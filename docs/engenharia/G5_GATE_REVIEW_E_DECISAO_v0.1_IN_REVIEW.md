@@ -23,7 +23,7 @@ Pelo PROJECT_LIFECYCLE, G5 exige arquitetura, contratos, testes planejados, risc
 | G5-CK-05 Contratos de segurança/API | IN_REVIEW | contratos candidatos de catalogo/push; aprovação técnica e controles de privacidade pendentes |
 | G5-CK-06 Riscos/retorno e separação de protótipos | PASS_DOCUMENTAL / IMPLEMENTAÇÃO PENDENTE | plano de rollback, preservação da coleta do Protótipo 1; teste em G6 |
 | G5-CK-07 UAT previstos antes de implementar | PASS_DOCUMENTAL | cenários abaixo e SPEC da Sprint 1; execução NOT_RUN |
-| G5-CK-08 Revisão independente | BLOCKED | revisor técnico separado do agente executor ainda não designado |
+| G5-CK-08 Revisão independente | IN_REVIEW / NOT_RUN | PO será revisora de negócio; assistente coordenador revisará a ADR de autoria do agente executor, não a própria arquitetura candidata; parecer ainda não emitido |
 | G5-CK-09 Aceite de baseline técnica pela PO | BLOCKED | após evidências 03-08 |
 | G5-CK-10 Permissões de catálogo publicável | G8_BLOCKER | diligência em paralelo; não bloqueia *planejamento* de Sprint 1 com placeholders, mas bloqueia release público |
 
@@ -36,7 +36,10 @@ Pelo PROJECT_LIFECYCLE, G5 exige arquitetura, contratos, testes planejados, risc
 
 ## Próximas ações para fechamento do G5
 1. Engenharia apresenta escolha justificada (preferência *candidata* Netlify em projeto administrado pela PO) e detalhamento do serviço de Push, persistência/scheduler, custo e rollback.
-2. PO define/obtém revisor independente; o executor e o revisor documentam parecer de riscos e correções obrigatórias.
+2. Agente executor elabora ADR própria ([Issue #2](https://github.com/lsfsoluri-collab/qfazer/issues/2)); o assistente revisor avalia o trabalho **desse agente** e a PO julga os impactos de negócio. Não autocertificar a proposta redigida pelo coordenador.
 3. Conferir permissões/límites de planos antes de escolher provedor; cotação não constitui contratação.
 4. PO aprova o pacote G5, uma versão específica, e autoriza o G6 da Sprint 1 expressamente.
 **Status:** `G5 NOT APPROVED`, Sprint 1 `READY FOR REVIEW / NOT STARTED`.
+
+## Designação de revisão — 17/11/2026
+**DECISION (PO):** revisores serão Luana (negócio/UAT) e assistente coordenador (especificações, segurança e evidências), separados do **agente de IA executor**. **Limite:** a revisão da própria arquitetura previamente elaborada pelo coordenador não é independente; o agente executor deve produzir ADR própria para que sua revisão seja tecnicamente separada da autoria. Issues operacionais: [#2 G5 ADR](https://github.com/lsfsoluri-collab/qfazer/issues/2), [#3 Sprint 1 bloqueada](https://github.com/lsfsoluri-collab/qfazer/issues/3). O G5 permanece NÃO APROVADO.
