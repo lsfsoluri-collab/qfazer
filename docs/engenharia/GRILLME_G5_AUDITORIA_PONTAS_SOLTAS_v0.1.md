@@ -1,5 +1,5 @@
 # Qfazer — GRILLME crítico da Etapa 1 / Gate G5
-**Data:** 17/11/2026 · **Estado:** IN_REVIEW · **Escopo:** migração, identidade, comportamento funcional e preparação da integração
+**Data:** 17/11/2026 · **Atualizado:** 17/11/2026 · **Estado:** IN_REVIEW · **Escopo:** migração, identidade, comportamento funcional e preparação da integração
 **Protocolo:** GRILLME_PROTOCOL (Business, Architecture, Spec), Constituição, ciclo de vida, baseline funcional REV7 aprovada, G4 UX, manual de marca v2, mockups, SPEC de integração e inventário de arquivos do PR #1.
 
 ## Status do gate
@@ -60,3 +60,41 @@ Todos: **NOT_RUN**, sem evidência técnica ainda.
 - Não fazer merge nem deploy sem revisão, plano de rollback e aprovação específica.
 
 **Condicional:** o GRILLME não encerra o gate apenas por este relatório. As respostas da PO devem entrar como DECISION/OPEN_QUESTION antes de nova avaliação.
+
+
+---
+
+## Rodada de respostas da Product Owner — 17/11/2026
+
+**Fonte:** respostas explícitas da PO nesta conversa; substituem apenas as perguntas respondidas, sem alterar automaticamente regras não mencionadas.
+
+| Registro | Classificação | Resposta | Consequência |
+|---|---|---|---|
+| G5-R1-01 | **OPEN_QUESTION** | Acesso na feira de 05/12: **ainda não definido** | Não presumir site público nem demonstração restrita; preparar cenários e exigir decisão anterior ao G8 |
+| G5-R1-02 | **DECISION** | Web Push **deve funcionar em 05/12/2026** | Requisito obrigatório do MVP; não marcar como futuro ou opcional; especificar operação, consentimento, segurança, testes e contingência |
+| G5-R1-03 | **FACT / atribuição de responsabilidade** | **Luana** foi indicada como responsável pelo código e pelo Netlify | Luana é ponto focal e responsável por coordenar a entrega; isso não prova que todas as credenciais, acessos ou competências de implementação foram validados; execução e revisão técnica exigem evidências |
+
+### Impactos na triagem GRILLME
+
+- **G5-06: HIGH → CRITICAL (prazo/segurança)**. A obrigação de Web Push com o aplicativo fechado fica no caminho crítico, exigindo arquitetura compatível, permissão explícita, inscrição e revogação, notificações sem revelar dados pessoais, tratamento de erros, verificação em dispositivos e navegador elegíveis, política de retenção de subscriptions e custos.
+- **G5-12 permanece HIGH.** Responsável identificado (**Luana**), porém destino de homologação, acesso efetivo ao painel Netlify, gestão de credenciais e orçamento não foram verificados.
+- **G5-02 permanece CRITICAL.** A indefinição do nível de acesso e a revisão de direitos para o catálogo impedem assumir deploy público de eventos.
+- **G5-04 permanece HIGH**, com correção de texto já coberta pela baseline: não é decisão comercial nova.
+- **OPEN_QUESTION**: política de fallback visual para eventos sem foto e critérios de aceite do comportamento da pesquisa acadêmica; podem ser resolvidos pela especificação sem mudar o negócio se não alterarem jornadas aprovadas.
+
+### Caminho crítico recomendado
+1. **Engenharia de notificações:** validar plataforma/infra e demonstrar fluxo em ambiente restrito, incluindo solicitar permissão, inscrever dispositivo, envio válido, fechamento do PWA, cancelamento de inscrição e reabertura; sem prometer entrega universal por restrições de SO/navegador.
+2. **Responsabilidade e acesso:** confirmar que Luana possui permissões efetivas do GitHub, domínio, Netlify e configurações da demo; designar um executor de engenharia e revisor independente, mesmo que sejam diferentes do ponto focal.
+3. **Migração:** finalizar assets e configuração da função Netlify na branch; nenhuma credencial ou arquivo protegido em repositório público.
+4. **Dados:** manter 161 sessões elegíveis somente para teste interno, excluindo os 43 registros pendentes/rejeitados; não usar publicação pública como alternativa para facilitar testes.
+5. **Decidir acesso à feira** antes da autorização de release; preparar alternativas público/restrito sem assumir uma delas.
+
+### UAT adicionais para Web Push (NOT_RUN)
+- **UAT-PUSH-02:** consentimento é solicitado após ação contextual; recusa não impede uso de descoberta.
+- **UAT-PUSH-03:** após opt-in, mensagem de teste chega ao dispositivo elegível com o PWA fechado dentro das condições suportadas, com registro de ambiente e hora; sem garantia de entrega universal.
+- **UAT-PUSH-04:** usuário desativa notificações; nenhuma nova notificação é enviada pelo sistema à assinatura revogada.
+- **UAT-PUSH-05:** quando serviço estiver indisponível ou permissão negada, interface informa limitação sem afirmar sucesso.
+- **UAT-PUSH-06:** mensagens notificadas não revelam dados privados; registros de subscriptions possuem controle de acesso e retenção definidos.
+
+### Estado após respostas
+**Decisão de Web Push registrada; responsável operacional identificado; acesso em 05/12 permanece OPEN_QUESTION. G5 segue bloqueado** até revisão independente, contrato de notificações, ambiente de teste e permissões de dados. Nenhum teste de push, merge ou deploy foi executado pela atualização documental.
