@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0B0B0B">
+  <meta name="description" content="Qfazer. Descubra experiências culturais reais em São Paulo.">
+  <meta name="color-scheme" content="dark">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/app-192.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/app-192.svg">
+  <link rel="stylesheet" href="./app.css">
+  <title>Qfazer — descubra experiências</title>
+</head>
+<body>
+  <a href="#main" class="skip-link">Ir para o conteúdo</a>
+  <div class="site-shell">
+    <header class="masthead">
+      <a href="#inicio" class="brand" aria-label="Qfazer: voltar ao início"><img src="./assets/logo-qfazer.svg" alt="Qfazer"></a>
+      <span class="masthead-meta">São Paulo <span aria-hidden="true">✳</span> experiências reais</span>
+      <nav class="nav-desktop" aria-label="Navegação principal">
+        <button type="button" data-tab="inicio">Início</button>
+        <button type="button" data-tab="salvos">Salvos</button>
+        <button type="button" data-tab="buscar">Buscar</button>
+        <button type="button" data-tab="chat">Chat</button>
+      </nav>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="panel page" id="page-inicio" data-page="inicio" aria-labelledby="home-heading">
+        <div class="hero">
+          <div>
+            <span class="eyebrow"><span class="small-dot"></span> São Paulo é cheia de possibilidades</span>
+            <h1 id="home-heading">o que você quer <em>fazer hoje?</em></h1>
+            <p class="hero-copy">Experiências culturais de verdade, organizadas para você decidir onde ir.</p>
+            <div class="hero-actions">
+              <button class="button button-primary" id="home-find">Explorar experiências <span aria-hidden="true">↗</span></button>
+              <span class="micro">Sem ingresso vendido aqui. Direto ao canal oficial.</span>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="hero-letter">Q</span><i class="ray ray-1"></i><i class="ray ray-2"></i><i class="ray ray-3"></i></div>
+        </div>
+        <div class="section-heading"><div><p class="section-overline">DESCUBRA A CIDADE</p><h2>experiências para explorar</h2></div><button class="text-button" id="home-show-all">Ver todas <span aria-hidden="true">↗</span></button></div>
+        <div id="home-list" class="event-grid" aria-live="polite"></div>
+        <section class="info-banner" aria-label="Sobre o Qfazer"><div class="info-icon" aria-hidden="true">✳</div><div><h3>menos rolagem. mais rolê.</h3><p>Busque por data, bairro, categoria ou orçamento. Compare opções e confira os detalhes na fonte oficial.</p></div></section>
+      </section>
+
+      <section class="panel page" id="page-salvos" data-page="salvos" aria-labelledby="saved-heading" hidden>
+        <div class="page-heading"><p class="section-overline">MINHA LISTA</p><h1 id="saved-heading">seus salvos<span class="punct">.</span></h1><p>Guarde ideias para encontrar depois. Os salvos ficam neste dispositivo.</p></div>
+        <div class="notification-box"><span class="notification-symbol" aria-hidden="true">♧</span><div><strong>Lembretes e avisos</strong><p>As notificações estão em desenvolvimento. Salvar um evento ainda não ativa avisos.</p></div><span class="status-pill">em breve</span></div>
+        <div id="saved-list" class="event-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="panel page" id="page-buscar" data-page="buscar" aria-labelledby="search-heading" hidden>
+        <div class="page-heading"><p class="section-overline">ENCONTRE SUA PRÓXIMA EXPERIÊNCIA</p><h1 id="search-heading">bora descobrir<span class="punct">?</span></h1><p>Filtre as sessões e confira a data, o local e o preço informado.</p></div>
+        <form id="search-form" class="search-form" autocomplete="off" role="search">
+          <label class="search-input-wrap"><span class="visually-hidden">Buscar por nome ou local</span><span class="search-icon" aria-hidden="true">⌕</span><input id="search-q" type="search" placeholder="O que você tem vontade de fazer?" maxlength="120"></label>
+          <div class="filters">
+            <label>Categoria<select id="filter-category"><option value="">Todas</option></select></label>
+            <label>Bairro<select id="filter-neighborhood"><option value="">Todos</option></select></label>
+            <label>Data <input type="date" id="filter-date" aria-label="Data do evento"></label>
+            <label>Orçamento<select id="filter-budget"><option value="">Qualquer valor</option><option value="free">Grátis</option><option value="50">Até R$ 50</option><option value="100">Até R$ 100</option><option value="200">Até R$ 200</option></select></label>
+          </div>
+          <div class="filter-controls"><button class="button button-primary" type="submit">Aplicar filtros</button><button class="text-button" type="reset">Limpar filtros</button></div>
+        </form>
+        <div class="results-heading"><h2 id="search-count">Experiências</h2><span>Disponibilidade sujeita à confirmação no canal oficial</span></div>
+        <div id="search-list" class="event-grid" aria-live="polite"></div>
+        <section id="compare-tray" class="compare-tray" aria-labelledby="compare-heading" hidden><div class="compare-heading"><strong id="compare-heading">Comparar sessões</strong><button type="button" class="text-button" id="compare-clear">Limpar</button></div><div id="compare-content"></div></section>
+      </section>
+
+      <section class="panel page" id="page-chat" data-page="chat" aria-labelledby="chat-heading" hidden>
+        <div class="page-heading"><p class="section-overline">RECOMENDAÇÃO CONVERSACIONAL</p><h1 id="chat-heading">conversa boa leva a rolê bom<span class="punct">.</span></h1><p>O assistente do Qfazer recomendará até três experiências a partir do catálogo verificado.</p></div>
+        <div class="chat-coming"><div class="chat-mark" aria-hidden="true">✳</div><h2>o chat está chegando.</h2><p>A integração com a IA ainda não foi ativada. Enquanto isso, você pode encontrar experiências reais pela busca e comparar até três sessões.</p><button type="button" class="button button-primary" id="chat-to-search">Ir para Buscar <span aria-hidden="true">↗</span></button></div>
+      </section>
+    </main>
+    <footer class="footer"><span>Qfazer <span aria-hidden="true">✳</span> São Paulo</span><span>Informações podem mudar. Confirme com o organizador antes de sair.</span></footer>
+  </div>
+  <nav class="nav-mobile" aria-label="Navegação principal móvel"><button type="button" data-tab="inicio"><span aria-hidden="true">⌂</span>Início</button><button type="button" data-tab="salvos"><span aria-hidden="true">♡</span>Salvos</button><button type="button" data-tab="buscar"><span aria-hidden="true">⌕</span>Buscar</button><button type="button" data-tab="chat"><span aria-hidden="true">▤</span>Chat</button></nav>
+  <dialog id="event-modal" class="event-modal" aria-labelledby="detail-title"><form method="dialog"><button class="close-modal" aria-label="Fechar detalhes">×</button></form><div id="event-detail"></div></dialog>
+  <aside id="review-panel" class="review-panel" hidden aria-labelledby="review-heading"><div class="review-inner"><div><strong id="review-heading">Homologação interna — catálogo real</strong><p>Os dados importados não são enviados nem incluídos no site público. Selecione o JSON de homologação do projeto.</p></div><label class="button button-outline">Carregar JSON local<input type="file" accept=".json,application/json" id="import-catalog" hidden></label><span id="review-status" role="status">Nenhum arquivo carregado</span></div></aside>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
