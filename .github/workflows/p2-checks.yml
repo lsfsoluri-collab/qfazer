@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Run static checks and 10 test cases
+      - name: Run checks (public CI skips private-catalog test)
         run: npm run check
       - name: Confirm public path excludes internal data
         shell: bash
