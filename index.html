@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#151313">
+<meta name="color-scheme" content="light">
+<meta name="description" content="Qual a Boa? Um guia cultural conversacional para descobrir experiências que combinam com seu tempo, seus interesses e seu bolso. Protótipo acadêmico para teste.">
+<title>Qual a Boa? — Seu guia cultural em São Paulo</title>
+<link rel="icon" type="image/png" href="icone-preto.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F8F4EE;--ink:#151313;--orange:#FF6A00;--orange-dark:#D94E00;--blue:#1755EB;--cream:#FFF8F0;--soft:#F1EAE1;--gray:#6C6863;--line:#DFD8CE;--radius:23px;--shadow:0 24px 55px rgba(29,22,15,.09)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 'DM Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+button:disabled{opacity:.5;cursor:not-allowed}
+.shell{width:min(1280px,calc(100% - 56px));margin:auto}
+header{border-bottom:1.5px solid var(--ink);background:var(--paper);position:sticky;top:0;z-index:50}
+.head{height:81px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand img{width:49px;height:49px;object-fit:cover;border-radius:14px}
+.wordmark{font-family:'Archivo Black','Arial Black',sans-serif;font-weight:900;line-height:.95;letter-spacing:-.075em;font-size:21px;transform:rotate(-2deg)}
+.wordmark b{color:var(--orange)}
+.nav{display:flex;gap:31px;font-size:13px;font-weight:800;align-items:center}
+.nav button{background:transparent;border:none;padding:8px 0;font-weight:800}
+.nav a:hover,.nav button:hover{color:var(--orange-dark)}
+.header-cta{background:var(--ink);color:white;border:1px solid var(--ink);border-radius:99px;font-size:12px;font-weight:800;padding:13px 18px}
+.header-cta:hover{background:var(--orange);border-color:var(--orange)}
+.test-ribbon{background:var(--ink);color:#EAE4DC;text-align:center;padding:8px 15px;font-size:10.5px;letter-spacing:.025em}
+.test-ribbon strong{color:#FFAB64}
+.hero{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:40px;align-items:start;padding-top:48px;padding-bottom:49px}
+.eyebrow{display:flex;gap:12px;align-items:center;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em}
+.eyebrow:before{content:'';height:4px;width:27px;background:var(--orange);display:inline-block;border-radius:20px}
+.hero-copy{padding-top:32px}
+h1,h2,h3,p{margin-top:0}
+h1,h2,h3{letter-spacing:-.05em}
+h1{font-family:'Archivo Black','Arial Black',sans-serif;font-size:clamp(45px,4.9vw,79px);line-height:1.05;letter-spacing:-.075em;max-width:610px;margin:25px 0 26px}
+h1 em{font-style:normal;position:relative;color:var(--blue);white-space:nowrap}
+h1 em:after{content:'';position:absolute;height:7px;background:var(--orange);border-radius:60%;bottom:-5px;left:3px;right:0;transform:rotate(-3deg)}
+.lead{font-size:17px;line-height:1.65;max-width:440px;color:#4A4641}
+.hero-actions{display:flex;align-items:center;gap:14px;margin:27px 0}
+.primary{border:none;border-radius:999px;background:var(--orange);color:#151313;display:inline-flex;align-items:center;justify-content:center;gap:13px;font-size:13px;font-weight:900;padding:16px 21px;transition:transform .2s,background .2s}
+.primary:hover{transform:translateY(-2px);background:#FF8A30}
+.primary.dark{background:var(--ink);color:white}
+.primary.dark:hover{background:var(--blue)}
+.small-link{font-weight:800;font-size:12px;text-decoration:underline;text-decoration-color:var(--orange);text-underline-offset:5px}
+.hero-footnote{font-size:11px;color:#77716D;max-width:410px}
+.poster{height:280px;border-radius:8px 82px 8px 8px;overflow:hidden;position:relative;margin-top:31px;background:#222;box-shadow:var(--shadow)}
+.poster img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 52%;filter:grayscale(100%) contrast(1.22)}
+.poster:before{content:'';position:absolute;z-index:2;left:0;bottom:0;width:60%;height:9px;background:var(--blue)}
+.poster-sticker{position:absolute;right:16px;top:14px;background:var(--orange);color:#171311;font:900 16px/1.1 'Archivo Black',sans-serif;transform:rotate(6deg);padding:10px 14px;z-index:3}
+.poster-caption{position:absolute;bottom:25px;left:26px;font-family:'Archivo Black',sans-serif;color:white;font-size:clamp(26px,3vw,41px);line-height:1.02;letter-spacing:-.05em;text-shadow:0 2px 15px #0009}
+.scribble{position:absolute;right:42px;bottom:-10px;width:115px;height:70px;border-top:13px solid var(--orange);border-radius:50%;transform:rotate(-18deg);z-index:3}
+.chat-panel{border:2px solid var(--ink);border-radius:29px;box-shadow:13px 13px 0 var(--blue);overflow:hidden;background:#FFFCF7;min-height:650px;display:flex;flex-direction:column;position:relative}
+.chat-head{display:flex;align-items:center;justify-content:space-between;padding:17px 18px;border-bottom:2px solid var(--ink);gap:12px;background:#fffaf2}
+.agent{display:flex;align-items:center;gap:11px}
+.agent img{width:45px;height:45px;border-radius:13px;object-fit:cover}
+.agent-title{font-size:15px;font-weight:900;line-height:1.2}
+.agent-status{font-size:11px;color:var(--gray);margin-top:3px;display:flex;align-items:center;gap:5px}
+.dot{height:7px;width:7px;display:inline-block;background:#32A065;border-radius:50%}
+.reset{background:transparent;border:1px solid var(--line);border-radius:99px;padding:8px 12px;font-size:11px;font-weight:800}
+.reset:hover{border-color:var(--ink)}
+.chat-feed{height:415px;min-height:415px;overflow:auto;padding:25px 21px 16px;overscroll-behavior:contain;scrollbar-color:#c5beb5 transparent;scrollbar-width:thin}
+.bubble-row{display:flex;gap:9px;margin-bottom:16px;align-items:flex-end}
+.bubble-row.you{justify-content:flex-end}
+.mini-icon{flex:0 0 28px;height:28px;border-radius:9px;overflow:hidden}
+.mini-icon img{width:100%;height:100%;object-fit:cover}
+.bubble{max-width:84%;font-size:13px;line-height:1.55;padding:14px 16px;border-radius:20px 20px 20px 5px;background:#F1EBE2;white-space:pre-wrap;color:#171412}
+.you .bubble{background:var(--orange);border-radius:20px 20px 5px 20px;color:#151313}
+.quick{min-height:52px;display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 14px}
+.quick button{background:white;border:1.5px solid #DAD2C8;padding:10px 13px;font-size:11px;border-radius:999px;font-weight:800;transition:.15s}
+.quick button:hover{background:var(--soft);border-color:var(--orange)}
+.chat-compose{display:flex;gap:8px;border-top:1px solid var(--line);padding:13px 14px;background:#FFF9F2}
+.chat-compose input{flex:1;min-width:0;border:1px solid #DCD3C8;border-radius:99px;background:white;padding:12px 17px;font-size:12px}
+.chat-compose button{background:var(--orange);border:none;border-radius:50%;height:45px;width:45px;display:grid;place-items:center}
+.chat-compose button svg{width:20px;height:20px}
+.chat-under{background:var(--ink);color:white;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 17px;font-size:10px;margin-top:auto}
+.chat-under b{color:#FF9847}
+.section{padding-top:60px;padding-bottom:67px}
+.section-line{border-top:2px solid var(--ink)}
+.section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:25px}
+.section-heading h2{font:900 clamp(28px,3.2vw,45px)/1.12 'Archivo Black',sans-serif;letter-spacing:-.07em;margin:8px 0}
+.section-heading p{max-width:420px;color:var(--gray);font-size:13px;margin:0}
+.accent{color:var(--orange)}
+.filters{display:flex;gap:9px;overflow-x:auto;padding:0 0 17px}
+.filter{border:1.5px solid var(--line);white-space:nowrap;background:#FFFCF8;padding:9px 15px;border-radius:100px;font-size:12px;font-weight:800}
+.filter.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.event{border:1.5px solid #DCD3C7;background:#FFFCF8;border-radius:21px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;min-width:0}
+.event:hover{transform:translateY(-2px);box-shadow:0 14px 30px #24150612}
+.event-image{height:194px;position:relative;background:linear-gradient(135deg,#f66c17,#2d143c);overflow:hidden}
+.event-image img{width:100%;height:100%;object-fit:cover;display:block}
+.event-image:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 45%,#0007)}
+.tag{position:absolute;z-index:2;left:14px;bottom:13px;background:var(--orange);font-size:10px;font-weight:900;padding:6px 9px;border-radius:7px}
+.save{position:absolute;z-index:2;right:12px;top:12px;background:#fff;border:none;border-radius:50%;width:33px;height:33px;display:grid;place-items:center;font-size:17px}
+.event-body{display:flex;flex-direction:column;flex:1;padding:17px 18px 20px}
+.event-body h3{font:900 19px/1.2 'Archivo Black',sans-serif;letter-spacing:-.055em;margin:1px 0 13px}
+.meta{font-size:11.5px;color:#5D5650;line-height:1.8}
+.meta b{color:#171311}
+.why{border-top:1px solid #E8DFD3;margin-top:13px;padding-top:12px;font-size:11px;color:#494039;line-height:1.5;flex:1}
+.why b{color:var(--orange-dark)}
+.event-actions{display:flex;gap:8px;margin-top:16px}
+.event-actions button{border:1px solid var(--ink);border-radius:99px;padding:11px 13px;font-size:11px;font-weight:900}
+.event-actions .detail{background:var(--ink);color:white;flex:1}
+.event-actions .detail:hover{background:var(--blue);border-color:var(--blue)}
+.event-actions .choose{background:white;flex:1}
+.event-actions .choose:hover{background:var(--orange)}
+.empty{grid-column:1/-1;background:white;border:1px dashed #CABEB3;padding:25px;border-radius:18px;color:var(--gray)}
+.note{font-size:11px;color:#736B64;margin-top:15px}
+.break{background:var(--ink);color:white;position:relative;overflow:hidden}
+.break-inner{display:flex;align-items:center;justify-content:space-between;gap:40px;padding:42px 0}
+.break h2{font:900 clamp(28px,4vw,56px)/1.06 'Archivo Black',sans-serif;max-width:690px;letter-spacing:-.065em;margin:0}
+.break h2 em{color:var(--orange);font-style:normal}
+.break p{max-width:260px;font-size:13px;color:#E9DCD0;margin:0}
+.break:after{content:'?';font:900 360px/.9 'Archivo Black',sans-serif;position:absolute;right:-30px;top:-72px;color:#FF6A0016;pointer-events:none}
+.test-section{padding:72px 0 100px;display:grid;grid-template-columns:.95fr 1.05fr;gap:40px}
+.test-section h2{font:900 clamp(32px,3.4vw,51px)/1.08 'Archivo Black',sans-serif;letter-spacing:-.07em;max-width:540px}
+.test-section p{color:#5A524B;max-width:470px}
+.test-section .steps{display:grid;gap:14px;margin:26px 0}
+.step{display:flex;align-items:center;gap:13px;font-size:12px;font-weight:800}
+.step b{width:29px;height:29px;border-radius:50%;background:var(--blue);color:white;display:grid;place-items:center}
+.feedback-card{background:#fffaf3;border:2px solid var(--ink);border-radius:24px;padding:25px;box-shadow:9px 9px 0 var(--orange)}
+.feedback-card h3{font:900 25px/1.12 'Archivo Black',sans-serif;margin-bottom:12px}
+.feedback-card p{font-size:12px;color:var(--gray)}
+.rating{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}
+.rating label{display:block}
+.rating input{position:absolute;opacity:0;width:1px;height:1px}
+.rating span{display:grid;place-items:center;width:46px;height:44px;border:1.5px solid #CFC4B9;border-radius:11px;font-size:16px;font-weight:900;background:white;cursor:pointer}
+.rating input:checked+span{background:var(--blue);border-color:var(--blue);color:white}
+.rating input:focus-visible+span{outline:3px solid var(--blue);outline-offset:3px}
+.field{display:grid;gap:7px;margin-bottom:16px;font-size:12px;font-weight:800}
+.field select,.field textarea,.field input{border:1px solid #D1C5BA;border-radius:12px;min-width:0;width:100%;background:#fff;padding:12px;font-size:12px;color:var(--ink)}
+.field textarea{min-height:83px;resize:vertical}
+.subcopy{font-size:10px;color:var(--gray);line-height:1.5}
+.form-message{font-size:12px;font-weight:800;min-height:18px;margin-top:11px}
+footer{padding:28px 0 33px;border-top:1px solid var(--ink);font-size:11px;color:#6C6661}
+.footer-in{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.footer-logo{font-family:'Archivo Black',sans-serif;color:var(--ink);font-size:17px;letter-spacing:-.08em}
+.mobile-bar{display:none}
+.overlay{display:none;position:fixed;inset:0;background:rgba(16,12,10,.61);z-index:80;align-items:center;justify-content:center;padding:18px}
+.overlay.show{display:flex}
+.modal{background:var(--paper);border:2px solid var(--ink);border-radius:23px;overflow:auto;max-height:min(90vh,820px);width:min(550px,100%);box-shadow:14px 14px 0 var(--orange);position:relative}
+.modal-image{height:215px;background:var(--orange);width:100%;object-fit:cover;display:block}
+.modal-body{padding:25px}
+.modal-body h3{font:900 30px/1.08 'Archivo Black',sans-serif;letter-spacing:-.07em;margin:4px 0 15px}
+.modal-body p{font-size:13px;color:#504943}
+.modal-close{position:absolute;right:12px;top:12px;border:1px solid #ddd;border-radius:50%;height:34px;width:34px;font-size:19px;background:white;display:grid;place-items:center;z-index:2}
+.modal-body .whybox{background:#FFE0C6;border-radius:14px;padding:16px;font-size:12px;margin:17px 0}
+.modal-body .modaltwo{display:flex;gap:8px}
+.modal-body .modaltwo button{flex:1}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.profile-grid .field:first-child{grid-column:1/-1}
+.profile-note{background:#E7EEFF;border-left:4px solid var(--blue);padding:12px 14px;border-radius:8px;font-size:11px;margin:9px 0 18px}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(80px);transition:.2s;z-index:150;background:var(--ink);color:white;padding:12px 20px;border-radius:99px;font-size:12px;font-weight:800;pointer-events:none;opacity:0;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* Introdução prévia e contexto de validação acadêmica */
+.welcome-gate{position:fixed;inset:0;z-index:200;background:#151313ee;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}
+.welcome-gate[hidden]{display:none!important}
+.welcome-card{width:min(620px,100%);max-height:calc(100vh - 30px);overflow:auto;border:2px solid var(--ink);border-radius:27px;padding:clamp(22px,4vw,38px);background:var(--paper);box-shadow:10px 10px 0 var(--orange)}
+.welcome-kicker{font-size:11px;font-weight:900;color:var(--blue);letter-spacing:.12em;text-transform:uppercase}
+.welcome-card h2{font:900 clamp(29px,5.8vw,49px)/1.06 'Archivo Black',sans-serif;letter-spacing:-.06em;margin:15px 0}
+.welcome-card p{font-size:14px;line-height:1.56;color:#4a403b}
+.welcome-choice{display:grid;gap:9px;font-weight:800;font-size:13px;margin:21px 0}
+.welcome-choice select{padding:14px 12px;border:1.5px solid #6c6259;border-radius:12px;background:white;width:100%;font-size:13px;min-width:0}
+.welcome-explain{border-left:4px solid var(--orange);background:#fff7ec;padding:13px 16px;border-radius:8px;color:#4e433c;font-size:12px!important;margin:18px 0}
+.welcome-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.welcome-skip{border:none;background:transparent;text-decoration:underline;font-size:12px;font-weight:700;padding:12px 2px;color:#5a524b}
+.context-strip{padding:26px 0 34px;border-top:2px solid var(--ink);display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.context-bit{background:#fffaf2;border:1px solid #d9cfc4;padding:20px 22px;border-radius:17px}
+.context-bit h2{font:900 19px/1.15 'Archivo Black',sans-serif;letter-spacing:-.04em;margin:0 0 9px}
+.context-bit p{color:#514840;font-size:13px;line-height:1.55;margin:0}
+.context-bit .context-label{color:var(--orange-dark);font-size:10px;font-weight:900;letter-spacing:.12em;margin-bottom:10px}
+.rating-note{font-size:11px;color:#625851;margin-bottom:8px}
+.demo-alert{border:1.5px solid var(--orange);background:#fff1e1;border-radius:12px;padding:12px 14px;font-size:12px;color:#342922;line-height:1.5;margin-top:17px}
+@media(max-width:760px){.context-strip{grid-template-columns:1fr;gap:12px;padding:15px 0 30px}.context-bit{padding:16px}.welcome-gate{padding:12px}.welcome-card{padding:23px 19px;box-shadow:5px 5px 0 var(--orange)}.welcome-actions .primary{width:100%}.welcome-actions{gap:1px}}
+
+@media(max-width:1000px){.hero{gap:30px;grid-template-columns:.9fr 1.1fr}.poster{height:220px}.chat-panel{box-shadow:8px 8px 0 var(--blue)}.cards{gap:10px}.event-body{padding:13px}.nav{gap:16px}}
+@media(max-width:760px){
+  .shell{width:min(100% - 34px,510px)}
+  .head{height:65px}.brand img{width:39px;height:39px;border-radius:10px}.wordmark{font-size:17px}
+  .nav,.header-cta{display:none}
+  .test-ribbon{font-size:9px;padding:7px 18px}
+  .hero{display:flex;flex-direction:column;gap:31px;padding-top:23px;padding-bottom:30px}
+  .hero-copy{padding-top:0;width:100%}h1{font-size:clamp(42px,10.3vw,61px);margin:18px 0}.lead{font-size:14px;max-width:460px}
+  .hero-actions{margin:20px 0 4px}.hero-footnote{font-size:10px}
+  .poster{height:177px;border-radius:5px 65px 5px 5px;margin-top:21px}.poster-caption{font-size:26px;left:16px;bottom:18px}.poster-sticker{font-size:12px}
+  .chat-panel{width:100%;min-height:540px;box-shadow:6px 6px 0 var(--blue);border-radius:23px}
+  .chat-feed{height:350px;min-height:350px;padding:17px 14px 9px}.chat-head{padding:13px 14px}.chat-under{font-size:9px;padding:9px 12px}.bubble{font-size:12px}
+  .quick{padding:0 12px 12px}.quick button{font-size:11px;padding:9px 11px}
+  .section{padding:41px 0 50px}.section-heading{display:block}.section-heading p{font-size:12px}
+  .cards{display:flex;gap:12px;overflow-x:auto;padding:0 6px 16px 0;scroll-snap-type:x mandatory}.event{flex:0 0 82%;scroll-snap-align:start}
+  .event-image{height:180px}.event-body{padding:17px}.event-body h3{font-size:19px}
+  .break-inner{display:block;padding:35px 0}.break p{margin-top:17px}
+  .test-section{display:flex;flex-direction:column;padding:49px 0 100px;gap:24px}.feedback-card{box-shadow:6px 6px 0 var(--orange)}
+  .footer-in{display:block}.footer-in div+div{margin-top:12px}
+  .mobile-bar{display:flex;align-items:center;justify-content:space-around;position:fixed;bottom:0;left:0;right:0;background:#fffaf3;border-top:1.5px solid var(--ink);height:69px;padding-bottom:env(safe-area-inset-bottom);z-index:55;box-shadow:0 -10px 24px #0000000b}
+  .mobile-bar button{border:0;background:none;display:grid;gap:2px;text-align:center;justify-items:center;min-width:64px;font-size:10px;font-weight:800;color:#514B46}
+  .mobile-bar svg{height:20px;width:20px;stroke-width:2}
+  .mobile-bar button.active{color:var(--orange-dark)}
+  .toast{bottom:91px;width:max-content;max-width:90%}
+}
+@media(max-width:365px){.event{flex-basis:91%}.shell{width:calc(100% - 26px)}.chat-panel{min-height:570px}.quick button{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* V4: editorial mobile-first. Desktop keeps its full navigation. */
+.mobile-intro-brand{display:none}
+.orange-question{color:var(--orange)}
+.hero{grid-template-areas:"copy chat" "poster chat";align-content:start}
+.hero-copy{grid-area:copy}
+.poster{grid-area:poster;margin-top:0;height:260px}
+.chat-panel{grid-area:chat;scroll-margin-top:30px}
+.context-strip,.section,.test-section{scroll-margin-top:30px}
+.institution-signature{display:flex;align-items:center;gap:16px;border:1px solid var(--line);border-radius:15px;background:#fffdf8;padding:12px 14px;margin:12px 0}
+.institution-signature img{display:block;width:120px;height:auto;object-fit:contain}
+.institution-signature span{font-size:11px;font-weight:750;color:#595149}
+footer{background:var(--ink);color:#f2e9dc;padding:50px 0 27px;border-top:0}
+.footer-in{align-items:start;gap:55px;display:grid;grid-template-columns:1.15fr .85fr}
+.footer-logo{font-size:clamp(27px,3vw,39px);color:#fff9ee;letter-spacing:-.075em}
+.footer-logo span{color:var(--orange)}
+.footer-brand-area{max-width:640px}
+.footer-brand-area p{max-width:520px;font-size:13px;line-height:1.65;margin:14px 0 23px;color:#dbd4ca}
+.footer-student-label{font-size:10px;font-weight:900;letter-spacing:.13em;color:#FFA366;margin-bottom:11px}
+.footer-brand-area .footer-names{font-weight:750;color:#fff9ee;margin:0}
+.footer-institution-area{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.belas-logo{width:200px;height:auto;object-fit:contain;margin:2px 0 26px;display:block}
+.footer-institution-area a{display:inline-flex;align-items:center;min-height:33px;color:#fff9ee;text-decoration:underline;text-decoration-color:#FF6A00;text-underline-offset:4px;font-weight:700;font-size:13px;overflow-wrap:anywhere}
+.footer-institution-area .footer-evaluate{margin-top:10px;border:1px solid #d8cec1;border-radius:99px;text-decoration:none;padding:10px 16px;min-height:44px}
+.footer-meta{color:#bab1a7;font-size:10px;border-top:1px solid #6d6159;padding-top:18px;margin-top:35px;line-height:1.5}
+.form-message.sent-ok{border:1px solid #A1B697;border-left:5px solid #26784b;border-radius:12px;background:#e3f2e7;color:#173c29;padding:14px;margin-top:15px}
+.form-message:not(.sent-ok):not(:empty){padding:14px;background:#fff1e4;border-radius:12px}
+@media(max-width:1000px){.hero{grid-template-areas:"copy chat" "poster chat"}.poster{height:220px}}
+@media(max-width:760px){
+  header{display:none!important}
+  body{padding-bottom:calc(78px + env(safe-area-inset-bottom))}
+  .shell{width:min(calc(100% - 32px),580px)}
+  .test-ribbon{font-size:10px;line-height:1.45;padding:10px 16px;position:relative;letter-spacing:0}
+  .test-ribbon strong{display:block;font-size:10px;letter-spacing:.07em}
+  .hero{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"copy" "chat" "poster";gap:23px;padding-top:24px;padding-bottom:37px}
+  .mobile-intro-brand{display:flex;align-items:center;gap:11px;margin-bottom:20px}
+  .mobile-intro-brand img{width:47px;height:47px;border-radius:12px;flex:0 0 47px;object-fit:contain}
+  .mobile-intro-brand>span{font:900 19px/.94 'Archivo Black',sans-serif;letter-spacing:-.07em;transform:rotate(-2deg)}
+  .mobile-intro-brand small{margin-left:auto;max-width:130px;font-size:10px;text-align:right;color:#736A5F;font-weight:750;line-height:1.35}
+  .hero-copy{display:block}
+  .hero-copy .eyebrow{font-size:9px;letter-spacing:.1em}
+  h1{font-size:clamp(36px,9vw,54px);margin:13px 0 14px;line-height:1.08;letter-spacing:-.07em}
+  .lead{font-size:14px;line-height:1.55;margin-bottom:0}
+  .hero-actions{display:none}
+  .hero-footnote{margin:10px 0 0;font-size:10.5px;line-height:1.5}
+  .chat-panel{margin:0;min-height:0;height:min(640px,calc(100svh - 110px));height:clamp(460px,74svh,650px);border-radius:22px;box-shadow:5px 6px 0 var(--blue)}
+  .chat-feed{min-height:0;height:auto;flex:1;overflow-y:auto;padding:17px 13px 10px}
+  .chat-head{padding:13px 12px}.agent{gap:9px}.agent img{width:39px;height:39px;border-radius:10px}
+  .agent-title{font-size:13px}.agent-status{font-size:10px}
+  .reset{font-size:10px;white-space:nowrap;padding:7px 9px}
+  .bubble{font-size:12px;padding:12px 13px;max-width:87%}
+  .quick{flex:0 0 auto;min-height:0;max-height:130px;overflow:auto;padding:7px 10px 9px;gap:7px}
+  .quick button{font-size:11px;padding:8px 10px;min-height:34px}
+  .chat-compose{padding:10px;gap:7px}.chat-compose input{min-height:45px;font-size:16px}.chat-compose button{flex:0 0 45px}
+  .chat-under{font-size:9px;padding:10px 13px}.chat-under>span:last-child{display:none}
+  .poster{height:150px;margin-top:6px;border-radius:8px 50px 8px 8px;box-shadow:none}
+  .poster-caption{font-size:23px}.poster-sticker{font-size:11px}
+  .section{padding:38px 0 43px}
+  .cards{gap:13px;scroll-padding-left:1px}.event{flex:0 0 min(84%,355px)}
+  .event-image{height:176px}.event-body{padding:15px}
+  .context-strip{grid-template-columns:1fr;gap:10px;padding-top:15px;padding-bottom:31px}
+  .test-section{gap:20px;padding:42px 0 45px}
+  .feedback-card{padding:18px 15px 22px;box-shadow:5px 5px 0 var(--orange);border-radius:19px}
+  .field select,.field textarea,.field input{font-size:16px;min-height:46px}
+  .field textarea{min-height:90px}
+  .rating{justify-content:space-between;gap:6px}.rating span{width:clamp(43px,13vw,55px);height:48px}
+  footer{padding:37px 0 17px}
+  .footer-in{display:flex;flex-direction:column;gap:31px}
+  .footer-brand-area p{font-size:12px;line-height:1.5}
+  .belas-logo{width:min(200px,70vw);margin:0 0 20px}
+  .footer-meta{margin-top:26px;padding-top:14px}
+  .mobile-bar{height:calc(68px + env(safe-area-inset-bottom));padding:5px 4px env(safe-area-inset-bottom);gap:0;justify-content:space-between}
+  .mobile-bar button{min-width:0;flex:1;gap:3px;font-size:9px;padding:6px 1px;min-height:58px}
+  .mobile-bar svg{height:20px;width:20px}
+  .mobile-bar button[data-mobile="conversar"]{color:var(--orange-dark);font-weight:900}
+  .toast{bottom:calc(85px + env(safe-area-inset-bottom))}
+  .modal{max-height:calc(100svh - 45px);box-shadow:6px 6px 0 var(--orange)}
+  .modal-body{padding:18px}.modal-body .modaltwo{flex-wrap:wrap}
+  .modal-body .modaltwo button{min-width:130px}
+  .welcome-card{width:min(100%,520px);max-height:calc(100dvh - 22px)}
+  .welcome-kicker{font-size:10px;letter-spacing:.1em}
+  .welcome-card p{font-size:13px}
+  .institution-signature{gap:9px;padding:9px}.institution-signature img{width:105px}
+  .institution-signature span{font-size:10px}
+  .welcome-choice select{font-size:16px;min-height:50px}
+  .welcome-card h2{font-size:clamp(27px,8vw,40px)}
+  .welcome-actions .primary{min-height:48px}
+  body:has(.chat-compose input:focus) .mobile-bar{display:none}
+}
+@media(max-width:365px){.shell{width:calc(100% - 24px)}.mobile-intro-brand small{font-size:9px;max-width:102px}.chat-panel{height:clamp(440px,72svh,620px)}.rating span{width:42px}.agent-title{font-size:12px}}
+
+/* Pesquisa em primeiro lugar · PIME 2026.2 */
+.hero-actions{flex-wrap:wrap;gap:10px}
+.hero-evaluate{background:var(--orange);border:1.5px solid var(--ink)}
+.hero-survey-hint{font-size:11px;font-weight:800;color:var(--blue);max-width:480px;margin:0 0 15px}
+.test-section-priority{padding:24px 0 48px;grid-template-columns:1fr minmax(260px,.65fr);gap:20px}
+.test-callout{border:2px solid var(--ink);background:#FFFCF7;border-radius:22px;padding:28px 32px;box-shadow:7px 7px 0 var(--orange)}
+.test-callout h2{font-size:clamp(25px,3.1vw,40px);margin:18px 0 12px;line-height:1.1}
+.test-callout p{max-width:620px;font-size:13px;line-height:1.55;margin-bottom:18px}
+.test-callout .subcopy{font-size:11px;max-width:580px;margin-top:14px;margin-bottom:0}
+.test-callout-side{border:2px solid var(--blue);background:#EBF0FF;color:var(--blue);border-radius:22px;padding:20px 30px;display:flex;align-items:flex-start;justify-content:center;flex-direction:column;gap:5px;font-family:'Archivo Black',sans-serif;font-size:clamp(24px,3.8vw,54px);letter-spacing:-.07em;line-height:1.11}
+.feedback-overlay{position:fixed;inset:0;z-index:230;background:#151313d9;display:flex;align-items:center;justify-content:center;padding:16px;overflow:hidden}
+.feedback-overlay[hidden],.review-nudge[hidden]{display:none!important}
+.feedback-dialog{position:relative;width:min(660px,100%);max-height:min(94dvh,990px);overflow:auto;border-radius:22px;background:var(--paper);padding:44px 20px 18px;box-shadow:0 30px 70px #0006;overscroll-behavior:contain}
+.feedback-dialog .feedback-card{box-shadow:none;border:0;padding:14px 18px 24px;background:transparent;border-radius:0}
+.feedback-dialog .feedback-card h3{font-size:clamp(21px,3vw,31px)}
+.feedback-progress{position:absolute;top:20px;left:37px;font-size:10px;color:var(--blue);font-weight:900;letter-spacing:.1em}
+.feedback-close{position:sticky;top:0;float:right;z-index:1;display:grid;place-items:center;margin:-30px -8px 0 0;width:38px;height:38px;border:1px solid #ccc;border-radius:50%;background:white;font-size:24px}
+.review-nudge{position:fixed;bottom:27px;right:23px;z-index:95;border:2px solid var(--ink);border-radius:17px;background:#FFF9F2;box-shadow:5px 6px 0 var(--blue);padding:14px 13px;display:flex;gap:14px;align-items:center;max-width:min(460px,calc(100vw - 30px))}
+.review-nudge div{display:grid;gap:2px;min-width:0}
+.review-nudge strong{font-size:13px}
+.review-nudge span{font-size:11px;line-height:1.35;color:#64594F}
+.review-nudge button{border:0;flex:0 0 auto;background:var(--ink);color:white;border-radius:99px;padding:12px 15px;font-size:11px;font-weight:900}
+.review-nudge #nudge-dismiss{background:transparent;color:var(--ink);font-size:20px;padding:6px}
+@media(max-width:760px){
+ .hero-actions{display:flex;flex-direction:column;align-items:stretch;gap:9px;margin:18px 0 9px}
+ .hero-actions .primary{display:flex;width:100%;font-size:12px;min-height:48px;padding:13px 15px}
+ .hero-survey-hint{font-size:10.5px;line-height:1.4;margin:4px 0 10px}
+ .test-section-priority{display:block;padding:10px 0 42px}
+ .test-callout{padding:22px 20px;box-shadow:5px 5px 0 var(--orange)}
+ .test-callout h2{font-size:28px}
+ .test-callout-side{display:none}
+ .feedback-overlay{padding:6px 8px}
+ .feedback-dialog{width:100%;max-height:calc(100dvh - 14px);padding:40px 8px 14px;border-radius:16px}
+ .feedback-dialog .feedback-card{padding:12px 12px 20px}
+ .feedback-progress{left:23px;top:17px;letter-spacing:.04em;font-size:9px}
+ .feedback-close{margin:-27px 1px 0 0}
+ .review-nudge{bottom:calc(81px + env(safe-area-inset-bottom));left:12px;right:12px;padding:11px 9px;max-width:none;gap:9px}
+ .review-nudge strong{font-size:12px}
+ .review-nudge span{font-size:10px}
+ .review-nudge button{padding:10px 12px}
+}
+
+</style>
+</head>
+<body>
+<header id="inicio">
+  <div class="shell head">
+    <a class="brand" href="#inicio" aria-label="Qual a Boa? Início">
+      <img src="icone-preto.png" alt="Símbolo da Qual a Boa?: interrogação e fechadura">
+      <span class="wordmark">QUAL A<br>BOA<b>?</b></span>
+    </a>
+    <nav class="nav" aria-label="Menu principal">
+      <a href="#inicio">Início</a><a href="#conversar">Conversar</a><a href="#explorar">Explorar</a>
+      <button type="button" id="nav-profile">Meu perfil</button><button type="button" id="nav-saved">Salvos <span id="save-count">(0)</span></button>
+    </nav>
+    <a class="header-cta" href="#conversar">Encontrar minha boa ↗</a>
+  </div>
+</header>
+<div class="test-ribbon"><strong>PROTÓTIPO ACADÊMICO · BELAS ARTES</strong> · Chat simulado, sem IA real · Eventos e preços fictícios · Pesquisa acadêmica</div>
+
+
+<div id="welcome-gate" class="welcome-gate" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+  <div class="welcome-card">
+    <div id="welcome-stage1">
+      <div class="welcome-kicker">ETAPA 1 DE 2 · PIME 2026.2 · BELAS ARTES</div>
+      <h2 id="welcome-title">Antes de começar, conta uma coisa?</h2>
+      <p>Estamos estudando como jovens escolhem experiências culturais presenciais em São Paulo — como shows, exposições e programas pela cidade.</p>
+      <label for="baseline-select" class="welcome-choice">Pensando na última vez em que quis fazer um programa cultural, qual situação descreve melhor sua decisão?
+        <select id="baseline-select">
+          <option value="">Selecione uma opção</option>
+          <option value="Foi fácil escolher">Foi fácil escolher</option>
+          <option value="Muitas opções e dificuldade de escolher">Encontrei muitas opções e fiquei em dúvida</option>
+          <option value="Informações insuficientes ou espalhadas">As informações eram insuficientes ou estavam espalhadas</option>
+          <option value="Dúvida se valeria tempo ou dinheiro">Não sabia se valeria meu tempo ou dinheiro</option>
+          <option value="Barreiras de preço, horário ou deslocamento">Preço, horário ou deslocamento dificultaram</option>
+          <option value="Não procurei experiências culturais recentemente">Não procurei experiências culturais recentemente</option>
+          <option value="Outro motivo">Foi outra situação</option>
+        </select>
+      </label>
+      <div class="welcome-actions">
+        <button type="button" class="primary dark" id="welcome-continue">Continuar ↗</button>
+        <button type="button" class="welcome-skip" id="welcome-skip">Prefiro não responder</button>
+      </div>
+      <p class="subcopy">A resposta será incluída na avaliação final, caso você decida enviar o questionário. Participação voluntária, sem identificação obrigatória.</p>
+    </div>
+    <div id="welcome-stage2" hidden>
+      <div class="welcome-kicker">PRÓXIMO PASSO · EXPERIMENTE ANTES DE AVALIAR</div>
+      <div class="institution-signature"><img src="belas-artes-preto.png" alt="Belas Artes" width="140" height="61"><span>Projeto acadêmico de Publicidade e Propaganda · PIME 2026.2</span></div>
+      <h2 id="welcome-explain-title">A sua próxima boa pode começar com uma conversa.</h2>
+      <p>O <strong>Qual a Boa?</strong> é uma ideia de guia cultural que ajuda a encontrar experiências alinhadas aos seus interesses, tempo e orçamento.</p>
+      <p class="welcome-explain"><strong>Atenção:</strong> esta versão é uma <strong>simulação com respostas pré-programadas e experiências fictícias</strong>. Não há IA real nem informações sobre eventos disponíveis. Uma versão futura pretende usar IA e dados atualizados. Seu teste ajudará a avaliar se essa solução poderia facilitar a escolha.</p>
+      <div class="welcome-actions"><button type="button" class="primary dark" id="welcome-start">Experimentar o guia ↗</button></div>
+      <p class="subcopy" style="margin-top:14px">Participação voluntária e sem identificação obrigatória. Evite incluir dados pessoais nas respostas. As avaliações serão consultadas pela equipe para fins acadêmicos.</p>
+    </div>
+  </div>
+</div>
+
+<main>
+<section class="shell hero">
+  <div class="hero-copy">
+    <div class="mobile-intro-brand"><img src="icone-preto.png" alt="Ícone Qual a Boa?" width="42" height="42"><span>QUAL A<br>BOA<span class="orange-question">?</span></span><small>Guia cultural experimental</small></div>
+    <div class="eyebrow">SÃO PAULO TEM MUITA COISA. E VOCÊ?</div>
+    <h1>A cidade tem mil opções.<br><em>Qual a sua boa?</em></h1>
+    <p class="lead">Teste uma conversa cultural simulada, receba sugestões e conte se essa ideia ajudaria você a escolher melhor. Sua opinião é a parte mais importante deste teste.</p>
+    <div class="hero-actions">
+      <a class="primary dark" href="#conversar">1. Experimentar o guia <span aria-hidden="true">↗</span></a>
+      <button type="button" class="primary hero-evaluate" data-open-feedback>2. Responder pesquisa ↗</button>
+    </div>
+    <p class="hero-survey-hint">Pesquisa acadêmica em duas etapas: uma pergunta inicial e sete perguntas depois do teste. Participação voluntária.</p>
+    <p class="hero-footnote">Demonstração guiada com respostas programadas e eventos fictícios. A versão com IA real ainda será desenvolvida.</p>
+
+  </div>
+  <div id="conversar" class="chat-panel" role="region" aria-label="Conversa com o guia cultural">
+    <div class="chat-head">
+      <div class="agent"><img src="icone-preto.png" alt=""><div><div class="agent-title">Converse com o Qual a Boa?</div><div class="agent-status"><span class="dot"></span> Demonstração · sem IA real</div></div></div>
+      <button class="reset" id="restart" type="button" title="Começar outra conversa">↻ Reiniciar</button>
+    </div>
+    <div id="chat-feed" class="chat-feed" role="log" aria-live="polite" aria-relevant="additions text"></div>
+    <div id="quick" class="quick" aria-label="Respostas rápidas"></div>
+    <form id="chat-form" class="chat-compose" autocomplete="off">
+      <label for="chat-input" style="position:absolute;width:1px;height:1px;overflow:hidden">Escreva sua mensagem</label>
+      <input id="chat-input" placeholder="Escreva o que você procura..." aria-label="Mensagem para o guia" maxlength="280" required>
+      <button type="submit" aria-label="Enviar mensagem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#171311" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4Z"/></svg>
+      </button>
+    </form>
+    <div class="chat-under"><span id="chat-mode"><b>SIMULAÇÃO:</b> respostas por regras, sem IA real nesta versão.</span><span>QUAL A BOA? ✳</span></div>
+  </div>
+    <div class="poster" aria-label="Fotografia ilustrativa de um público em show">
+      <img src="https://images.unsplash.com/photo-1587608767810-5e604e6f00f9?auto=format&fit=crop&w=960&q=82" alt="Público em um show com luzes quentes" loading="lazy" onerror="this.onerror=null;this.src='foto-show.jpg'">
+      <div class="poster-sticker">CULTURA<br>EM MOVIMENTO</div>
+      <div class="poster-caption">A próxima história<br>começa na rua.</div>
+      <div class="scribble" aria-hidden="true"></div>
+    </div>
+</section>
+
+<section class="shell context-strip" id="sobre-projeto" aria-label="Sobre o projeto acadêmico">
+  <div class="context-bit">
+    <div class="context-label">O DESAFIO QUE INVESTIGAMOS</div>
+    <h2>Muitas opções. Como decidir?</h2>
+    <p>Em uma cidade com tanta oferta cultural, informações sobre programação, custos, deslocamento e adequação aos interesses podem aparecer em lugares diferentes. Queremos descobrir se isso dificulta a passagem da descoberta para a participação.</p>
+  </div>
+  <div class="context-bit">
+    <div class="context-label">A SOLUÇÃO QUE QUEREMOS VALIDAR</div>
+    <h2>Uma conversa que dá contexto.</h2>
+    <p>A proposta é reunir preferências e condições pessoais em um diálogo e explicar por que determinadas experiências combinariam com a pessoa. <strong>Neste teste, a conversa é simulada; futuramente, pretendemos usar IA real e informações atualizadas.</strong></p>
+  </div>
+</section>
+
+<section class="section section-line shell" id="explorar">
+  <div class="section-heading">
+    <div><div class="eyebrow">PRA VOCÊ AGORA</div><h2>Boas para <span class="accent">descobrir.</span></h2></div>
+    <p>Algumas possibilidades do nosso catálogo de teste. Depois da conversa, a seleção se adapta ao que você contou.</p>
+  </div>
+  <div class="filters" role="group" aria-label="Filtrar experiências">
+    <button type="button" class="filter active" data-filter="todos">Todos</button>
+    <button type="button" class="filter" data-filter="musica">♫ Música</button>
+    <button type="button" class="filter" data-filter="arte">◈ Arte</button>
+    <button type="button" class="filter" data-filter="gastronomia">◉ Gastronomia</button>
+    <button type="button" class="filter" data-filter="cinema">▣ Cinema</button>
+    <button type="button" class="filter" data-filter="gratuito">Gratuitos</button>
+  </div>
+  <div class="cards" id="event-cards" aria-live="polite"></div>
+  <p class="note" id="event-note">* Eventos, datas e valores inventados exclusivamente para simulação de uso. Imagens meramente ilustrativas.</p>
+</section>
+
+<section class="shell test-section test-section-priority" id="avaliar" aria-label="Pesquisa de avaliação do protótipo">
+  <div class="test-callout">
+    <div class="eyebrow">PESQUISA ACADÊMICA · ETAPA 2 DE 2</div>
+    <h2>Testou o guia? <span style="color:var(--blue)">Conta pra gente.</span></h2>
+    <p>A pesquisa é o foco deste protótipo. Depois de conversar e receber sugestões, avalie se a proposta pode ajudar você a escolher experiências culturais com mais confiança.</p>
+    <button type="button" class="primary dark" data-open-feedback>Responder às 7 perguntas ↗</button>
+    <p class="subcopy">Respostas voluntárias, sem identificação obrigatória. Pode responder mesmo que não tenha conseguido completar o teste.</p>
+  </div>
+  <div class="test-callout-side" aria-hidden="true"><span>TESTE.</span><span>ESCOLHA.</span><span>AVALIE.</span></div>
+</section>
+
+<div class="break" id="como-funciona">
+  <div class="shell break-inner">
+    <h2>Você pergunta. A cidade <em>responde.</em></h2>
+    <p>Não é sobre mostrar tudo. É sobre encontrar o que faz sentido para você, naquele momento.</p>
+  </div>
+</div>
+
+
+</main>
+<footer id="contato" aria-label="Créditos e contato do projeto">
+  <div class="shell footer-in">
+    <div class="footer-brand-area">
+      <span class="footer-logo">QUAL A BOA<span>?</span></span>
+      <p>Um projeto acadêmico sobre tornar mais fácil a escolha de experiências culturais em São Paulo. Demonstração com conversa simulada, criada para validar a proposta antes de desenvolver a versão com IA real.</p>
+      <div class="footer-student-label">EQUIPE · PUBLICIDADE E PROPAGANDA</div>
+      <p class="footer-names">Luana Soluri · Maria Eduarda Leopardo · Clarissa Haddad · Penelope Challa</p>
+    </div>
+    <div class="footer-institution-area">
+      <div class="footer-student-label">PROJETO ACADÊMICO · PIME 2026.2</div>
+      <img class="belas-logo" src="belas-artes-branco.png" alt="Belas Artes" width="218" height="102" loading="lazy">
+      <div class="footer-student-label">CONTATO DA EQUIPE</div>
+      <a href="mailto:Madyee.co@gmail.com">Madyee.co@gmail.com</a>
+      <a href="tel:+5511978284573">(11) 97828-4573</a>
+      <a class="footer-evaluate" href="#avaliar">Avaliar o protótipo ↗</a>
+    </div>
+  </div>
+  <div class="shell footer-meta">Projeto de estudantes da Belas Artes. A instituição é identificada para fins acadêmicos; esta demonstração não representa um serviço oficial da faculdade. Eventos e preços são fictícios.</div>
+</footer>
+
+<nav class="mobile-bar" aria-label="Navegação do celular">
+  <button type="button" class="active" data-mobile="inicio" aria-label="Início"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m3 10 9-7 9 7v10h-7v-6h-4v6H3z"/></svg>Início</button>
+  <button type="button" data-mobile="explorar" aria-label="Explorar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>Explorar</button>
+  <button type="button" data-mobile="conversar" aria-label="Conversar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11a8 8 0 0 1-8 8H5l-3 3v-9a9 9 0 1 1 19-2Z"/></svg>Conversar</button>
+  <button type="button" data-mobile="avaliar" aria-label="Avaliar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>Avaliar</button>
+  <button type="button" data-mobile="perfil" aria-label="Perfil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 3-7 8-7s8 2 8 7"/></svg>Perfil</button>
+</nav>
+
+<div id="feedback-overlay" class="feedback-overlay" role="dialog" aria-modal="true" aria-labelledby="feedback-title" hidden>
+  <div class="feedback-dialog">
+    <button type="button" class="feedback-close" id="feedback-close" aria-label="Fechar avaliação">×</button>
+    <div class="feedback-progress" id="feedback-title">ETAPA 2 DE 2 · AVALIAÇÃO DO PROTÓTIPO</div>
+  <div class="feedback-card" id="feedback-card">
+    <h3>Sua experiência conta.</h3>
+    <p>Após experimentar a demonstração, responda às sete perguntas. Respostas negativas também ajudam! Cada visita começa do zero.</p>
+    <form name="avaliacao-pime" id="feedback-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" autocomplete="off">
+      <input type="hidden" name="form-name" value="avaliacao-pime">
+      <p style="display:none"><label>Não preencher: <input name="bot-field"></label></p>
+      <input type="hidden" name="barreira_inicial" id="f-barrier" value="Não respondido">
+      <input type="hidden" name="opcao_escolhida" id="f-selected" value="">
+      <input type="hidden" name="categoria" id="f-category" value="">
+      <input type="hidden" name="orcamento" id="f-budget" value="">
+      <input type="hidden" name="disponibilidade" id="f-day" value="">
+      <input type="hidden" name="modo" id="f-mode" value="Simulação sem IA real">
+      <label class="field">1. Até onde você conseguiu testar a demonstração?
+        <select name="nivel_teste" required>
+          <option value="">Selecione</option><option>Conversei e vi recomendações</option><option>Conversei, mas não vi recomendações</option><option>Apenas explorei a página</option><option>Não consegui testar</option>
+        </select>
+      </label>
+      <fieldset style="border:0;padding:0;margin:0 0 17px">
+        <legend style="font-weight:900;font-size:12px">2. Com IA real e eventos atualizados, quão útil essa proposta poderia ser para escolher uma experiência cultural?</legend>
+        <div class="rating-note">1 = nada útil · 5 = muito útil</div>
+        <div class="rating" role="radiogroup" aria-label="Utilidade potencial">
+          <label><input type="radio" name="utilidade_potencial" value="1" required><span>1</span></label>
+          <label><input type="radio" name="utilidade_potencial" value="2"><span>2</span></label>
+          <label><input type="radio" name="utilidade_potencial" value="3"><span>3</span></label>
+          <label><input type="radio" name="utilidade_potencial" value="4"><span>4</span></label>
+          <label><input type="radio" name="utilidade_potencial" value="5"><span>5</span></label>
+        </div>
+      </fieldset>
+      <label class="field">3. Pensando na sua realidade, a proposta parece ajudar a resolver uma dificuldade que você enfrenta ao escolher experiências culturais?
+        <select name="ajuda_na_dor" required><option value="">Selecione</option><option>Sim</option><option>Em parte</option><option>Não</option><option>Não tenho essa dificuldade</option><option>Não sei avaliar</option></select>
+      </label>
+      <label class="field">4. Qual informação seria mais importante para você confiar numa recomendação?
+        <select name="criterio_confianca" required>
+          <option value="">Selecione a principal</option><option>Programação, datas e disponibilidade confiáveis</option><option>Preço total e opções gratuitas</option><option>Horário, duração e como chegar</option><option>Por que a experiência combina comigo</option><option>Avaliações e relatos de quem já foi</option><option>Comparação entre alternativas</option><option>Outro fator</option>
+        </select>
+      </label>
+      <label class="field">5. Você usaria um guia assim, com IA real e dados atualizados, quando fosse escolher um programa cultural?
+        <select name="intencao_uso_futuro" required><option value="">Selecione</option><option>Sim</option><option>Talvez</option><option>Não</option><option>Ainda não sei</option></select>
+      </label>
+      <label class="field">6. O que precisaria existir ou melhorar para que esse guia realmente ajudasse você a decidir?
+        <textarea name="melhoria_necessaria" rows="4" required placeholder="Pode falar de confiança, informações, funcionamento, recursos ou do que não gostou."></textarea>
+      </label>
+      <label class="field">7. Quer deixar mais algum comentário, crítica ou sugestão? (opcional)
+        <textarea name="observacoes" placeholder="Espaço livre para qualquer opinião." rows="3"></textarea>
+      </label>
+      <button type="submit" class="primary" style="width:100%">Enviar avaliação <span>↗</span></button>
+      <div class="form-message" id="form-message" role="status" aria-live="polite"></div>
+      <div class="subcopy">As respostas são enviadas à equipe pelo Netlify Forms quando a conexão estiver disponível. Se falhar, você receberá um aviso.</div>
+    </form>
+  </div>
+  </div>
+</div>
+<div id="review-nudge" class="review-nudge" hidden aria-live="polite">
+  <div><strong>Já recebeu sugestões? ✳</strong><span>Agora sua opinião ajuda a validar a ideia.</span></div>
+  <button type="button" id="nudge-open">Avaliar ↗</button>
+  <button type="button" id="nudge-dismiss" aria-label="Continuar explorando">×</button>
+</div>
+
+<div class="overlay" id="modal-overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button type="button" class="modal-close" id="modal-close" aria-label="Fechar">×</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+<div class="toast" role="status" id="toast"></div>
+
+<script>
+"use strict";
+const IMAGES={
+ musica:"https://images.unsplash.com/photo-1587608767810-5e604e6f00f9?auto=format&fit=crop&w=850&q=80",
+ arte:"https://images.unsplash.com/photo-1744063427137-8de9a1a0b211?auto=format&fit=crop&w=850&q=80",
+ gastronomia:"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=850&q=80",
+ cinema:"https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=850&q=80",
+ teatro:"https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=850&q=80",
+ criativo:"https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=850&q=80"
+};
+const EVENTS=[
+ {id:"e1",name:"Som na Cidade",category:"musica",price:0,region:"Centro",day:"sábado",time:"19h",duration:"2h",theme:"Shows independentes e descoberta musical em um espaço aberto",photo:IMAGES.musica},
+ {id:"e2",name:"Arte sem Pressa",category:"arte",price:30,region:"Paulista",day:"sábado",time:"14h",duration:"1h30",theme:"Passeio por uma mostra contemporânea com tempo para explorar",photo:IMAGES.arte},
+ {id:"e3",name:"Feira de Sabores",category:"gastronomia",price:45,region:"Pinheiros",day:"domingo",time:"12h",duration:"2h",theme:"Comidas de pequenos produtores e clima de feira urbana",photo:IMAGES.gastronomia},
+ {id:"e4",name:"Cinema de Rua",category:"cinema",price:0,region:"Centro",day:"sexta",time:"19h",duration:"2h",theme:"Sessão coletiva de cinema brasileiro e conversa depois do filme",photo:IMAGES.cinema},
+ {id:"e5",name:"Jazz de Domingo",category:"musica",price:55,region:"Vila Mariana",day:"domingo",time:"16h",duration:"2h",theme:"Música ao vivo em ambiente intimista",photo:IMAGES.musica},
+ {id:"e6",name:"Ateliê Aberto",category:"arte",price:0,region:"Pinheiros",day:"domingo",time:"11h",duration:"1h",theme:"Visita a espaços criativos e conversas sobre processos artísticos",photo:IMAGES.arte},
+ {id:"e7",name:"Cena no Bairro",category:"teatro",price:60,region:"Paulista",day:"sábado",time:"20h",duration:"1h40",theme:"Peça contemporânea em palco de pequeno porte",photo:IMAGES.teatro},
+ {id:"e8",name:"Sabores do Centro",category:"gastronomia",price:25,region:"Centro",day:"sábado",time:"12h",duration:"2h",theme:"Roteiro de comidinhas e descobertas pelo centro",photo:IMAGES.gastronomia},
+ {id:"e9",name:"Música no Quintal",category:"musica",price:35,region:"Pinheiros",day:"sexta",time:"20h",duration:"2h",theme:"Artistas locais em uma noite informal",photo:IMAGES.musica},
+ {id:"e10",name:"Curta na Praça",category:"cinema",price:0,region:"Vila Mariana",day:"domingo",time:"18h",duration:"1h30",theme:"Sessão comentada de curtas em um ambiente coletivo",photo:IMAGES.cinema}
+];
+const FALLBACK={musica:"foto-show.jpg",arte:"foto-arte.jpg",gastronomia:"foto-gastro.jpg",cinema:"foto-show.jpg",teatro:"foto-show.jpg"};
+const LABELS={musica:"Música",arte:"Arte",gastronomia:"Gastronomia",cinema:"Cinema",teatro:"Teatro"};
+// Anonymous test: each page load starts a new, isolated experience.
+// Intentionally do not read or write user choices to localStorage/sessionStorage.
+let profile={interest:"",budget:"",region:"",day:""};
+let saved=[];
+let state={category:profile.interest||"",budget:profile.budget===""?null:Number(profile.budget),day:profile.day||"",region:profile.region||"",chosen:"",resultOffset:0,recommended:[],started:false};
+const el=id=>document.getElementById(id);
+let feedbackInviteShown=false,feedbackSent=false,feedbackReturnFocus=null;
+async function sendToNetlify(data){
+ const result=await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(data).toString()});
+ return result.ok;
+}
+function openFeedback(){
+ if(!el("feedback-overlay").hidden)return;
+ feedbackReturnFocus=document.activeElement;
+ el("review-nudge").hidden=true;
+ el("feedback-overlay").hidden=false;
+ document.body.style.overflow="hidden";
+ el("feedback-close").focus({preventScroll:true});
+}
+function closeFeedback(){
+ if(el("feedback-overlay").hidden)return;
+ el("feedback-overlay").hidden=true;
+ document.body.style.overflow="";
+ if(feedbackReturnFocus&&feedbackReturnFocus.isConnected)feedbackReturnFocus.focus({preventScroll:true});
+}
+function maybeInviteAfterRecommendation(){
+ if(feedbackInviteShown||feedbackSent)return;
+ feedbackInviteShown=true;
+ setTimeout(()=>{if(el("feedback-overlay").hidden&&el("welcome-gate").hidden&&!feedbackSent)el("review-nudge").hidden=false},1400);
+}
+
+const formatPrice=n=>n===0?"Grátis":"R$ "+n;
+// Clear only legacy state left by older versions of this prototype.
+function clearLegacyState(){
+ try{["qab-profile","qab-saved","qab-answers"].forEach(key=>localStorage.removeItem(key))}catch{}
+ try{sessionStorage.removeItem("qab-barreira-inicial")}catch{}
+}
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const normal=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+function toast(msg){let t=el("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("show"),2700)}
+function addBubble(text,who="guide"){
+  const row=document.createElement("div");row.className="bubble-row"+(who==="you"?" you":"");
+  if(who!=="you"){const avatar=document.createElement("span");avatar.className="mini-icon";const img=document.createElement("img");img.src="icone-preto.png";img.alt="";avatar.append(img);row.append(avatar)}
+  const bubble=document.createElement("div");bubble.className="bubble";bubble.textContent=text;row.append(bubble);el("chat-feed").append(row);el("chat-feed").scrollTop=el("chat-feed").scrollHeight;
+}
+const liveAI={active:false,busy:false,history:[],turns:0};
+let liveReasons={};
+function setAIStatus(active){
+ liveAI.active=active;
+ const s=document.querySelector('.agent-status');
+ s.innerHTML=active?'<span class="dot"></span> IA conversacional conectada · catálogo de teste':'<span class="dot" style="background:#F39634"></span> Modo de simulação · catálogo de teste';
+ el('chat-mode').innerHTML=active?'<b>IA ATIVA:</b> conversa gerada pela IA com base em eventos fictícios. Evite dados pessoais.':'<b>MODO DEMO:</b> respostas simuladas por regras; sem conexão com IA externa.';
+}
+async function detectAI(){
+ if(!/^https?:$/.test(location.protocol)){setAIStatus(false);return}
+ try{
+   const ctrl=new AbortController();const timeout=setTimeout(()=>ctrl.abort(),4000);
+   const res=await fetch('/.netlify/functions/guia',{signal:ctrl.signal});clearTimeout(timeout);
+   const j=await res.json();setAIStatus(res.ok&&j.enabled===true);
+ }catch{setAIStatus(false)}
+}
+async function sendAI(value){
+ if(liveAI.busy)return;
+ const msg=String(value||'').trim().slice(0,280);if(!msg)return;
+ if(liveAI.turns>=12){addBubble('Já conversamos bastante neste teste! Para uma nova busca, toque em Reiniciar. Se quiser, você também pode avaliar a experiência no formulário abaixo.');chips(['Reiniciar conversa']);el('quick').firstChild.onclick=()=>{initConversation();toast('Conversa reiniciada')};return}
+ liveAI.busy=true;el('chat-input').disabled=true;el('chat-form').querySelector('button').disabled=true;
+ addBubble(msg,'you');el('chat-input').value='';el('quick').replaceChildren();
+ const before=liveAI.history.slice(-10);
+ liveAI.history.push({role:'user',content:msg});liveAI.turns++;
+ addBubble('Pensando em boas opções pra você…');
+ const feed=el('chat-feed');const pending=feed.lastElementChild;
+ try{
+   const r=await fetch('/.netlify/functions/guia',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[...before,{role:'user',content:msg}],profile})});
+   const d=await r.json().catch(()=>({}));
+   if(!r.ok||typeof d.reply!=='string')throw new Error(d.error||'Falha na conexão.');
+   if(pending&&pending.isConnected)pending.remove();
+   liveAI.history.push({role:'assistant',content:d.reply});addBubble(d.reply);
+   const recommended=Array.isArray(d.recommendations)?d.recommendations:[];
+   const ids=[...new Set(recommended.map(x=>x.id))].filter(id=>EVENTS.some(e=>e.id===id)).slice(0,3);
+   if(ids.length){
+    liveReasons=Object.fromEntries(recommended.filter(x=>ids.includes(x.id)).map(x=>[x.id,String(x.why||'').slice(0,250)]));
+    state.recommended=ids;
+    getSignals(msg);
+    const selection=ids.map(id=>EVENTS.find(e=>e.id===id));
+    renderCards(selection,true);
+    el('event-note').textContent='* Recomendações geradas pela IA a partir de eventos fictícios do catálogo de teste, sem disponibilidade real.';
+    chips(['Ver recomendações ↓','Quero outras opções','Quero refinar a busca']);
+    const quick=el('quick').querySelectorAll('button');quick[0].onclick=()=>el('explorar').scrollIntoView({behavior:'smooth'});
+   }else{chips(['Quero encontrar um rolê','Me surpreenda!','Como você pode me ajudar?'])}
+  }catch(e){
+   if(pending&&pending.isConnected)pending.remove();
+   setAIStatus(false);liveAI.history=[];
+   addBubble('A conexão com a IA está indisponível agora. Vou continuar em modo de demonstração para você conseguir testar a ideia.');
+   respond(msg,{alreadyShown:true});
+  }finally{liveAI.busy=false;el('chat-input').disabled=false;el('chat-form').querySelector('button').disabled=false}
+}
+function handleMessage(value){if(liveAI.active)return sendAI(value);respond(value)}
+function chips(labels){el("quick").innerHTML="";labels.forEach(s=>{const btn=document.createElement("button");btn.type="button";btn.textContent=s;btn.addEventListener("click",()=>handleMessage(s));el("quick").append(btn)})}
+function initConversation(){
+ state={category:"",budget:null,day:"",region:"",chosen:"",resultOffset:0,recommended:[],started:false};
+ profile={interest:"",budget:"",region:"",day:""};
+ saved=[];el("save-count").textContent="(0)";el("f-selected").value="";
+ el("chat-feed").innerHTML="";liveAI.history=[];liveAI.turns=0;liveReasons={};
+ addBubble("Oi! Tudo bem? 👋\nEu sou o guia do Qual a Boa? Te ajudo a encontrar experiências em São Paulo que combinem com seus interesses, seu tempo e seu orçamento.\n\nPor onde você quer começar?");
+ chips(["Quero encontrar um rolê","Me surpreenda!","Como você pode me ajudar?"]);
+}
+function getSignals(text){
+ const s=normal(text);
+ if(/m[uú]sica|show|concerto|jazz|samba|pagode|rock|banda|cantor|musical|festa/.test(s))state.category="musica";
+ else if(/arte|museu|exposic|galeria|pintura|fotograf|ateli/.test(s))state.category="arte";
+ else if(/gastronom|comida|comer|restaurante|feira|cafe|brunch|sabor/.test(s))state.category="gastronomia";
+ else if(/cinema|filme|curta/.test(s))state.category="cinema";
+ else if(/teatro|peca|espetaculo/.test(s))state.category="teatro";
+ const explicit=s.match(/(?:r\$\s*|ate\s*r?\$?\s*)(\d{1,4})/);
+ if(explicit) state.budget=Number(explicit[1]);
+ else if(/\bgratis\b|\bgratuito\b|\bsem gastar\b/.test(s))state.budget=0;
+ else if(/sem limite|qualquer preco|sem preferencia|nao importa o preco/.test(s))state.budget=999;
+ if(/sabado/.test(s))state.day="sábado";
+ else if(/domingo/.test(s))state.day="domingo";
+ else if(/sexta/.test(s))state.day="sexta";
+ else if(/fim de semana|final de semana|qualquer dia|essa semana|esta semana/.test(s))state.day="qualquer";
+ const regions=["vila mariana","pinheiros","paulista","centro"];
+ regions.forEach(r=>{if(s.includes(r))state.region=r==="vila mariana"?"Vila Mariana":r.charAt(0).toUpperCase()+r.slice(1)});
+ if(/qualquer bairro|qualquer regiao|tanto faz a regiao/.test(s))state.region="";
+}
+function nextStep(){
+ if(!state.category){addBubble("Boa! O que te anima mais: música, arte, gastronomia, cinema ou teatro?");chips(["Música","Arte","Gastronomia","Cinema","Teatro"]);return}
+ if(state.budget===null){addBubble("E quanto você pretende gastar na experiência?");chips(["Grátis","Até R$ 40","Até R$ 80","Sem preferência de preço"]);return}
+ if(!state.day){addBubble("Pra quando você procura?");chips(["Sábado","Domingo","Sexta","Fim de semana"]);return}
+ showRecommendations();
+}
+function respond(value,{alreadyShown=false}={}){
+ const s=normal(value.trim()); if(!s)return;
+ if(!alreadyShown)addBubble(value,"you");el("chat-input").value="";state.started=true;
+ if(/como voce pode me ajudar|como funciona/.test(s)){addBubble("Você me conta o que procura e eu combino gosto, dia e orçamento para sugerir opções do catálogo de teste. Explico por que cada uma combina com seu momento. É uma simulação conversacional — ainda não consulta eventos reais.");chips(["Quero encontrar um rolê","Me surpreenda!"]);return}
+ if(/me surpreenda|surpreenda/.test(s)){addBubble("Adoro um rolê fora do óbvio! Separei possibilidades variadas para você explorar. Se quiser, depois ajustamos por gosto, região e orçamento.");state.budget=999;state.day="qualquer";state.category="";showRecommendations();return}
+ if(/encontrar um role|quero achar|buscar um role|quero encontrar um role/.test(s)){addBubble("Fechado! Me conta: que tipo de experiência você está a fim de viver? Pode escrever tudo em uma frase, tipo: 'arte no sábado até R$ 80' 👀");chips(["Música","Arte","Gastronomia","Cinema","Teatro"]);return}
+ if(/mais opcoes|outras opcoes|outra sugestao|quero outras/.test(s)){state.resultOffset+=3;showRecommendations();return}
+ if(/meu perfil|ajustar perfil/.test(s)){openProfile();return}
+ getSignals(value);
+ nextStep();
+}
+function deriveWhy(item){
+ const details=[];
+ if(state.category&&state.category===item.category)details.push("combina com seu interesse por "+LABELS[item.category].toLowerCase());
+ if(state.budget!==null&&state.budget<999)details.push(item.price===0?"é gratuita":"cabe no limite de "+formatPrice(state.budget));
+ if(state.day&&state.day!=="qualquer"&&state.day===item.day)details.push("acontece no dia que você procura");
+ if(state.region&&normal(state.region)===normal(item.region))details.push("fica na região que você indicou");
+ if(details.length===0)details.push("é uma possibilidade cultural para explorar");
+ return "Porque "+details.join(", ")+"."; 
+}
+function rankedEvents(){
+ const sorted=EVENTS.filter(e=>(state.budget===null||state.budget===999||e.price<=state.budget))
+  .map(e=>({e,score:(state.category===e.category?6:0)+(state.day==="qualquer"||!state.day?0:state.day===e.day?3:-1)+(state.region&&normal(state.region)===normal(e.region)?2:0)+(e.price===0?0.15:0)}))
+  .sort((a,b)=>b.score-a.score||a.e.price-b.e.price).map(x=>x.e);
+ return sorted;
+}
+function showRecommendations(){
+ let list=rankedEvents();
+ if(list.length===0){addBubble("Nesse catálogo reduzido não encontrei algo dentro do limite. Você pode ampliar o orçamento ou experimentar outra categoria.");chips(["Até R$ 80","Sem preferência de preço"]);return}
+ if(state.resultOffset>=list.length)state.resultOffset=0;
+ const selected=list.slice(state.resultOffset,state.resultOffset+3);
+ state.recommended=selected.map(x=>x.id);
+ el("event-note").textContent="* Estas recomendações são simuladas com dados de demonstração; datas e preços não correspondem a eventos reais.";
+ addBubble("Encontrei "+selected.length+" "+(selected.length===1?"possibilidade":"possibilidades")+" pra você! ✨\nDeixei a seleção logo abaixo da conversa e expliquei por que cada uma pode fazer sentido. Quer ajustar? Pode continuar conversando.");
+ renderCards(selected,true);
+ chips(["Ver as recomendações ↓","Quero outras opções","Ajustar meu perfil"]);
+ el("quick").querySelectorAll("button").forEach(b=>{if(b.textContent.startsWith("Ver as"))b.onclick=()=>el("explorar").scrollIntoView({behavior:"smooth"});else if(b.textContent.startsWith("Ajustar"))b.onclick=openProfile});
+ maybeInviteAfterRecommendation();
+ // Avoid forced scroll: user chooses when to see results.
+}
+function renderCards(items,personal=false){
+ const container=el("event-cards");container.replaceChildren();
+ if(!items.length){const p=document.createElement("div");p.className="empty";p.textContent="Nenhuma opção neste filtro. Experimente outra categoria.";container.append(p);return}
+ items.forEach(item=>{
+  const article=document.createElement("article");article.className="event";
+  article.innerHTML=`<div class="event-image"><img src="${item.photo}" alt="Imagem ilustrativa de ${escapeHTML(LABELS[item.category])}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK[item.category]}'"><span class="tag">EXEMPLO · ${escapeHTML(LABELS[item.category])}</span><button type="button" class="save" aria-label="${saved.includes(item.id)?"Remover dos":"Adicionar aos"} salvos" title="Salvar">${saved.includes(item.id)?"♥":"♡"}</button></div>
+  <div class="event-body"><h3>${escapeHTML(item.name)}</h3><div class="meta">◷ <b>${escapeHTML(item.day)} · ${escapeHTML(item.time)}</b> · ${escapeHTML(item.duration)}<br>⌖ ${escapeHTML(item.region)} · ${formatPrice(item.price)}</div>
+  <div class="why"><b>✦ Por que é sua boa?</b><br>${escapeHTML(personal?(liveAI.active&&liveReasons[item.id]?liveReasons[item.id]:deriveWhy(item)):"Uma experiência para conhecer. Converse com o guia para personalizar a indicação.")}</div>
+  <div class="event-actions"><button class="detail" type="button">Ver detalhes ↗</button><button class="choose" type="button">Eu iria</button></div></div>`;
+  article.querySelector(".save").onclick=()=>toggleSaved(item.id);
+  article.querySelector(".detail").onclick=()=>openDetail(item.id);
+  article.querySelector(".choose").onclick=()=>choose(item.id);
+  container.append(article);
+ });
+}
+function toggleSaved(id){
+ if(saved.includes(id))saved=saved.filter(x=>x!==id);else saved.push(id);
+ el("save-count").textContent="("+saved.length+")";
+ const showing=el("event-cards").dataset.view==="saved"?EVENTS.filter(x=>saved.includes(x.id)):null;
+ if(showing)renderCards(showing,true);else renderCards(EVENTS.filter(x=>state.recommended.includes(x.id)).length?EVENTS.filter(x=>state.recommended.includes(x.id)):EVENTS.slice(0,3),Boolean(state.recommended.length));
+ toast(saved.includes(id)?"Salvo no seu guia!":"Removido dos salvos.");
+}
+function choose(id){const item=EVENTS.find(x=>x.id===id);if(!item)return;state.chosen=item.name;el("f-selected").value=item.name;toast("Escolha anotada para o teste: "+item.name);closeModal();openFeedback();}
+function openModal(html){
+ el("modal-content").innerHTML=html;el("modal-overlay").classList.add("show");el("modal-overlay").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";el("modal-close").focus();
+}
+function closeModal(){el("modal-overlay").classList.remove("show");el("modal-overlay").setAttribute("aria-hidden","true");document.body.style.overflow="";el("modal-content").innerHTML="";}
+function openDetail(id){
+ const e=EVENTS.find(x=>x.id===id);if(!e)return;
+ openModal(`<img class="modal-image" src="${e.photo}" alt="Foto ilustrativa do tema ${escapeHTML(LABELS[e.category])}" onerror="this.onerror=null;this.src='${FALLBACK[e.category]}'"><div class="modal-body"><div class="eyebrow">EXPERIÊNCIA ILUSTRATIVA</div><h3 id="modal-title">${escapeHTML(e.name)}</h3><div class="meta">◷ ${escapeHTML(e.day)} · ${escapeHTML(e.time)} · ${escapeHTML(e.duration)}<br>⌖ ${escapeHTML(e.region)} · ${formatPrice(e.price)}</div><p style="margin-top:15px">${escapeHTML(e.theme)}.</p><div class="whybox"><b>✦ Por que essa sugestão?</b><br>${escapeHTML(deriveWhy(e))}</div><p class="subcopy">Atenção: esta experiência é fictícia, criada apenas para o teste da interface. Não há ingressos ou reservas.</p><div class="modaltwo"><button class="primary dark" type="button" id="modal-choose">Eu escolheria</button><button class="primary" type="button" id="modal-save">${saved.includes(e.id)?"Remover salvo":"Salvar ♥"}</button></div></div>`);
+ el("modal-choose").onclick=()=>choose(e.id);el("modal-save").onclick=()=>{toggleSaved(e.id);closeModal()};
+}
+function openProfile(){
+ openModal(`<div class="modal-body"><div class="eyebrow">O QUE COMBINA COM VOCÊ?</div><h3 id="modal-title">Meu perfil cultural.</h3><p>Você pode ajustar suas preferências. Elas valem apenas enquanto esta página estiver aberta.</p>
+  <div class="profile-note">Sem cadastro. As preferências são temporárias, não ficam salvas para a próxima visita.</div>
+  <form id="profile-form"><div class="profile-grid">
+  <label class="field">Interesse principal<select name="interest"><option value="">Ainda não escolhi</option>${Object.keys(LABELS).map(x=>`<option value="${x}" ${profile.interest===x?"selected":""}>${LABELS[x]}</option>`).join("")}</select></label>
+  <label class="field">Orçamento<select name="budget"><option value="">Sem preferência</option>${[0,30,50,80,100,150].map(x=>`<option value="${x}" ${String(profile.budget)===String(x)?"selected":""}>${x===0?"Somente grátis":"Até R$ "+x}</option>`).join("")}</select></label>
+  <label class="field">Região<select name="region"><option value="">Toda São Paulo</option>${["Centro","Paulista","Pinheiros","Vila Mariana"].map(x=>`<option ${profile.region===x?"selected":""}>${x}</option>`).join("")}</select></label>
+  <label class="field">Dia<select name="day"><option value="">Qualquer dia</option>${["sexta","sábado","domingo"].map(x=>`<option value="${x}" ${profile.day===x?"selected":""}>${x}</option>`).join("")}</select></label>
+  </div><button class="primary" type="submit" style="width:100%">Salvar preferências ↗</button></form></div>`);
+ el("profile-form").onsubmit=evt=>{evt.preventDefault();let d=new FormData(evt.target);profile={interest:d.get("interest"),budget:d.get("budget"),region:d.get("region"),day:d.get("day")};state.category=profile.interest||"";state.budget=profile.budget===""?null:Number(profile.budget);state.region=profile.region||"";state.day=profile.day||"";closeModal();toast("Preferências salvas!");addBubble("Atualizei seu perfil cultural. Quer que eu encontre sugestões usando essas preferências?");chips(["Encontrar opções com meu perfil","Me surpreenda!"]);el("quick").querySelector("button").onclick=()=>{addBubble("Encontrar opções com meu perfil","you");nextStep();el("conversar").scrollIntoView({behavior:"smooth"})}
+ };
+}
+function openSaved(){
+ const list=EVENTS.filter(e=>saved.includes(e.id));
+ if(!list.length){toast("Você ainda não salvou nenhuma experiência.");el("explorar").scrollIntoView({behavior:"smooth"});return}
+ renderCards(list,true);el("event-cards").dataset.view="saved";
+ document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.dataset.filter==="todos"));
+ el("explorar").scrollIntoView({behavior:"smooth"});toast("Exibindo seus salvos");
+}
+function showFilter(key){
+ el("event-cards").dataset.view="catalog";let list=key==="todos"?EVENTS.slice(0,6):key==="gratuito"?EVENTS.filter(e=>e.price===0):EVENTS.filter(e=>e.category===key);
+ renderCards(list,false);
+}
+
+function initWelcome(){
+ const gate=el("welcome-gate"),select=el("baseline-select"),stage1=el("welcome-stage1"),stage2=el("welcome-stage2");
+ document.body.style.overflow="hidden";
+ select.focus({preventScroll:true});
+ const advance=value=>{el("f-barrier").value=value||"Não respondido";stage1.hidden=true;stage2.hidden=false;el("welcome-start").focus({preventScroll:true})};
+ el("welcome-continue").onclick=()=>{
+  if(!select.value){select.focus();select.setCustomValidity("Selecione uma opção ou pule a pergunta.");select.reportValidity();return}
+  select.setCustomValidity("");advance(select.value);
+ };
+ select.onchange=()=>select.setCustomValidity("");
+ el("welcome-skip").onclick=()=>advance("Não respondido");
+ el("welcome-start").onclick=()=>{gate.hidden=true;document.body.style.overflow="";if(window.matchMedia("(min-width: 761px)").matches)el("chat-input").focus({preventScroll:true})};
+}
+
+function setupFeedback(){
+ el("feedback-form").addEventListener("submit",async event=>{
+  event.preventDefault();const form=event.currentTarget;if(!form.reportValidity())return;
+  el("f-category").value=state.category?LABELS[state.category]:"não definido";
+  el("f-budget").value=state.budget===null?"não definido":state.budget===999?"sem limite":String(state.budget);
+  el("f-day").value=state.day||"não definido";
+  el("f-mode").value="Simulação guiada sem IA real";
+  const btn=form.querySelector("button[type='submit']");btn.disabled=true;btn.textContent="Enviando avaliação…";
+  el("form-message").textContent="Aguarde a confirmação do envio.";
+  el("form-message").classList.remove("sent-ok");
+  try{
+   const ok=await sendToNetlify(new FormData(form));
+   if(!ok)throw new Error("O servidor não confirmou o envio");
+   feedbackSent=true;el("review-nudge").hidden=true;
+   el("form-message").textContent="Obrigada por participar! Sua avaliação foi enviada para a equipe e poderá ser consultada na Netlify.";
+   el("form-message").classList.add("sent-ok");
+   form.hidden=true;toast("Avaliação enviada! Obrigada.");
+  }catch(err){
+   el("form-message").textContent="Não conseguimos confirmar o envio. Verifique a conexão e tente novamente; suas respostas ainda estão nesta tela.";
+   btn.disabled=false;btn.textContent="Tentar enviar avaliação ↗";
+   toast("Falha no envio. Tente novamente.");
+  }
+ });
+}
+
+function init(){
+ el("restart").onclick=()=>{initConversation();el("event-cards").dataset.view="catalog";showFilter("todos");toast("Conversa reiniciada")};
+ el("chat-form").onsubmit=e=>{e.preventDefault();handleMessage(el("chat-input").value)};
+ el("nav-profile").onclick=openProfile;el("nav-saved").onclick=openSaved;el("save-count").textContent="("+saved.length+")";
+ document.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{document.querySelectorAll(".filter").forEach(c=>c.classList.remove("active"));b.classList.add("active");showFilter(b.dataset.filter)});
+ document.querySelectorAll("[data-mobile]").forEach(btn=>btn.onclick=()=>{document.querySelectorAll("[data-mobile]").forEach(b=>b.classList.toggle("active",b===btn));let target=btn.dataset.mobile;if(target==="perfil")openProfile();else if(target==="avaliar")openFeedback();else if(target==="inicio")window.scrollTo({top:0,behavior:"smooth"});else el(target).scrollIntoView({behavior:"smooth"})});
+ document.querySelectorAll('[data-open-feedback],a[href="#avaliar"]').forEach(button=>button.addEventListener("click",event=>{event.preventDefault();openFeedback()}));
+ el("feedback-close").onclick=closeFeedback;
+ el("feedback-overlay").onclick=event=>{if(event.target===el("feedback-overlay"))closeFeedback()};
+ el("nudge-open").onclick=openFeedback;el("nudge-dismiss").onclick=()=>el("review-nudge").hidden=true;
+ el("modal-close").onclick=closeModal;el("modal-overlay").onclick=e=>{if(e.target===el("modal-overlay"))closeModal()};document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeFeedback();closeModal()}});
+ // Exportação local disponível apenas no código; não é exibida aos participantes.
+  clearLegacyState();
+  el("feedback-form").reset();el("chat-form").reset();el("baseline-select").selectedIndex=0;
+  el("event-cards").dataset.view="catalog";showFilter("todos");initConversation();setupFeedback();setAIStatus(false);initWelcome();
+}
+document.addEventListener("DOMContentLoaded",init);
+window.addEventListener("pageshow",event=>{if(event.persisted)location.reload()});
+</script>
+</body>
+</html>
