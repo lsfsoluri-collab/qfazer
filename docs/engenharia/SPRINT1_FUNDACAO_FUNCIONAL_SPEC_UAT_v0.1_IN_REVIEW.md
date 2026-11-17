@@ -1,6 +1,6 @@
 # Qfazer — Sprint 1 | Fundação funcional — SPEC + UAT
 **Versão:** 0.1 · **Data:** 17/11/2026 · **Fase:** G6 futura · **Status:** IN_REVIEW / NÃO INICIADA
-**PO:** Luana · **Executor técnico previsto:** agente de IA de desenvolvimento · **Revisor independente:** OPEN_QUESTION
+**PO e revisora de negócio:** Luana · **Executor técnico previsto:** agente de IA de desenvolvimento · **Revisor de especificações/código:** assistente coordenador, independente do agente executor quando este for autor do artefato. **Revisão ainda NÃO EXECUTADA.**
 **Origem:** Manual de marca v2, baseline REV7 aprovada, DEC-UX-02, decisão de 2 protótipos, checklist visual e parecer G5.
 
 ## Objetivo e exclusões
@@ -77,10 +77,13 @@ Pode ser implementação HTML/CSS/JS modular, framework leve ou abordagem equiva
 
 ## Riscos / OPEN_QUESTIONS
 - G5 ainda não aprovado e arquitetura/hospedagem não escolhidas.
-- Revisor independente a designar.
+- Revisores designados: Luana (negócio) e assistente coordenador (artefatos do agente executor). Parecer independente sobre a ADR do executor e revisão do código ainda NOT_RUN.
 - Licença da Garet para redistribuição web/repo público.
 - Formato final das pranchas editáveis e ícones individuais; PNG pode ser suficiente para MVP, sujeito à inspeção.
 - Fonte pública de sessões e catálogo publicável pertencem às Sprints posteriores.
 - Validação de acessibilidade, escopo do service worker e iOS/Android em dispositivos reais pertence à execução de G6/G7.
 
 **Gate:** pronta para revisão/aceite após G5; nenhuma afirmação de implementação, teste, merge ou deploy.
+
+## Controle de entrada em G6 / atualização 17-11-2026
+Abrir Sprint 1 somente após G5 com ADR do executor, parecer do assistente sobre o documento de outro autor e aprovação explícita da PO. Registro de trabalho: [Issue #3](https://github.com/lsfsoluri-collab/qfazer/issues/3). Até esse momento, backlog **especificado mas bloqueado**, sem código ou QA executados por esse registro.
