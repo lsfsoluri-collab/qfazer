@@ -184,3 +184,27 @@ Documento complementar: `docs/decisoes/GRILLME_G5_RESPOSTAS_RODADA2_2026-11-17.m
 
 ### Adendo corretivo — inventário de dispositivos atualizado
 **FACT (PO, rodada 2 atualizada):** além de iPhone e computador, existe **Android disponível para testes**. A informação anterior de ausência de Android foi substituída. Requer UAT separado no Android (permite/nega permissão; inscrição; app fechado; recebimento; revogação) e registro de OS, navegador, versão do PWA e evidência. **Todos NOT_RUN.** Sem alteração do teto de R$ 50/mês, tolerância de 5 minutos, caráter obrigatório do Web Push e revisor ainda não designado.
+
+
+---
+
+## Adendo de governança — hospedagem do protótipo anterior / delimitação do gate
+**FACT (PO, 17/11/2026):** o painel Netlify do protótipo anterior está na **conta de outra integrante da equipe**. O projeto comprou apenas o domínio `qfazer.com.br`; a equipe não informou hospedagem própria contratada. Não presume-se acesso, propriedade da conta, transferência autorizada ou acesso a variáveis secretas do ambiente legado.
+
+**ASSUMPTION a validar:** uma infraestrutura própria sob controle da equipe será operacionalmente mais segura para a versão pública. A Netlify é apenas candidata a provedora; nenhuma transferência/mudança de DNS está autorizada.
+
+**Architecture Grill — decisão técnica pendente:** comparar criação de uma hospedagem nova sob conta controlada pelo projeto com transferência formal de site autorizada pela titular da conta antiga, avaliando custo, propriedade, risco de dependência, acesso a logs/secrets, continuidade e reversibilidade. Não solicitar senhas da integrante. Se migração, configurar credenciais novas, não copiar segredos sem aprovação.
+
+### Correção de escopo do gate
+Conforme `PROJECT_LIFECYCLE.md`, o **G5** exige arquitetura, contratos, testes *planejados*, riscos, dependências claras, plano executável e **revisão técnica independente**. A execução integral de código e QA é **G6**, aceite em dispositivos é **G7**, publicação pública autorizada é **G8**. Testes reais de Web Push, deploy, DNS e rollback operacional permanecem pendências de G6/G7/G8 e não devem ser classificados isoladamente como impedimento de aprovação de baseline G5 se houver plano verificável e riscos tratados.
+
+### Checklist específico para encerrar G5
+- [ ] Arquitetura de hospedagem/DB/funções/cron/Push escolhida com comparativo de custo e dependências; ponto de controle do domínio e owner identificados
+- [ ] Teto de R$ 50/mês demonstrado por cenários de uso e limites; contratação ainda depende de aprovação individual
+- [ ] Contratos de API e modelo de dados seguros, incluindo device/session, inscrições, revogação, reprogramação e isolamento catálogo interno/público
+- [ ] Matriz de riscos, controles mínimos de LGPD, credenciais, abuso e custos revisada com responsáveis
+- [ ] Plano de implementação G6, UAT de iPhone/Android/desktop e rollback G8 com critérios verificáveis
+- [ ] Revisão independente concluída e parecer de engenharia documentado
+- [ ] PO aprova a baseline técnica e qualquer consequência comercial/financeira específica
+
+**Estado:** G5 IN_REVIEW; pendência adicional de governança da hospedagem anterior identificada. Nenhuma hospedagem, DNS ou deploy alterado.
