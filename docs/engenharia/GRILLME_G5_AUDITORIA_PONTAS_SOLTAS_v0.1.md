@@ -98,3 +98,28 @@ Todos: **NOT_RUN**, sem evidência técnica ainda.
 
 ### Estado após respostas
 **Decisão de Web Push registrada; responsável operacional identificado; acesso em 05/12 permanece OPEN_QUESTION. G5 segue bloqueado** até revisão independente, contrato de notificações, ambiente de teste e permissões de dados. Nenhum teste de push, merge ou deploy foi executado pela atualização documental.
+
+
+---
+
+## Rodada de respostas da Product Owner — Acesso público (17/11/2026)
+
+**DECISION — DEC-G5-19:** o Qfazer estará **aberto ao público na feira de 05/12/2026**, com acesso no navegador e como PWA, após os gates de liberação. Esta decisão **fecha** a antiga `OPEN_QUESTION` G5-R1-01 e substitui qualquer indicação anterior de que o formato público/restrito ainda não esteja definido.
+
+**Distinção obrigatória:** o requisito de **acesso público** está aprovado; o **deploy** e a **publicação dos dados** NÃO estão autorizados nem concluídos. A política de autonomia exige autorização expressa específica para deploy em produção, mudanças reais de acesso e publicação externa.
+
+### Impactos diretos
+- **G5-02 CRITICAL:** nenhum dos 204 registros da fotografia possui liberação geral de `reuso_publico`. A engenharia deve construir um conjunto público licenciado/revisado separado da base interna; se não houver sessão liberada, não fabricar conteúdo para preencher o catálogo.
+- **G5-06 CRITICAL:** Web Push real permanece obrigatório em dispositivo compatível, com consentimento, revogação e testes de app fechado; integra caminho crítico do lançamento público.
+- **G5-12 HIGH:** Luana é responsável de coordenação por GitHub/Netlify conforme resposta; acesso efetivo ao Netlify, responsável executor e revisão independente permanecem sem evidência.
+- **G5-04 HIGH:** chamadas que prometem reservar dentro do próprio Qfazer devem ser corrigidas para consulta/encaminhamento oficial.
+- **G5-13 MEDIUM→HIGH:** política de privacidade e termos de uso da inscrição push e formulários passam a ser dependências de release público.
+
+### Próximos passos
+1. Reconciliar e aprovar plano técnico de Web Push, incluindo origem HTTPS, service worker, gerenciamento seguro de subscriptions, persistência mínima, revogação e taxa de envio.
+2. Concluir migração visual e funcional isolada no PR #1; não fazer merge sem revisão.
+3. Diligenciar direitos dos eventos; separar dados privados, dataset apto interno e dataset público liberado.
+4. Definir domínio, ambiente de homologação, limite operacional, privacidade e plano de contingência.
+5. Executar testes com evidências; submeter aprovação da versão e autorização específica de deploy.
+
+**Status atual:** G5 IN_REVIEW / G8 release público bloqueado por evidências e aprovações pendentes.
