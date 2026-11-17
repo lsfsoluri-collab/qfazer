@@ -165,7 +165,7 @@ Para cada teste: ambiente, versão, dispositivo, pré-condição, resultado espe
 
 **DECISION (PO):** orçamento de operação de até **R$ 50/mês**, condicionado à aprovação separada de **cada serviço/contratação**. Não presumir autorização de pagamento, contratação, auto-upgrade ou uso de cartão.
 
-**FACT:** dispositivos para homologação: **iPhone e computador**. Não declarar teste de Android sem dispositivo e evidências.
+**FACT:** dispositivos para homologação: **iPhone, computador e Android**. Não declarar testes concluídos sem evidências de execução.
 
 **DECISION (PO):** tolerância de até **5 minutos após o instante programado** (24h antes do evento) para *disparo/tentativa do servidor*. A chegada da notificação na tela não tem prazo universal garantido.
 
@@ -177,7 +177,10 @@ Para cada teste: ambiente, versão, dispositivo, pré-condição, resultado espe
 1. Reestimar arquitetura A/B/C considerando total mensal de hospedagem, dados, cron/fila, banda, funções, IA e notificações dentro de R$ 50. Sem dados da conta/provedor, **custo total permanece não verificado**.
 2. Confirmar status de acesso à Netlify anterior, se disponível, plano atual, limitações de agendamento, suporte a custom domain, HTTPS e gestão de segredos antes de escolhê-la.
 3. Ajustar SPEC do lembrete: `scheduled_for = start_at - 24h` e `attempted_at` deve estar na janela `[scheduled_for, scheduled_for + 5 min]` em condições operacionais de teste; servidor não deve prometer entrega no dispositivo nesse intervalo.
-4. Elaborar matriz de testes para iPhone compatível (instalado como PWA, autorização explícita, app fechado), navegador desktop, revogação e remoção de salvo; registrar versão de SO/navegador.
+4. Elaborar matriz de testes para iPhone compatível (instalado como PWA, autorização explícita, app fechado), Android compatível (Chrome/PWA, aplicativo fechado), navegador desktop, revogação e remoção de salvo; registrar versão de SO/navegador.
 5. Sem parecer técnico independente, acesso à hospedagem e testes reais, manter **G5 IN_REVIEW / NOT APPROVED**.
 
 Documento complementar: `docs/decisoes/GRILLME_G5_RESPOSTAS_RODADA2_2026-11-17.md`.
+
+### Adendo corretivo — inventário de dispositivos atualizado
+**FACT (PO, rodada 2 atualizada):** além de iPhone e computador, existe **Android disponível para testes**. A informação anterior de ausência de Android foi substituída. Requer UAT separado no Android (permite/nega permissão; inscrição; app fechado; recebimento; revogação) e registro de OS, navegador, versão do PWA e evidência. **Todos NOT_RUN.** Sem alteração do teto de R$ 50/mês, tolerância de 5 minutos, caráter obrigatório do Web Push e revisor ainda não designado.
