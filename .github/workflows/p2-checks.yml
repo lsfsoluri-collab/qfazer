@@ -1,0 +1,47 @@
+name: Qfazer P2 - verificação automática
+on:
+  pull_request:
+    paths:
+      - "p2/**"
+      - "shared/**"
+      - "tests/**"
+      - "package.json"
+      - "netlify.toml"
+      - ".github/workflows/p2-checks.yml"
+  push:
+    branches:
+      - "feat/qfazer-p2-shell"
+    paths:
+      - "p2/**"
+      - "shared/**"
+      - "tests/**"
+      - "package.json"
+      - "netlify.toml"
+      - ".github/workflows/p2-checks.yml"
+permissions:
+  contents: read
+jobs:
+  tests:
+    name: Unit tests and publish-surface audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run static checks and 10 test cases
+        run: npm run check
+      - name: Confirm public path excludes internal data
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Fq 'publish = "p2"' netlify.toml
+          test ! -e p2/catalog-public.json
+          test ! -e p2/catalogo_homologacao_interna_161.json
+          test ! -e p2/.env
+          test ! -e p2/guia.mjs
+          test -e p2/manifest.webmanifest
+          test -e p2/sw.js
