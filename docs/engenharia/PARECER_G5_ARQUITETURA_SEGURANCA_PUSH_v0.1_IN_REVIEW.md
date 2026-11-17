@@ -157,3 +157,27 @@ Para cada teste: ambiente, versão, dispositivo, pré-condição, resultado espe
 | Rollback comprovado | TEST | engenharia | NOT_RUN |
 
 **PARECER:** `G5 CONDITIONALLY SPECIFIED / NOT APPROVED`. O desenho de solução e os testes foram especificados; faltam revisão independente, autorização de fornecedores/custos/dados, validação técnica e evidência de privacidade. **Não iniciar G6 integral nem G8** com essas lacunas. Pode-se preparar código/configuração em branch isolada após autorização de implementação e sem serviços/dados reais, conforme política de autonomia.
+
+
+---
+
+## Adendo G5 / 17-11-2026 — Respostas GRILLME rodada 2 e domínio
+
+**DECISION (PO):** orçamento de operação de até **R$ 50/mês**, condicionado à aprovação separada de **cada serviço/contratação**. Não presumir autorização de pagamento, contratação, auto-upgrade ou uso de cartão.
+
+**FACT:** dispositivos para homologação: **iPhone e computador**. Não declarar teste de Android sem dispositivo e evidências.
+
+**DECISION (PO):** tolerância de até **5 minutos após o instante programado** (24h antes do evento) para *disparo/tentativa do servidor*. A chegada da notificação na tela não tem prazo universal garantido.
+
+**OPEN_QUESTION:** revisor técnico independente não identificado.
+
+**FACT:** aquisição efetuada apenas do **domínio qfazer.com.br** no Registro.br; **não houve contratação de hospedagem informada**. Netlify é **candidata** por compatibilidade com código anterior, não plataforma aprovada. Nenhum DNS alterado.
+
+### Impactos no parecer
+1. Reestimar arquitetura A/B/C considerando total mensal de hospedagem, dados, cron/fila, banda, funções, IA e notificações dentro de R$ 50. Sem dados da conta/provedor, **custo total permanece não verificado**.
+2. Confirmar status de acesso à Netlify anterior, se disponível, plano atual, limitações de agendamento, suporte a custom domain, HTTPS e gestão de segredos antes de escolhê-la.
+3. Ajustar SPEC do lembrete: `scheduled_for = start_at - 24h` e `attempted_at` deve estar na janela `[scheduled_for, scheduled_for + 5 min]` em condições operacionais de teste; servidor não deve prometer entrega no dispositivo nesse intervalo.
+4. Elaborar matriz de testes para iPhone compatível (instalado como PWA, autorização explícita, app fechado), navegador desktop, revogação e remoção de salvo; registrar versão de SO/navegador.
+5. Sem parecer técnico independente, acesso à hospedagem e testes reais, manter **G5 IN_REVIEW / NOT APPROVED**.
+
+Documento complementar: `docs/decisoes/GRILLME_G5_RESPOSTAS_RODADA2_2026-11-17.md`.
