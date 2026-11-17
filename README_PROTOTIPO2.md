@@ -15,3 +15,10 @@
 - Nenhum endpoint de IA foi ligado; `guia.mjs` legado permanece isolado do diretório `p2/` e não é implantado nesta fase.
 - O service worker cacheia apenas shell e imagens; não cacheia catálogo nem API. O modo de homologação é um utilitário de testes, não funcionalidade aprovada para o produto público.
 - UAT manual ainda necessária: iPhone, Android, desktop, instalação PWA, acessibilidade, diferenças de hora, persistência de salvos, ficha e integração com o catálogo real.
+
+## Interface v0.2 — referência visual aprovada em 17/11/2026
+A estrutura desktop/mobile reproduz as três pranchas enviadas pela Product Owner: cabeçalho e logotipo, hero com Q grande, busca creme, chips de categorias, seleções e cartões de eventos, filtros por sessão, chat em dois tipos de balão e barra inferior no mobile. **Decisão funcional prevalecente:** são 4 abas (Início, Salvos, Buscar, Chat), sem Perfil.
+
+Cards recebem exclusivamente título, data, local e preço do catálogo real importado. **As áreas gráficas são padrões abstratos ilustrativos**; não são fotografias específicas dos eventos e não constituem evidência de realização nem disponibilidade. Fotos editoriais e Garet dependem de direitos de uso/licenças.
+
+QA local: `npm run check` valida JavaScript e contrato visual; `tests/browser_reference_smoke.py` (exige Python/Playwright/Chromium e variável `QFAZER_INTERNAL_CATALOG` definida apenas no ambiente de testes) validou interações em larguras 320, 390, 768 e 1360 px; evidências locais **64/64 PASS**. Os testes de navegador usam conteúdo HTML/JS injetado, não hospedagem HTTP real, por restrição de rede local. Não comprovam instalação PWA, Push ou funcionamento em hardware físico.
