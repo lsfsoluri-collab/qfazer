@@ -208,3 +208,13 @@ Conforme `PROJECT_LIFECYCLE.md`, o **G5** exige arquitetura, contratos, testes *
 - [ ] PO aprova a baseline técnica e qualquer consequência comercial/financeira específica
 
 **Estado:** G5 IN_REVIEW; pendência adicional de governança da hospedagem anterior identificada. Nenhuma hospedagem, DNS ou deploy alterado.
+
+
+---
+
+## Registro de colaboração da integrante titular Netlify (17/11/2026)
+**FACT (PO):** a integrante responsável pela conta Netlify do protótipo anterior **permanece no desenvolvimento do Qfazer**. Não há evidência de transferência, autorização de uso da conta pessoal na nova produção, acesso de Luana ao painel, ou plano/limites de faturamento.
+
+**Parecer atualizado:** antes de substituir a infraestrutura, avaliar **nova hospedagem Netlify controlada pela equipe Qfazer com colaboração da integrante**, preservando o protótipo anterior; transferência formal da hospedagem antiga é opção, não requisito. Confrontar com Cloudflare Workers/D1 caso custo ou capacidade inviabilizem Netlify. Opções, riscos e critérios em `docs/engenharia/G5_DECISAO_HOSPEDAGEM_COLABORATIVA_v0.1_IN_REVIEW.md`.
+
+**Gate G5 segue IN_REVIEW:** escolha técnica final, custos e limites verificáveis, definição de owner/backup, revisão de privacidade e revisão técnica independente ainda pendentes. Não confundir aprovação de continuidade da metodologia com autorização de deploy, contratação ou mudança de acesso.
