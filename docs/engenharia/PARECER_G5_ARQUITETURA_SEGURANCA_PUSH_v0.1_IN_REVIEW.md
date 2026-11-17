@@ -218,3 +218,15 @@ Conforme `PROJECT_LIFECYCLE.md`, o **G5** exige arquitetura, contratos, testes *
 **Parecer atualizado:** antes de substituir a infraestrutura, avaliar **nova hospedagem Netlify controlada pela equipe Qfazer com colaboração da integrante**, preservando o protótipo anterior; transferência formal da hospedagem antiga é opção, não requisito. Confrontar com Cloudflare Workers/D1 caso custo ou capacidade inviabilizem Netlify. Opções, riscos e critérios em `docs/engenharia/G5_DECISAO_HOSPEDAGEM_COLABORATIVA_v0.1_IN_REVIEW.md`.
 
 **Gate G5 segue IN_REVIEW:** escolha técnica final, custos e limites verificáveis, definição de owner/backup, revisão de privacidade e revisão técnica independente ainda pendentes. Não confundir aprovação de continuidade da metodologia com autorização de deploy, contratação ou mudança de acesso.
+
+
+---
+
+## Resultado da análise comparativa de custos em 17/11/2026
+Documento de suporte: `docs/engenharia/G5_COMPARATIVO_INFRA_CUSTOS_v0.2_IN_REVIEW.md`.
+
+**FACT:** Free Netlify (contas novas credit-based) tem 300 créditos por mês e limite rígido; Neon Free anunciou 1 GB e 100 CU-horas/mês por projeto em 02/10/2026. Despesas e capacidade do Qfazer não foram medidas. Netlify Database é alternativa de armazenamento com uso de créditos por compute. Cloudflare Workers/D1 é plano B, com impacto de refatoração.
+
+**ASSUMPTION:** Netlify + Neon pode reduzir esforço por reuso do código legado; porém cron de 5 minutos gera aproximadamente 8.640 invocações em 30 dias e pode manter o banco ativo, consumindo compute. Não tratar esta alternativa como aprovada nem garantidamente gratuita.
+
+**RECOMENDAÇÃO CONDICIONAL:** equipe técnica avalia A (Netlify+Neon), B (Netlify+DB), C (Cloudflare+D1) contra limites reais, viabilidade do Web Push (incluindo revogação/reagendamento), capacidade de IA, custos e teto de R$50 total. Sem revisão independente e dados de consumo, manter **G5 IN_REVIEW**. Protótipo 1 permanece intocado, e a conta futura do Protótipo 2 fica sob controle administrativo de Luana conforme decisão de negócio.
