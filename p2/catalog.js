@@ -28,7 +28,7 @@ export function normalizeSessions(payload, {internal = false, now = new Date()} 
     categories: resolveCategories(session), tags: resolveTags(session),
     imageUrl: session.licenca_imagem === 'LIBERADA' && validUrl(session.imagem_url) ? session.imagem_url : null,
     imageCredit: session.credito_imagem || null,
-    description: session.descricao_editorial || '', date: session.data_local,
+    description: session.descricao_editorial || '', why: session.por_que_vale_a_pena || '', date: session.data_local,
     startsAt: session.inicio_utc, hour: session.hora_local,
     neighborhood: session.bairro || 'Bairro não informado', place: session.local,
     priceType: session.tipo_preco || '', minCents: Number.isFinite(session.preco_min_centavos) ? session.preco_min_centavos : null,
