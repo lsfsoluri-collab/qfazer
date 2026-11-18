@@ -1,0 +1,55 @@
+name: Qfazer - sincronização segura do catálogo público
+on:
+  workflow_dispatch:
+  schedule:
+    # 09:15 America/Sao_Paulo (novembro), cron UTC. Ativado somente no branch default após aprovação.
+    - cron: "15 12 * * *"
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Conferir configuração de credenciais
+        id: config
+        env:
+          QFAZER_CATALOG_SHEET_ID: ${{ vars.QFAZER_CATALOG_SHEET_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ -n "$QFAZER_CATALOG_SHEET_ID" ] && [ -n "$GOOGLE_SERVICE_ACCOUNT_JSON" ]; then
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+            echo '::notice::Catálogo não sincronizado: faltam configuração de acesso somente leitura e aprovação do gate.'
+          fi
+      - name: Testar contrato público
+        if: steps.config.outputs.ready == 'true'
+        run: npm run check
+      - name: Gerar somente eventos liberados
+        if: steps.config.outputs.ready == 'true'
+        env:
+          QFAZER_CATALOG_SHEET_ID: ${{ vars.QFAZER_CATALOG_SHEET_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: node scripts/export_public_catalog.mjs --google --out p2/catalog-public.json
+      - name: Abrir PR de atualização, nunca publicar diretamente
+        if: steps.config.outputs.ready == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          commit-message: "data(qfazer): atualizar projeção pública aprovada"
+          title: "data(qfazer): atualização do catálogo público validado"
+          body: |
+            Projeção pública gerada somente a partir da aba CURADORIA.
+            Critérios: sessão apta, reuso público liberado, editorial aprovado, data futura e evidências mínimas.
+            Nenhum dado interno bruto é versionado.
+            **Revisar e aprovar PR antes de merge e publicação.**
+          branch: automation/catalogo-publico
+          base: ${{ github.event.repository.default_branch }}
+          add-paths: p2/catalog-public.json
+          delete-branch: true
