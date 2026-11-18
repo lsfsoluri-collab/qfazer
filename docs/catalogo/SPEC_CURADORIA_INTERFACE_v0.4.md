@@ -1,5 +1,7 @@
 # Curadoria completa na interface interna
 
+Referência visual: HTML interno selecionado pela PO no handoff de 18/11, que substitui a v0.5. O gerador aceita essa referência privada como entrada e preserva seu HTML/CSS; não a incorpora ao repositório.
+
 Decisão da PO em 18/11/2026: revalidar pendências, atualizar somente fatos resolvidos e disponibilizar todos os registros novos na interface, com filtros para bloqueios.
 
 ## Fatos
