@@ -1,6 +1,21 @@
 [build]
-  publish = "."
+  publish = "p2"
   functions = "netlify/functions"
 
-[functions]
-  node_bundler = "esbuild"
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/catalog-public.json"
+  [headers.values]
+    Cache-Control = "no-store"
