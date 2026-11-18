@@ -5,6 +5,7 @@ import {createServer} from 'node:http';
 import {readFile,mkdir} from 'node:fs/promises';
 import {resolve,extname,sep} from 'node:path';
 import assert from 'node:assert/strict';
+import {validatePublicCatalog} from '../p2/public-catalog.js';
 
 const ROOT=resolve('p2');
 const now=Date.now();
@@ -25,15 +26,17 @@ function eventAt(i){
     inicio_utc:starts.toISOString(),
     data_local:v.year+'-'+v.month+'-'+v.day,
     hora_local:'19:00',
-    local:'Espaço de QA',bairro:'Centro',codigo_ibge:'3550308',
+    local:'Espaço de QA',bairro:'Centro',municipio:'São Paulo',codigo_ibge:'3550308',
     url_oficial:'https://example.org/qa/'+i,
-    status:'APTO_PARA_PILOTO',reuso_publico:'LIBERADO',
-    tipo_preco:'GRATUITO',preco_min_centavos:0,
-    imagem_url:i<2?'https://images.example.org/qfazer-qa.png':'',
-    licenca_imagem:i===0?'LIBERADA':'PENDENTE_REVISAO'
+    url_acesso:'https://example.org/qa/'+i,fonte_id:'fixture-qa',verificado_em:new Date(now).toISOString().slice(0,10),
+    status:'APTO_PARA_PILOTO',reuso_publico:'LIBERADO',revisao_editorial:'APROVADO',
+    tipo_preco:'GRATUITO',preco_min_centavos:0,preco_max_centavos:0,
+    // A projeção pública só transporta imagem com licença e origem; QA continua sintética.
+    ...(i===0?{imagem_url:'https://images.example.org/qfazer-qa.png',licenca_imagem:'LIBERADA',credito_imagem:'Fixture sintética de QA',url_fonte_imagem:'https://example.org/press'}:{})
   };
 }
-const fixture={meta:{scope:'SOMENTE_TESTE_NAO_PUBLICAR',total:45},sessoes:Array.from({length:45},(_,i)=>eventAt(i))};
+// Resposta interceptada apenas neste servidor de QA; nunca gravada no catálogo do projeto.
+const fixture=validatePublicCatalog({meta:{schema_version:'1.0',scope:'PUBLICO_APROVADO',total:45},sessoes:Array.from({length:45},(_,i)=>eventAt(i))});
 const types={'.html':'text/html','.css':'text/css','.js':'text/javascript','.json':'application/json','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png'};
 const server=createServer(async(req,res)=>{
   try{
