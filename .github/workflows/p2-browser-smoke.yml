@@ -1,0 +1,36 @@
+name: Qfazer P2 - smoke visual Chromium
+on:
+  pull_request:
+    paths:
+      - "p2/**"
+      - "tests/browser-smoke.mjs"
+      - ".github/workflows/p2-browser-smoke.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    name: Navegação e screenshots em mobile e desktop
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install isolated Playwright CLI
+        run: npm install --no-save --ignore-scripts playwright
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run UI smoke
+        run: node tests/browser-smoke.mjs
+      - name: Attach screenshots for review
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qfazer-p2-chromium-screenshots
+          path: screenshots/*.png
+          if-no-files-found: warn
+          retention-days: 7
