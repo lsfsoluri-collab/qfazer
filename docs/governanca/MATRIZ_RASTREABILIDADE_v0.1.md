@@ -15,3 +15,7 @@
 - Associar QA e UAT à **mesma versão/commit e mesma origem de dados**.
 - Registrar bloqueios de reuso público, imagens, IA e Push; não marcar `PASS` por existência de arquivo de teste.
 - Migrar matriz para a pasta `03-specifications/` do futuro Product Studio, preservando o vínculo por IDs.
+
+| REQ-SYNC-01 | BR-SYNC-01: três aprovações | SPEC-SYNC-01: projeção pública validada | UAT-SYNC-01,02 | `docs/catalogo/SPEC_SINCRONIZACAO_INTEGRADA_v0.5.md`; UAT NOT_RUN |
+| REQ-SYNC-02 | BR-SYNC-02: zero dados internos públicos | SPEC-SYNC-02: campos permitidos, auditoria | UAT-SYNC-03 | Mesmo documento; UAT NOT_RUN |
+| REQ-SYNC-03 | BR-SYNC-03: PR humano + gate habilitado | SPEC-SYNC-03: workflow gated | UAT-SYNC-04,05 | Mesmo documento; um cenário BLOCKED por credenciais |

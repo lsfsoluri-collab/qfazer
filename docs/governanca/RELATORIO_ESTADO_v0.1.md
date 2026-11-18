@@ -27,3 +27,9 @@
 
 ## Gate de aprovação
 A PO aprovou a **estrutura de versionamento**; as especificações de sua execução e este índice estão em revisão até conferência. Não promover PR automaticamente.
+
+## Atualização cruzada: 18/11/2026
+- **FACT SHEETS:** leitura direta de 240 registros, 240 IDs distintos; 186 aptos internos, 43 pendentes, 11 não utilizar, 0 com aprovações públicas/editoriais.
+- **FACT GITHUB:** PR #5, commit `d8b6e15`; checks de código/Chromium `success` para esse SHA. Este PR de governança foi sincronizado sem tocar nos arquivos do aplicativo.
+- **BLOCKED:** credencial Google de serviço / ID nas variáveis e ativação do workflow na branch principal; revisão de direitos/editorial das sessões; homologação UAT; decisões de IA e Push.
+- **NEXT:** revisar PR #6 → finalizar revisão de especificações G5 → executar UAT G7 em ambiente isolado → apenas com gate G8 publicar release. Nenhuma coleta ou sincronização ao vivo foi ativada.

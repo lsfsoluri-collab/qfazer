@@ -24,3 +24,9 @@ A criação de outro repositório ainda não foi realizada. Não usar repositór
 O último arquivo criado não é necessariamente o mais recente **aprovado**. A v0.5 HTML independente foi rejeitada como substituição visual; a referência indicada pela PO é o HTML privado enviado em 18/11/2026 (hash no manifesto). O **código P2** e essa **referência HTML** são artefatos distintos: equivalência funcional/visual depende de QA e UAT.
 
 Não fazer merge, deploy, alterar DNS, configurar credenciais, publicar catálogo nem acionar integrações em produção por causa deste índice.
+
+## Coordenação entre curadoria e engenharia — snapshot 18/11/2026
+- [Painel compartilhado do MVP](PAINEL_INTEGRADO_MVP_2026-11-18.md).
+- [Plano de convergência e gates de aceite](PLANO_CONVERGENCIA_MVP_2026-11-18.md).
+- A versão técnica verificada no PR #5 é `d8b6e15ebf687d25a5b863e0676f0f1cfce68392`. O PR #6 de governança acompanha essa revisão, sem alterar o código do P2.
+- **Acesso humano a estas páginas é compartilhado; chats/agentes não trocam mensagens automaticamente.** O GitHub é a fonte comum de decisões e pendências, não um barramento de comunicação em tempo real.

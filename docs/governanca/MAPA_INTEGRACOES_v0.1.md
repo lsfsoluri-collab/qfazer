@@ -18,3 +18,6 @@
 
 ### Prioridade de resolução
 (1) confirmar correspondência visual da referência HTML com o código P2; (2) revisar disponibilidade e direitos das sessões; (3) liberar e validar projeção pública; (4) homologar filtros/salvos/compare; (5) revisar arquitetura de IA e Push, custo, LGPD e abuso; (6) homologação e release.
+
+## Evidência adicional de convergência
+No commit técnico `d8b6e15`, existem `p2/public-catalog.js` (validador), `p2/catalog-public.json` (projeção pública vazia), `scripts/audit-public-surface.mjs` e `tests/integration-sync.test.mjs`. A fotografia real de 240 linhas foi lida diretamente da planilha e não incorporada no repositório público. O workflow `.github/workflows/catalogo-publico.yml` só inicia a sincronização se `QFAZER_CATALOG_SYNC_ENABLED=true`, ID de planilha e credencial protegida estiverem configurados. Geração de PR não equivale a publicação.

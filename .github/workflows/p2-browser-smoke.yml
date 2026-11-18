@@ -48,6 +48,7 @@ jobs:
             p2/app.css
             p2/app.js
             p2/catalog.js
+            p2/public-catalog.js
             p2/curation.js
             p2/taxonomy.js
             p2/assets/*.svg

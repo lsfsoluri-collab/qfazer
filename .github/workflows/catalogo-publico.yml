@@ -5,10 +5,16 @@ on:
     # 09:15 America/Sao_Paulo (novembro), cron UTC. Ativado somente no branch default após aprovação.
     - cron: "15 12 * * *"
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+concurrency:
+  group: qfazer-catalogo-publico
+  cancel-in-progress: false
 jobs:
   sync:
+    if: vars.QFAZER_CATALOG_SYNC_ENABLED == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

@@ -4,6 +4,7 @@ on:
     paths:
       - "p2/**"
       - "shared/**"
+      - "scripts/**"
       - "tests/**"
       - "package.json"
       - "netlify.toml"
@@ -14,6 +15,7 @@ on:
     paths:
       - "p2/**"
       - "shared/**"
+      - "scripts/**"
       - "tests/**"
       - "package.json"
       - "netlify.toml"
@@ -39,7 +41,7 @@ jobs:
         run: |
           set -euo pipefail
           grep -Fq 'publish = "p2"' netlify.toml
-          test ! -e p2/catalog-public.json
+          node scripts/audit-public-surface.mjs
           test ! -e p2/catalogo_homologacao_interna_161.json
           test ! -e p2/.env
           test ! -e p2/guia.mjs

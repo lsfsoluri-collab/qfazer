@@ -34,11 +34,16 @@
 
 ## Artefatos que devem ficar SOMENTE no Product Studio privado
 - HTML de referência **Qfazer_PREVIEW_INTERNO_ATUALIZADO_2026-11-18 (1).html**, fornecido em 18/11, **SHA-256: `b13baa1f37334c2e03100462f9f944bd7102580db44e061dce0234c30caf4a1e`**.
-- Snapshot contido na referência: metadados indicam **240 registros na curadoria**, **180 sessões futuras aptas**; o HTML embute **180 sessões**, não a base completa. Dados de reuso público pendentes.
+- Referência HTML anexada: **180 sessões futuras aptas embutidas**, com metadado de **240 registros totais** naquele recorte. A referência é visual; **não** é a interface interna v0.6 nem a base canônica. A leitura direta da CURADORIA atual em 18/11 confirmou **240 sessões, 186 aptas, 43 pendentes, 11 não utilizar, 0 liberadas publicamente**. O relatório de outro chat informa uma prévia v0.6 com 240 sessões, armazenada somente em fluxo privado. Evitar misturar os números entre versões.
 - Backup privado separado: `Qfazer_BACKUP_PRIVADO_HOMOLOGACAO_2026-11-18.zip` (SHA-256 `778ebaedab8c88d065bf3943356cb2c1971c3437032a5a99b0e6ac338029d2ed`).
 - `Qfazer_PREVIEW_FUNCIONAL_v05_INTERNO.html` (SHA-256 `4bf5d1e33739721b08d0a9608a71de63a56b3cc5e529dd1a9c5b0a1b105529bd`): **RETIRED para efeito de referência visual**, preservado como histórico.
 - Biblioteca de pesquisa, fontes de eventos, capturas e evidências de homologação, conforme autorização de acesso e propriedade intelectual; inventário nominal completo PENDENTE.
 - Google Sheets CURADORIA é fonte operacional; não espelhar indiscriminadamente o arquivo para Git público. Documentar ID/URL e controle de versão apenas na área restrita, quando disponível.
+
+## Convergência com curadoria (18/11)
+- Google Sheets CURADORIA (privado) segue como única fonte operacional; não realizar edição ou exportação bruta a Git público por padrão.
+- A branch técnica agora contém `docs/catalogo/SPEC_SINCRONIZACAO_INTEGRADA_v0.5.md`, `p2/public-catalog.js`, `p2/catalog-public.json` vazio e `tests/integration-sync.test.mjs`, testados no CI do PR #5.
+- A integração hospedada ainda requer credencial de serviço restrita e habilitação explícita; NÃO é sincronização ao vivo.
 
 ## Lacunas explícitas
 Ainda não existe, neste repositório, um pacote verificadamente completo de **todos** os artefatos históricos e anexos da equipe. O índice descreve o que foi efetivamente localizado; itens não localizados continuam PENDENTES, não ausentes por conclusão.

@@ -22,3 +22,8 @@
 
 ## Regras de avanço
 Aprovação de design não aprova comportamento técnico. Aprovação de conteúdo para testes não libera direitos de republicação. Resultado de teste histórico não é UAT atual. Nenhuma aprovação de documentação autoriza contratação, acesso, deploy ou alteração de DNS.
+
+## Atualização de fotografia: 18/11/2026
+A consulta **direta** à CURADORIA confirmou **240 IDs únicos: 186 APTO_PARA_PILOTO, 43 PENDENTE_VERIFICACAO, 11 NAO_UTILIZAR**. Todos os 240 têm `reuso_publico=PENDENTE_REVISAO` e `revisao_editorial=PENDENTE_REVISAO`. **0 publicáveis.**
+A referência HTML antiga com 180 sessões embutidas deve ser preservada apenas como baseline **visual**; o snapshot interno v0.6 é separado e não substitui a planilha.
+CI de 18/11 para `d8b6e15`: verificação de código e smoke Chromium com conclusão `success` (runs 44412988762 e 44412988770). Isto não é UAT, teste de credenciais ou deploy.
