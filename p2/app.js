@@ -39,7 +39,7 @@ function showDetail(item){
  const toolbar=node('div','detail-quick-actions');
  const saved=state.saved.includes(item.id);
  const save=button('',`detail-icon-action ${saved?'is-saved':''}`,()=>{
-   toggleSave(item.id);showDetail(item);
+   toggleSave(item.id);save.classList.toggle('is-saved',state.saved.includes(item.id));save.setAttribute('aria-label',state.saved.includes(item.id)?'Remover dos salvos':'Salvar evento');
  });
  save.setAttribute('aria-label',saved?'Remover dos salvos':'Salvar evento');
  save.append(uiIcon('heart'));
