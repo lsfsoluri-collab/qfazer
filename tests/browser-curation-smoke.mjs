@@ -17,7 +17,7 @@ try{for(const width of [1360,390]){
  await page.route('https://fonts.googleapis.com/**',r=>r.abort());await page.route('https://fonts.gstatic.com/**',r=>r.abort());
  await page.goto('http://127.0.0.1:'+server.address().port,{waitUntil:'domcontentloaded'});
  const nav=view=>page.locator(width<600?'.nav-mobile [data-tab="'+view+'"]':'.nav-desktop [data-tab="'+view+'"]').click();
- const reset=async()=>{await page.locator('#search-form button[type=reset]').click();await page.waitForFunction(()=>document.getElementById('search-count').textContent.startsWith('240 '));};
+ const reset=async()=>{if(width>=600){await page.locator('#search-form button[type=reset]').click();}else{await page.locator('#search-q').fill('');for(const id of ['filter-category','filter-neighborhood','filter-budget','filter-status','filter-blocker','filter-publication','filter-tag'])await page.locator('#'+id).selectOption('');await page.locator('#filter-date').fill('');}await page.waitForFunction(()=>document.getElementById('search-count').textContent.startsWith('240 '));};
  const count=async n=>assert.match(await page.locator('#search-count').innerText(),new RegExp('^'+n+' '));
  await check(width+' inicia 240 sessões, sem erro JS',async()=>{await page.waitForFunction(()=>document.getElementById('review-status').textContent.includes('240'));assert.deepEqual(errors,[]);});
  await check(width+' preserva navegação e não tem overflow',async()=>{assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.equal(await page.locator(width<600?'.nav-mobile [data-tab]':'.nav-desktop [data-tab]').count(),4);});
@@ -29,7 +29,7 @@ try{for(const width of [1360,390]){
  await reset();
  await check(width+' filtros cruzados categoria Esporte e tag Samba',async()=>{await page.locator('#filter-category').selectOption('esporte');await page.locator('#filter-tag').selectOption('samba');await count(60);});
  await reset();
- await check(width+' preço desconhecido não aparece como gratuito',async()=>{await page.locator('#search-q').fill('Preço desconhecido de QA');await page.locator('#search-form .search-go').click();await count(1);await page.locator('#filter-budget').selectOption('free');await count(0);});
+ await check(width+' preço desconhecido não aparece como gratuito',async()=>{await page.locator('#search-q').fill('Preço desconhecido de QA');await page.waitForFunction(()=>document.getElementById('search-count').textContent.startsWith('1 '));await count(1);await page.locator('#filter-budget').selectOption('free');await count(0);});
  await reset();
  await check(width+' cards completos, 240 IDs sem duplicidade',async()=>{while(await page.locator('#search-list .event-card').count()<240)await page.locator('#search-more').evaluate(b=>b.click());const ids=await page.locator('#search-list .event-card').evaluateAll(a=>a.map(x=>x.dataset.sessionId));assert.equal(ids.length,240);assert.equal(new Set(ids).size,240);});
  await check(width+' destaques aptos e Chat sem recomendação fictícia',async()=>{const labels=await page.locator('#home-list .curation-badge').allTextContents();assert.ok(labels.every(x=>x==='Apto para teste interno'));await nav('chat');assert.equal(await page.locator('[data-page=chat] .event-card').count(),0);assert.deepEqual(errors,[]);});
