@@ -1,3 +1,5 @@
+import {resolveCategories,resolveTags} from '../p2/taxonomy.js';
+import {validatePublicCatalog} from '../p2/public-catalog.js';
 // Qfazer — exportador de projeção pública, sem dependências de terceiros.
 // Importante: NUNCA publica o arquivo bruto da pesquisa; só campos permitidos e sessões aprovadas.
 
@@ -100,10 +102,16 @@ export function buildPublicProjection(rows,{now=new Date()}={}) {
     if(Number.isNaN(min)||Number.isNaN(max)||(min!==null&&max!==null&&min>max))errors.push(`Linha ${i+2}: faixa de preço inconsistente (${id})`);
     if(row.tipo_preco==='GRATUITO'&&min!==0)errors.push(`Linha ${i+2}: gratuidade sem preço zero (${id})`);
     if(row.imagem_url&&row.licenca_imagem==='LIBERADA'&&!httpsUrl(row.imagem_url))errors.push(`Linha ${i+2}: imagem sem URL HTTPS válida (${id})`);
+    if(row.imagem_url&&row.licenca_imagem==='LIBERADA'&&!httpsUrl(row.url_fonte_imagem))errors.push(`Linha ${i+2}: falta URL da fonte da imagem aprovada (${id})`);
+    if(row.imagem_url&&row.licenca_imagem==='LIBERADA'&&!String(row.credito_imagem??'').trim())errors.push(`Linha ${i+2}: falta crédito da imagem aprovada (${id})`);
+    const categories=resolveCategories(row);
+    const tags=resolveTags(row);
+    if(categories.includes('outros'))errors.push(`Linha ${i+2}: categoria não mapeada para taxonomia pública (${id})`);
     if(errors.some(e=>e.includes(`(${id})`)))continue;
     const out={
       session_id:id,
       titulo:String(row.titulo),categoria:String(row.categoria),
+      categorias_busca:categories,tags_busca:tags,
       descricao_editorial:String(row.descricao_editorial??''),
       data_local:date,hora_local:String(row.hora_local??''),
       inicio_utc:new Date(ts).toISOString(),
@@ -113,15 +121,21 @@ export function buildPublicProjection(rows,{now=new Date()}={}) {
       url_oficial:String(row.url_oficial),
       url_acesso:String(row.url_acesso||row.url_oficial),
       fonte_id:String(row.fonte_id),verificado_em:isoDate(row.verificado_em),
-      status:'APTO_PARA_PILOTO',reuso_publico:'LIBERADO'
+      status:'APTO_PARA_PILOTO',reuso_publico:'LIBERADO',revisao_editorial:'APROVADO'
     };
-    if(row.imagem_url&&row.licenca_imagem==='LIBERADA')out.imagem_url=String(row.imagem_url);
+    if(String(row.por_que_vale_a_pena??'').trim())out.por_que_vale_a_pena=String(row.por_que_vale_a_pena).trim();
+    if(row.imagem_url&&row.licenca_imagem==='LIBERADA'){
+      out.imagem_url=String(row.imagem_url);
+      out.licenca_imagem='LIBERADA';
+      if(String(row.credito_imagem??'').trim())out.credito_imagem=String(row.credito_imagem).trim();
+      out.url_fonte_imagem=String(row.url_fonte_imagem).trim();
+    }
     sessions.push(out);
   }
   if(errors.length)throw Error('Catálogo NÃO exportado. Corrigir:\n'+errors.slice(0,40).join('\n'));
   sessions.sort((a,b)=>a.inicio_utc.localeCompare(b.inicio_utc)||a.session_id.localeCompare(b.session_id));
-  return {
+  return validatePublicCatalog({
     meta:{schema_version:'1.0',scope:'PUBLICO_APROVADO',total:sessions.length},
     sessoes:sessions
-  };
+  });
 }

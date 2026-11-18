@@ -1,3 +1,4 @@
+import {resolveCategories,resolveTags,categoryLabel,tagLabel} from './taxonomy.js';
 // Adaptador de leitura: sessões reais aprovadas, sem alterar o JSON-fonte.
 // Nenhuma sessão é publicada automaticamente a partir do lote interno.
 export const CATALOG_STATUS = Object.freeze({
@@ -23,8 +24,11 @@ export function normalizeSessions(payload, {internal = false, now = new Date()} 
     unique.add(session.session_id);
     return true;
   }).map(session => ({
-    id: session.session_id, title: session.titulo, category: session.categoria,
-    description: session.descricao_editorial || '', date: session.data_local,
+    id: session.session_id, title: session.titulo, category: resolveCategories(session)[0],
+    categories: resolveCategories(session), tags: resolveTags(session),
+    imageUrl: session.licenca_imagem === 'LIBERADA' && validUrl(session.imagem_url) ? session.imagem_url : null,
+    imageCredit: session.credito_imagem || null,
+    description: session.descricao_editorial || '', why: session.por_que_vale_a_pena || '', date: session.data_local,
     startsAt: session.inicio_utc, hour: session.hora_local,
     neighborhood: session.bairro || 'Bairro não informado', place: session.local,
     priceType: session.tipo_preco || '', minCents: Number.isFinite(session.preco_min_centavos) ? session.preco_min_centavos : null,
@@ -39,9 +43,11 @@ export function priceLabel(item) {
 }
 export function sessionMatches(item, filter={}) {
   const q = (filter.query || '').trim().toLocaleLowerCase('pt-BR');
-  const content = `${item.title} ${item.place} ${item.neighborhood} ${item.description}`.toLocaleLowerCase('pt-BR');
+  const categories = Array.isArray(item.categories) ? item.categories : [item.category];
+  const tags = Array.isArray(item.tags) ? item.tags : [];
+  const content = `${item.title} ${item.place} ${item.neighborhood} ${item.description} ${categories.map(categoryLabel).join(' ')} ${tags.map(tagLabel).join(' ')}`.toLocaleLowerCase('pt-BR');
   if (q && !content.includes(q)) return false;
-  if (filter.category && filter.category !== item.category) return false;
+  if (filter.category && !resolveCategories({categoria:filter.category}).some(id=>categories.includes(id))) return false;
   if (filter.neighborhood && filter.neighborhood !== item.neighborhood) return false;
   if (filter.date && filter.date !== item.date) return false;
   if (filter.budget === 'free' && !(item.priceType === 'GRATUITO' && item.minCents === 0)) return false;

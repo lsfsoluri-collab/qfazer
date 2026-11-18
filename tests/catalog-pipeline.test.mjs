@@ -62,3 +62,13 @@ test('aceita data brasileira nas datas editoriais',()=>{
   const row=base();row.verificado_em='17/11/2026';row.revisado_em='17/11/2026';row.data_local='20/01/2027';
   assert.equal(buildPublicProjection([row],{now}).sessoes[0].data_local,'2027-01-20');
 });
+
+test('imagem liberada exige autoria e link verificável da origem',()=>{
+  const row={...base(),imagem_url:'https://example.org/arte.jpg',licenca_imagem:'LIBERADA'};
+  assert.throws(()=>buildPublicProjection([row],{now}),/fonte da imagem|crédito/);
+  row.url_fonte_imagem='https://example.org/press';row.credito_imagem='Fotógrafa informada na origem';
+  const [item]=buildPublicProjection([row],{now}).sessoes;
+  assert.equal(item.imagem_url,'https://example.org/arte.jpg');
+  assert.equal(item.credito_imagem,'Fotógrafa informada na origem');
+  assert.equal(item.url_fonte_imagem,'https://example.org/press');
+});

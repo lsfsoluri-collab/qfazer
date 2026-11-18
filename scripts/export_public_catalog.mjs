@@ -31,7 +31,7 @@ async function privateSheetRows(){
   if(!tokenResp.ok)throw Error(`Não foi possível autenticar na API Google (${tokenResp.status})`);
   const token=(await tokenResp.json()).access_token;
   if(!token)throw Error('A API não retornou token de leitura');
-  const range=encodeURIComponent('CURADORIA!A1:AF600');
+  const range=encodeURIComponent('CURADORIA!A1:AZ2000'); // já admite colunas editoriais futuras sem publicar dados brutos
   const resp=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${encodeURIComponent(sheetId)}/values/${range}?valueRenderOption=UNFORMATTED_VALUE`,{headers:{Authorization:`Bearer ${token}`}});
   if(!resp.ok)throw Error(`Não foi possível ler a aba CURADORIA (${resp.status}). Confirme o compartilhamento somente leitura com a conta de serviço.`);
   const json=await resp.json();
