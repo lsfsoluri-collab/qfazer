@@ -48,6 +48,7 @@ function showDetail(item){
    facts.append(node('dt','',k),node('dd','',v));
  }
  c.append(facts);
+ if(item.why){const box=node('section','detail-rationale');box.append(node('h3','', '✳ Por que vale a pena?'),node('p','',item.why));c.append(box);}
  const labels=[...new Set([...(item.categories||[item.category]).map(categoryLabel),...(item.tags||[]).map(tagLabel)])].filter(Boolean);
  if(labels.length){
    const tags=node('div','detail-tags');
