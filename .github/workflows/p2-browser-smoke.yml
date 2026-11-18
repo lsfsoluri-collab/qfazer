@@ -4,6 +4,9 @@ on:
     paths:
       - "p2/**"
       - "tests/browser-smoke.mjs"
+      - "tests/browser-curation-smoke.mjs"
+      - "scripts/build-internal-preview.mjs"
+      - "scripts/templates/**"
       - ".github/workflows/p2-browser-smoke.yml"
   workflow_dispatch:
 permissions:
@@ -25,7 +28,7 @@ jobs:
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Run UI smoke
-        run: node tests/browser-smoke.mjs
+        run: node tests/browser-smoke.mjs && node tests/browser-curation-smoke.mjs
       - name: Attach screenshots for review
         uses: actions/upload-artifact@v4
         if: always()
@@ -45,6 +48,7 @@ jobs:
             p2/app.css
             p2/app.js
             p2/catalog.js
+            p2/curation.js
             p2/taxonomy.js
             p2/assets/*.svg
             p2/manifest.webmanifest
