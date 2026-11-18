@@ -116,7 +116,7 @@ try{
  await check('ficha de evento em tela cheia com informações e retorno',async()=>{
   await mobile.page.locator('.nav-mobile [data-tab="buscar"]').click();
   const first=mobile.page.locator('#search-list .event-card').first();
-  await first.locator('.detail-link').click();
+  await first.click({position:{x:115,y:70}}); // qualquer área do card abre a ficha, não só a seta
   const modal=mobile.page.locator('#event-modal');
   await modal.waitFor({state:'visible'});
   const box=await modal.boundingBox();
