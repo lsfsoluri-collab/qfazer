@@ -9,7 +9,7 @@ Manter opções futuras, verificadas e relevantes no Qfazer sem apagar a trilha 
 **FACT (18/11):** CURADORIA com 240 `session_id` únicos: 186 `APTO_PARA_PILOTO`, 43 `PENDENTE_VERIFICACAO`, 11 `NAO_UTILIZAR`, 0 `reuso_publico=LIBERADO`, 0 `revisao_editorial=APROVADO`. `BASE_ORIGINAL` é preservada e **não deve ser editada**. A documentação do PR #5 já contém `SPEC_SINCRONIZACAO_INTEGRADA_v0.5.md`, `scripts/export_public_catalog.mjs`, `p2/public-catalog.js` e `p2/catalog-public.json` vazio, com testes automatizados. Cron de publicação **não ativado**.
 
 ## 2. Duas camadas, duas ferramentas
-**Camada editorial/semântica:** uma tarefa agendada do ChatGPT `Curadoria diária Qfazer` faz triagem e pesquisa de URLs oficiais. Início previsto 19/11/2026, aproximadamente 09h, fuso America/Sao_Paulo. **Piloto somente leitura**, limitado a até 15 pendências prioritárias e 10 novas sessões candidatas por execução. A tarefa gera relatório com URLs, IDs e alterações propostas; não afirma capacidade de extração automática indiscriminada e não grava na planilha.
+**Camada editorial/semântica:** uma tarefa agendada do ChatGPT `Curadoria diária Qfazer` faz triagem e pesquisa de URLs oficiais. Início previsto 19/11/2026, aproximadamente 09h, fuso America/Sao_Paulo. **Piloto somente leitura**, limitado a até 10 sessões aptas próximas, 15 pendências prioritárias e 10 novas sessões candidatas por execução. A tarefa gera relatório com URLs, IDs e alterações propostas; não afirma capacidade de extração automática indiscriminada e não grava na planilha.
 
 **Camada determinística/operacional:** código versionado e Google Sheets. Em produção, o P2 filtra sessões vencidas na consulta/renderização em horário atual de São Paulo; o exportador publica só projeção pública permitida. Workflow GitHub **já preparado** para 09:15 BRT em novembro (12:15 UTC), mas não ativo no branch padrão, sem conta de serviço/variáveis e sem revisão humana. O workflow cria PR, nunca faz merge; release/deploy exige gate específico. Não oferecer cron como tempo real nem presumir pontualidade exata.
 
@@ -19,6 +19,12 @@ Manter opções futuras, verificadas e relevantes no Qfazer sem apagar a trilha 
 - Reavaliar na abertura do app e ao voltar de aba/suspensão. Especificar atualização periódica para telas abertas durante a virada de horário (sujeito a implementação/QA), sem recarregar a página inteira indevidamente.
 - Evento cancelado ou alterado pela fonte deve ser marcado para revalidação imediata; salvos por ID precisam refletir a alteração. Evento recorrente é nova sessão, não reaproveitar ID de evento antigo.
 - **Bloqueio:** não tratar sessão iniciada como "disponível" só porque há estoque no link. Fuso de negócio America/Sao_Paulo; persistência e comparação com instante UTC.
+
+### FL-01B — Rechecagem de sessões já aptas (ChatGPT, risco e recência)
+- A tarefa diária também prioriza **até 10 sessões já APTO_PARA_PILOTO** que começam nos próximos 7 dias, para rever alterações de horário, cancelamento, local, condições de ingresso/preço e links nos canais oficiais. Status apto não é garantia de informação permanentemente atual.
+- Política proposta de frequência após homologação: próximas 72h = revisão prioritária diária; 4–14 dias = revisão a cada 2–3 dias por risco; 15–30 dias = revisão semanal, além de disparos por indícios oficiais de alteração. Estes intervalos são **hipóteses operacionais**, não rotinas configuradas.
+- Nenhuma tarefa pode afirmar que verificou **todos os 240 eventos** em cada execução se examinou apenas um subconjunto. O relatório informa cobertura efetiva, pendentes de revisão e antiguidade por registro.
+- Mudança confirmada de fato deve entrar no mesmo fluxo de evidência e aprovação de FL-02, preservando versões e sinalizando salvos eventualmente afetados.
 
 ### FL-02 — Investigação das pendências (ChatGPT com evidências)
 - Entrada: `CURADORIA` + `REGRAS`, campos `motivo_status`, `restricoes`, `observacoes_equipe`, `verificado_em`, `fonte_id` e URLs existentes.
