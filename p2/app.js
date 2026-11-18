@@ -13,7 +13,7 @@ function announce(msg) { let el=byId('app-announcement');if(!el){el=document.cre
 function text(el,v){ el.textContent=String(v??'');return el; }
 function node(tag,cls,content){const e=document.createElement(tag);if(cls)e.className=cls;if(content!==undefined)text(e,content);return e;}
 function button(label,cls,handler){const b=node('button',cls,label);b.type='button';b.addEventListener('click',handler);return b;}
-function uiIcon(name,cls=''){const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');if(cls)svg.setAttribute('class',cls);svg.setAttribute('aria-hidden','true');const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href',`#i-${name}`);svg.append(use);return svg;}
+function uiIcon(name,cls=''){const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');if(cls)svg.setAttribute('class',cls);svg.setAttribute('aria-hidden','true');if(name==='share'||name==='external'){svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','1.8');svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d',name==='share'?'M12 15V3m0 0L8 7m4-4 4 4M5 11v10h14V11':'M14 3h7v7m0-7L10 14m0-11H3v18h18v-7');svg.append(path);return svg;}const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href',`#i-${name}`);svg.append(use);return svg;}
 function mediaVariant(item){let h=0;for(const c of item.id)h=(h*31+c.charCodeAt(0))>>>0;return h%6;}
 function visualBand(item){
  const band=node('div',`card-art variant-${mediaVariant(item)}`);
@@ -48,7 +48,7 @@ function showDetail(item){
  });
  save.setAttribute('aria-label',saved?'Remover dos salvos':'Salvar evento');
  save.append(uiIcon('heart'));
- const share=button('↗','detail-icon-action',async()=>{
+ const share=button('','detail-icon-action',async()=>{
    try{
      if(navigator.share){await navigator.share({title:item.title,url:item.url||location.href});}
      else if(navigator.clipboard&&validUrl(item.url)){await navigator.clipboard.writeText(item.url);announce('Link oficial copiado.');}
@@ -56,6 +56,7 @@ function showDetail(item){
    }catch(error){if(error?.name!=='AbortError')announce('Não foi possível compartilhar.');}
  });
  share.setAttribute('aria-label','Compartilhar link oficial');
+ share.append(uiIcon('share'));share.disabled=!validUrl(item.url);
  toolbar.append(save,share);
  const title=node('h2','modal-title',item.title);title.id='detail-title';
  c.append(hero,toolbar,title);
@@ -81,7 +82,7 @@ function showDetail(item){
  if(item.imageUrl&&item.imageCredit)c.append(node('p','image-credit',`Imagem: ${item.imageCredit}`));
  c.append(node('p','disclaimer','Preço e disponibilidade podem mudar. Confira a programação e as condições no canal oficial antes de sair.'));
  if(validUrl(item.url)){
-   const a=node('a','button button-primary detail-official-link',item.eligible===false?'Consultar fonte da pendência ↗':'Abrir página oficial ↗');
+   const a=node('a','button button-primary detail-official-link',item.eligible===false?'Consultar fonte da pendência':'Abrir página oficial');a.append(uiIcon('external'));
    a.href=item.url;a.target='_blank';a.rel='noopener noreferrer';c.append(a);
  }
  if(typeof d.showModal==='function')d.showModal();else d.setAttribute('open','');
