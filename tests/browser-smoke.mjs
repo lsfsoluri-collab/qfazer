@@ -80,7 +80,7 @@ try{
   const ok=await desktop.page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1);
   assert.ok(ok,'scroll horizontal indevido');
  });
- await check('desktop 45 sessões reais do fixture classificadas e 18 cards iniciais',async()=>{
+ await check('desktop fixture isolada de QA com 45 casos e 18 cards iniciais',async()=>{
   await desktop.page.locator('.nav-desktop [data-tab="buscar"]').click();
   await desktop.page.waitForFunction(()=>document.querySelector('#search-count')?.textContent?.includes('45'));
   const count=await desktop.page.locator('#search-list .event-card').count();
