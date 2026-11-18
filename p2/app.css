@@ -43,3 +43,7 @@
   .event-modal .detail-official-link{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:10;box-shadow:0 10px 30px #000c}
   .search-progress{padding-bottom:22px}
 }
+
+.detail-rationale{margin-top:21px;border:1px solid var(--lime);border-radius:15px;padding:16px 17px;background:#10120b}
+.detail-rationale h3{font:800 16px/1.25 var(--font-display);color:var(--lime);margin:0 0 9px}
+.detail-rationale p{margin:0;font-size:13px;line-height:1.5;color:#e5e5dd}
