@@ -116,3 +116,59 @@ main[tabindex="-1"]:focus{outline:none}
 
 /* Revisão interna: amplia apenas os controles da curadoria. */
 .curation-filters{display:flex;flex-wrap:wrap;gap:14px;border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px}.curation-filters[hidden]{display:none}.curation-filters label{display:grid;gap:6px;flex:1;min-width:160px}.curation-filters select{max-width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:#202020;color:var(--cream)}.curation-filters p{flex-basis:100%;font-size:12px;margin:0}.curation-badge{font-size:12px;font-weight:600;color:var(--lime)}.status-PENDENTE_VERIFICACAO{color:#f6c76c}.status-NAO_UTILIZAR{color:#ff9b9b}.curation-note{border:1px solid #56663b;background:#171b12;color:var(--cream);border-radius:12px;padding:16px;margin:16px 0}.curation-note p{font-size:14px}
+
+/* Busca e detalhes v0.6 — referências fornecidas pela PO, escopo isolado. */
+#search-list .search-event-card{border:1px solid #aaa89f;border-radius:22px;background:var(--cream);overflow:hidden}
+#search-list .search-event-card .card-body{position:relative;padding:12px 16px 13px;gap:6px;border-radius:15px 15px 0 0;background:var(--cream);margin-top:-4px;z-index:2}
+#search-list .search-event-card .event-title{font-size:20px;line-height:1.15;letter-spacing:-.04em;overflow-wrap:anywhere}
+#search-list .search-event-card .card-meta{font-size:14px;gap:5px}
+#search-list .search-event-card .card-meta svg{width:17px;height:17px;flex:none}
+#search-list .search-event-card .card-location{font-size:12px;white-space:normal}
+#search-list .search-event-card .card-footer{padding-top:0;min-height:44px}
+#search-list .search-event-card .price{display:flex;align-items:center;gap:8px;font-size:15px;white-space:normal;background:none;padding:0;max-width:65%;overflow:visible}
+#search-list .price-icon{width:18px;height:18px;flex:none}
+#search-list .search-event-card .card-actions .detail-link{height:46px;width:46px}
+#search-list .search-event-card .detail-link svg{width:26px;height:26px}
+#search-list .search-event-card .compare-button{height:44px;width:44px}
+#search-list .search-event-card .card-art .media-note,.event-modal .detail-hero .media-note{bottom:14px;left:16px;background:#0b0b0bd9;color:var(--cream);border:1px solid #ccc8;padding:6px 16px;font-size:13px;font-weight:700;border-radius:30px}
+#search-list .curation-badge{font-size:10px;margin:0;color:#3e5420}
+#search-list .status-PENDENTE_VERIFICACAO{color:#7b4c00}
+#search-list .status-NAO_UTILIZAR{color:#8e2525}
+html.has-event-detail{overflow:hidden}
+.event-modal{--detail-hero-height:210px;position:fixed;inset:0;width:min(calc(100% - 28px),620px);height:auto;max-width:620px;max-height:calc(100dvh - 32px);margin:auto;padding:0 0 18px;border:1px solid #bbb9ae;border-radius:28px;background:#0d0d0d;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.event-modal::backdrop{background:#000b;backdrop-filter:blur(5px)}
+.event-modal form{position:sticky;top:12px;right:auto;height:0;z-index:80;padding:0 14px;pointer-events:none}
+.event-modal .close-modal{height:50px;width:50px;flex:none;background:#111e;border:3px solid var(--lime);color:var(--cream);font-size:34px;font-weight:300;pointer-events:auto;line-height:1}
+.event-modal #event-detail{position:relative;padding-bottom:4px}
+.event-modal .detail-hero{height:var(--detail-hero-height);margin:0 0 0;border:0;border-radius:0;overflow:hidden}
+.event-modal #event-detail>:not(.detail-hero){margin-left:20px;margin-right:20px}
+.event-modal .detail-quick-actions{position:absolute;top:calc(var(--detail-hero-height) - 65px);right:0;z-index:5;display:flex;gap:9px;margin-top:0;margin-bottom:0}
+.event-modal .detail-icon-action{width:44px;height:44px;background:#101010c9;border:1px solid #ddd;font-size:27px}
+.event-modal .modal-title{font-size:32px;line-height:1.08;letter-spacing:-.045em;margin-top:5px;margin-bottom:13px;overflow-wrap:anywhere}
+.event-modal .detail-summary{font-size:15px;line-height:1.4;color:var(--cream);margin-top:0;margin-bottom:13px}
+.event-modal .event-facts{grid-template-columns:132px minmax(0,1fr);column-gap:10px;row-gap:10px;border-top:1px solid #68685d;border-bottom:1px solid #68685d;padding:13px 0;margin-top:10px;margin-bottom:17px;font-size:14px}
+.event-modal .event-facts dt{display:flex;align-items:center;gap:11px;color:#c2c2bb}
+.event-modal .event-facts dt svg{width:21px;height:21px;flex:none}
+.event-modal .event-facts dd{color:var(--cream);min-width:0;overflow-wrap:anywhere;line-height:1.4}
+.event-modal .detail-rationale{border:1px solid var(--lime);border-radius:18px;padding:15px 16px;margin-top:15px;background:linear-gradient(120deg,#1a1e0c,#10120b)}
+.event-modal .detail-rationale h3{display:flex;align-items:center;gap:9px;font-size:18px;letter-spacing:-.02em}
+.event-modal .detail-rationale h3 svg{width:25px;height:25px;flex:none}
+.event-modal .detail-rationale p{font-size:14px;line-height:1.4}
+.event-modal .detail-tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.event-modal .detail-tag{display:flex;align-items:center;gap:10px;padding:8px 12px;border-color:#89897c;font-size:12px;overflow-wrap:anywhere}
+.event-modal .detail-tag svg{width:23px;height:23px;flex:none;color:var(--lime)}
+.event-modal .disclaimer{border-top:1px solid #68685d;padding-top:15px;margin-top:19px;color:#c8c8bf;font-size:12px;line-height:1.4}
+.event-modal .detail-official-link{position:relative;bottom:auto;margin-top:12px;min-height:48px;font-size:16px;box-shadow:none}
+.event-modal .curation-note{padding:12px;margin-top:18px;font-size:12px}
+.event-modal .curation-note p{font-size:12px;line-height:1.4}
+@media(max-width:650px){
+ #search-list.event-grid{grid-template-columns:minmax(0,1fr);gap:14px}
+ #search-list .search-event-card .card-art{height:clamp(108px,29vw,146px)}
+ #search-list .search-event-card .event-title{font-size:20px}
+ #search-list .search-event-card .card-save{width:39px;height:39px}
+ .event-modal{--detail-hero-height:175px;width:calc(100% - 24px);max-height:calc(100dvh - 26px);border-radius:27px}
+ .event-modal .modal-title{font-size:30px}
+ .event-modal #event-detail>:not(.detail-hero){margin-left:17px;margin-right:17px}
+ .event-modal .event-facts{grid-template-columns:125px minmax(0,1fr);font-size:13px;gap:11px 8px}
+ .event-modal .detail-rationale h3{font-size:18px}
+}

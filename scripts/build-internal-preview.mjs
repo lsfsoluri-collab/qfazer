@@ -20,8 +20,16 @@ export async function buildInternalPreview(payload,{generatedAt=new Date().toISO
   const fieldset=shell.match(/<fieldset id="curation-filters"[\s\S]*?<\/fieldset>/)?.[0];
   if(!fieldset||!html.includes('<div class="filter-controls">'))throw Error('Referência não corresponde ao contrato visual do P2.');
   html=html.replace('<div class="filter-controls">',()=>fieldset+'<div class="filter-controls">');
-  const extra=css.slice(css.indexOf('/* Revisão interna:'));
+  const extra=css.slice(css.indexOf('/* Revisão interna:'),css.indexOf('/* Busca e detalhes v0.6'));
   html=html.replace('</head>',()=>'<style>'+extra+'</style></head>');
+ }
+ // Keep the approved shell intact; apply only the requested search/detail revision.
+ if(referenceHtml){
+  const marker='/* Busca e detalhes v0.6';
+  const revision=css.slice(css.indexOf(marker));
+  if(!css.includes(marker))throw Error('Estilos de Buscar/Detalhes ausentes.');
+  html=html.replace(/<style data-qfazer-search-detail>[\s\S]*?<\/style>/g,'');
+  html=html.replace('</head>',()=>'<style data-qfazer-search-detail>'+revision+'</style></head>');
  }
  for(const match of [...html.matchAll(/(?:src|href)="(\.\/assets\/[^\"]+\.svg)"/g)]){
   const bytes=await fs.readFile(resolve(ROOT,'p2',match[1]));html=html.replaceAll(match[1],'data:image/svg+xml;base64,'+bytes.toString('base64'));

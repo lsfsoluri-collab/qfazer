@@ -1,5 +1,5 @@
 // Only shell assets. No catalog, API results, private data, or subscriptions are cached.
-const CACHE = 'qfazer-shell-v5';
+const CACHE = 'qfazer-shell-v6';
 const ROOT = new URL('./', self.registration.scope);
 const SHELL = ['./','./index.html','./app.css','./app.js','./catalog.js','./public-catalog.js','./curation.js','./taxonomy.js','./manifest.webmanifest','./assets/logo-qfazer.svg','./assets/app-192.svg','./assets/app-512.svg'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));});

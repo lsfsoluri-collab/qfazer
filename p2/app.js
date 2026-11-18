@@ -34,8 +34,11 @@ function visualBand(item){
 function navTo(view){if(!tabs.has(view))view='inicio';state.active=view;for(const page of document.querySelectorAll('[data-page]'))page.hidden=page.dataset.page!==view;for(const btn of document.querySelectorAll('[data-tab]')){const active=btn.dataset.tab===view;btn.classList.toggle('is-active',active);if(active)btn.setAttribute('aria-current','page');else btn.removeAttribute('aria-current');}history.replaceState(null,'',`#${view}`);document.title=`${view.charAt(0).toUpperCase()+view.slice(1)} — Qfazer`;if(view==='salvos')renderSaved();if(view==='buscar')renderSearch();scrollTo({top:0,behavior:'instant'});byId('main').focus({preventScroll:true});}
 function emptyState(title,body){const box=node('div','empty-state');box.append(node('span','empty-star','✳'),node('h3','',title),node('p','',body));return box;}
 function formatDay(event){const d=new Date(event.startsAt||`${event.date}T12:00:00-03:00`);return Number.isNaN(d.getTime())?'Data a confirmar':new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'short',weekday:'short',timeZone:'America/Sao_Paulo'}).format(d).replace('.','');}
+let detailReturn=null;
 function showDetail(item){
  const d=byId('event-modal'),c=byId('event-detail');
+ detailReturn={id:item.id,trigger:document.activeElement,scrollY:window.scrollY};
+ d.dataset.sessionId=item.id;document.documentElement.classList.add('has-event-detail');
  c.replaceChildren();
  const hero=visualBand(item);hero.classList.add('detail-hero');
  const toolbar=node('div','detail-quick-actions');
@@ -55,25 +58,26 @@ function showDetail(item){
  share.setAttribute('aria-label','Compartilhar link oficial');
  toolbar.append(save,share);
  const title=node('h2','modal-title',item.title);title.id='detail-title';
- c.append(hero,toolbar,node('p','section-overline',categoryLabel(item.category)),title);
- if(item.internal&&item.statusLabel){const review=node('section','curation-note');review.append(node('strong','',item.statusLabel),node('p','',item.reason||'Dados factuais aptos para teste interno. A publicação tem aprovação própria.'),node('p','',`Publicação: ${item.publication==='LIBERADO'?'liberada':'pendente de autorização'}`));if(item.restrictions)review.append(node('p','',item.restrictions));if(!item.eligible)review.append(node('p','','Registro visível para curadoria. Não participa de recomendações ou comparação.'));c.append(review);}
+ c.append(hero,toolbar,title);
+
  if(item.description){
-  c.append(node('h3','detail-subhead','Sobre esta experiência'),node('p','detail-summary',item.description));
+  c.append(node('p','detail-summary',item.description));
  }else{
-  c.append(node('p','detail-summary','Confira os detalhes oficiais da programação no site do organizador.'));
+  c.append(node('p','detail-summary','Descrição editorial ainda não informada. Consulte a programação oficial.'));
  }
  const facts=node('dl','event-facts');
- for(const [k,v] of [['Quando',`${formatDay(item)} • ${item.hour||'horário a confirmar'}`],['Onde',`${item.place} • ${item.neighborhood}`],['Preço',priceLabel(item)],['Verificação',item.verifiedAt||'não informada']]){
-   facts.append(node('dt','',k),node('dd','',v));
+ for(const [icon,k,v] of [['calendar','Quando',`${formatDay(item)} • ${item.hour||'horário a confirmar'}`],['pin','Onde',`${item.place} • ${item.neighborhood}`],['ticket','Preço',priceLabel(item)],['check','Verificação',item.verifiedAt||'não informada']]){
+   const label=node('dt','',k);label.prepend(uiIcon(icon));facts.append(label,node('dd','',v));
  }
  c.append(facts);
- if(item.why){const box=node('section','detail-rationale');box.append(node('h3','', '✳ Por que vale a pena?'),node('p','',item.why));c.append(box);}
+ {const box=node('section','detail-rationale'),heading=node('h3','', 'Por que vale a pena?');heading.prepend(uiIcon('spark'));box.append(heading,node('p','',item.why||'Justificativa editorial ainda não informada.'));c.append(box);}
  const labels=[...new Set([...(item.categories||[item.category]).map(categoryLabel),...(item.tags||[]).map(tagLabel)])].filter(Boolean);
  if(labels.length){
    const tags=node('div','detail-tags');
-   for(const label of labels.slice(0,10))tags.append(node('span','detail-tag',label));
+   for(const label of labels.slice(0,10)){const chip=node('span','detail-tag',label);chip.prepend(uiIcon(/música|samba|show/i.test(label)?'music':/gastro|comida/i.test(label)?'food':'spark'));tags.append(chip);}
    c.append(tags);
  }
+ if(item.internal&&item.statusLabel){const review=node('section','curation-note');review.append(node('strong','',item.statusLabel),node('p','',item.reason||'Dados factuais aptos para teste interno. A publicação tem aprovação própria.'),node('p','',`Publicação: ${item.publication==='LIBERADO'?'liberada':'pendente de autorização'}`));if(item.restrictions)review.append(node('p','',item.restrictions));if(!item.eligible)review.append(node('p','','Registro visível para curadoria. Não participa de recomendações ou comparação.'));c.append(review);}
  if(item.imageUrl&&item.imageCredit)c.append(node('p','image-credit',`Imagem: ${item.imageCredit}`));
  c.append(node('p','disclaimer','Preço e disponibilidade podem mudar. Confira a programação e as condições no canal oficial antes de sair.'));
  if(validUrl(item.url)){
@@ -83,7 +87,7 @@ function showDetail(item){
  if(typeof d.showModal==='function')d.showModal();else d.setAttribute('open','');
 }
 function card(item,{allowCompare=false}={}){
- const article=node('article','event-card');article.dataset.sessionId=item.id;const band=visualBand(item);article.append(band);
+ const article=node('article',allowCompare?'event-card search-event-card':'event-card');article.dataset.sessionId=item.id;const band=visualBand(item);article.append(band);
  const saved=state.saved.includes(item.id);
  const saveBtn=button('',`card-save ${saved?'is-saved':''}`,()=>toggleSave(item.id));saveBtn.setAttribute('aria-label',saved?`Remover ${item.title} dos salvos`:`Salvar ${item.title}`);saveBtn.append(uiIcon('heart'),node('span','visually-hidden',saved?'Remover salvo':'Salvar'));
  article.append(saveBtn);
@@ -95,6 +99,7 @@ function card(item,{allowCompare=false}={}){
  const actions=node('div','card-actions');
  if(allowCompare&&item.eligible!==false){const selected=state.selected.includes(item.id);const compareBtn=button('',`compare-button ${selected?'chosen':''}`,()=>toggleCompare(item.id));compareBtn.setAttribute('aria-label',selected?`Remover ${item.title} da comparação`:`Comparar ${item.title}`);compareBtn.append(uiIcon(selected?'check':'sliders'),node('span','visually-hidden',selected?'Comparando':'Comparar'));actions.append(compareBtn);}
  const details=button('', 'detail-link',()=>showDetail(item));details.setAttribute('aria-label',`Ver detalhes de ${item.title}`);details.append(uiIcon('arrow'),node('span','visually-hidden','Detalhes'));actions.append(details);
+ if(allowCompare){const priceIcon=uiIcon('ticket');priceIcon.classList.add('price-icon');footer.querySelector('.price').prepend(priceIcon);}
  footer.append(actions);main.append(footer);article.append(main);
  // O card inteiro abre detalhes; botões de salvar/comparar mantêm ações independentes.
  article.classList.add('is-openable');
@@ -120,18 +125,24 @@ function renderSaved(){const source=state.homologation?state.audit:state.all;con
 function options(select,values){const current=select.value;for(const old of [...select.options].slice(1))old.remove();for(const v of values){const opt=node('option','',catLabels[v]||v);opt.value=v;select.add(opt);}if(values.includes(current))select.value=current;}
 function syncFilters(){if(state.homologation){const select=byId('filter-tag');const current=select.value;select.replaceChildren(node('option','','Todas as tags'));select.options[0].value='';for(const id of [...new Set(state.audit.flatMap(x=>x.tags))].sort()){const option=node('option','',tagLabel(id)||id);option.value=id;select.append(option);}if([...select.options].some(x=>x.value===current))select.value=current;}const source=state.homologation?state.audit:state.all;const present=new Set(source.flatMap(x=>x.categories||[x.category]));options(byId('filter-category'),CATEGORIES.filter(x=>present.has(x.id)).map(x=>x.id));options(byId('filter-neighborhood'),[...new Set(source.map(x=>x.neighborhood))].sort((a,b)=>a.localeCompare(b,'pt-BR')));}
 function getFilters(){return {query:byId('search-q').value,category:byId('filter-category').value,neighborhood:byId('filter-neighborhood').value,date:byId('filter-date').value,budget:byId('filter-budget').value,status:byId('filter-status')?.value||'',blocker:byId('filter-blocker')?.value||'',publication:byId('filter-publication')?.value||'',tag:byId('filter-tag')?.value||''};}
-function renderSearch(){
+function renderSearch({append=false}={}){
  const filters=getFilters(),key=JSON.stringify(filters);
  if(key!==state.searchFilterKey){state.searchVisible=SEARCH_PAGE_SIZE;state.searchFilterKey=key;}
  const source=state.homologation?state.audit:state.all;
  const matches=source.filter(x=>sessionMatches(x,filters)&&(!state.homologation||curationMatches(x,filters)&&(!filters.tag||x.tags.includes(filters.tag))));
  text(byId('search-count'),`${matches.length} ${matches.length===1?'sessão encontrada':'sessões encontradas'}`);
  const visible=matches.slice(0,state.searchVisible);
- renderInto('search-list',visible,['Nenhuma sessão encontrada',state.all.length?'Tente alterar os filtros ou consulte a fonte oficial.':'Ainda não há sessões autorizadas para exibição.']);
+ const list=byId('search-list'),existing=[...list.querySelectorAll('.event-card')];
+ const canAppend=append&&existing.length>0&&existing.every((card,i)=>card.dataset.sessionId===visible[i]?.id);
+ if(canAppend){for(const item of visible.slice(existing.length))list.append(card(item,{allowCompare:true}));}
+ else renderInto('search-list',visible,['Nenhuma sessão encontrada',state.all.length?'Tente alterar os filtros ou consulte a fonte oficial.':'Ainda não há sessões autorizadas para exibição.']);
  text(byId('search-visible-count'),matches.length?`Exibindo ${visible.length} de ${matches.length} sessões`:'');
  byId('search-more').hidden=visible.length>=matches.length;
- renderCompare();
+ renderCompare();requestAnimationFrame(maybeLoadMoreSearch);
 }
+let searchLoading=false;
+function maybeLoadMoreSearch(){if(state.active==='buscar'&&!byId('event-modal').open&&!byId('search-more').hidden&&byId('search-sentinel').getBoundingClientRect().top<=innerHeight+380)loadMoreSearch();}
+function loadMoreSearch(){if(searchLoading||state.active!=='buscar'||byId('search-more').hidden||byId('event-modal').open)return;searchLoading=true;state.searchVisible+=SEARCH_PAGE_SIZE;renderSearch({append:true});requestAnimationFrame(()=>{searchLoading=false;maybeLoadMoreSearch();});}
 function renderCompare(){state.selected=compareIds(state.all,state.selected);const tray=byId('compare-tray'),target=byId('compare-content');tray.hidden=state.selected.length===0;target.replaceChildren();if(!state.selected.length)return;target.append(node('p','micro',`${state.selected.length} de 3 sessões selecionadas`));const list=node('div','compare-grid');for(const id of state.selected){const s=state.all.find(x=>x.id===id);if(!s)continue;const cell=node('div','compare-item');cell.append(node('strong','',s.title),node('p','',`${formatDay(s)} • ${s.hour||'horário a confirmar'}`),node('p','',`${s.place} • ${s.neighborhood}`),node('p','',priceLabel(s)));cell.append(button('Remover','text-button',()=>toggleCompare(id)));list.append(cell);}target.append(list);}
 function toggleSave(id){if(state.saved.includes(id))state.saved=state.saved.filter(x=>x!==id);else state.saved=[...state.saved,id].slice(-300);storeSaved();renderHome();renderSearch();renderSaved();announce(state.saved.includes(id)?'Sessão salva neste dispositivo.':'Sessão removida dos salvos.');}
 function toggleCompare(id){if(!state.all.some(x=>x.id===id)){announce('Esta sessão está bloqueada para comparação. Consulte a pendência na ficha.');return;}if(state.selected.includes(id))state.selected=state.selected.filter(x=>x!==id);else if(state.selected.length>=3){announce('Escolha até três sessões para comparar.');return;}else state.selected.push(id);renderSearch();}
@@ -139,8 +150,10 @@ function initializeCatalog(payload,internal){if(internal){state.audit=normalizeC
 async function fetchPublic(){try{const response=await fetch('./catalog-public.json',{cache:'no-store'});if(!response.ok)return;const data=await response.json();initializeCatalog(data,false);}catch{/* conteúdo ausente não é erro crítico: sem dados fictícios */}}
 function start(){for(const btn of document.querySelectorAll('[data-tab]'))btn.addEventListener('click',()=>navTo(btn.dataset.tab));document.querySelector('.brand').addEventListener('click',e=>{e.preventDefault();navTo('inicio');});byId('home-form').addEventListener('submit',e=>{e.preventDefault();byId('search-q').value=byId('home-query').value;navTo('buscar');});byId('home-show-all').addEventListener('click',()=>navTo('buscar'));byId('home-more').addEventListener('click',()=>navTo('buscar'));for(const b of document.querySelectorAll('[data-category-shortcut]'))b.addEventListener('click',()=>{navTo('buscar');byId('filter-category').value=b.dataset.categoryShortcut;renderSearch();});byId('chat-to-search').addEventListener('click',()=>navTo('buscar'));byId('search-form').addEventListener('submit',e=>{e.preventDefault();renderSearch();});for(const field of ['filter-category','filter-neighborhood','filter-date','filter-budget'])byId(field).addEventListener('change',renderSearch);
 let filterTyping;
-byId('search-q').addEventListener('input',()=>{clearTimeout(filterTyping);filterTyping=setTimeout(renderSearch,200);});byId('search-form').addEventListener('reset',()=>setTimeout(renderSearch,0));byId('compare-clear').addEventListener('click',()=>{state.selected=[];renderSearch();});byId('search-more').addEventListener('click',()=>{state.searchVisible+=SEARCH_PAGE_SIZE;renderSearch();});
-if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{if(state.active==='buscar'&&entries.some(entry=>entry.isIntersecting)&&!byId('search-more').hidden)byId('search-more').click();},{rootMargin:'380px 0px'});observer.observe(byId('search-sentinel'));}
+byId('search-q').addEventListener('input',()=>{clearTimeout(filterTyping);filterTyping=setTimeout(renderSearch,200);});byId('search-form').addEventListener('reset',()=>setTimeout(renderSearch,0));byId('compare-clear').addEventListener('click',()=>{state.selected=[];renderSearch();});byId('search-more').addEventListener('click',loadMoreSearch);
+if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting))maybeLoadMoreSearch();},{rootMargin:'380px 0px'});observer.observe(byId('search-sentinel'));}
+else{let scrolling=false;window.addEventListener('scroll',()=>{if(!scrolling){scrolling=true;requestAnimationFrame(()=>{scrolling=false;maybeLoadMoreSearch();});}},{passive:true});}
+byId('event-modal').addEventListener('close',()=>{document.documentElement.classList.remove('has-event-detail');if(!detailReturn)return;const saved=detailReturn;detailReturn=null;const trigger=saved.trigger?.isConnected?saved.trigger:[...document.querySelectorAll('.event-card')].find(card=>card.dataset.sessionId===saved.id)?.querySelector('.detail-link');trigger?.focus({preventScroll:true});scrollTo({top:saved.scrollY,behavior:'instant'});});
 if(state.homologation){byId('review-panel').hidden=false;byId('curation-filters').hidden=false;for(const [value,label] of Object.entries(BLOCKER_LABELS)){const option=node('option','',label);option.value=value;byId('filter-blocker').append(option);}for(const id of ['filter-status','filter-blocker','filter-publication','filter-tag'])byId(id).addEventListener('change',renderSearch);const embedded=byId('qfazer-curation-data')||byId('qfazer-preview-data');if(embedded){try{initializeCatalog(JSON.parse(embedded.textContent),true);}catch{announce('Não foi possível carregar o snapshot interno.');}}byId('import-catalog').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>12_000_000)throw Error('Arquivo muito grande para revisão local.');const payload=JSON.parse(await file.text());if(payload?.meta?.publicacao_autorizada===true)throw Error('Arquivo interno inesperadamente marcado como público.');initializeCatalog(payload,true);text(byId('review-status'),`${state.audit.length} sessões na curadoria; ${state.all.length} elegíveis neste momento. Somente neste navegador.`);}catch(error){text(byId('review-status'),`Não foi possível abrir o catálogo: ${error.message}`);}});}
 const hash=location.hash.slice(1);navTo(tabs.has(hash)?hash:'inicio');if(!state.homologation)fetchPublic();if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});}
 start();
