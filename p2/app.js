@@ -83,7 +83,7 @@ function renderHome(){const featured=byId('home-featured');featured.replaceChild
 }
 function renderSaved(){const items=state.saved.map(id=>state.all.find(s=>s.id===id)).filter(Boolean);renderInto('saved-list',items,state.saved.length?['Sessões não disponíveis neste catálogo','Seus IDs salvos permanecem neste dispositivo. Carregue uma versão atualizada do catálogo para conferir as informações.']:['Seu próximo rolê começa aqui','Quando salvar uma sessão, ela aparecerá nesta página.']);}
 function options(select,values){const current=select.value;for(const old of [...select.options].slice(1))old.remove();for(const v of values){const opt=node('option','',catLabels[v]||v);opt.value=v;select.add(opt);}if(values.includes(current))select.value=current;}
-function syncFilters(){const present=new Set(state.all.flatMap(x=>x.categories||[x.category]));options(byId('filter-category'),CATEGORIES.filter(x=>present.has(x.id)).map(x=>x.id));options(byId('filter-neighborhood'),[...new Set(state.all.map(x=>x.neighborhood))].sort((a,b)=>a.localeCompare(b,'pt-BR'));}
+function syncFilters(){const present=new Set(state.all.flatMap(x=>x.categories||[x.category]));options(byId('filter-category'),CATEGORIES.filter(x=>present.has(x.id)).map(x=>x.id));options(byId('filter-neighborhood'),[...new Set(state.all.map(x=>x.neighborhood))].sort((a,b)=>a.localeCompare(b,'pt-BR')));}
 function getFilters(){return {query:byId('search-q').value,category:byId('filter-category').value,neighborhood:byId('filter-neighborhood').value,date:byId('filter-date').value,budget:byId('filter-budget').value};}
 function renderSearch(){
  const filters=getFilters(),key=JSON.stringify(filters);
