@@ -116,16 +116,17 @@ try{
   assert.deepEqual(tabs.map(v=>v.trim()),['Início','Salvos','Buscar','Chat']);
  });
  await mobile.page.screenshot({path:'screenshots/mobile-inicio-390.png',fullPage:true});
- await check('ficha de evento em tela cheia com informações e retorno',async()=>{
+ await check('ficha arredondada conforme referência, com informações e retorno',async()=>{
   await mobile.page.locator('.nav-mobile [data-tab="buscar"]').click();
   const first=mobile.page.locator('#search-list .event-card').first();
   await first.click({position:{x:115,y:70}}); // qualquer área do card abre a ficha, não só a seta
   const modal=mobile.page.locator('#event-modal');
   await modal.waitFor({state:'visible'});
   const box=await modal.boundingBox();
-  assert.ok(box&&Math.abs(box.width-390)<3,'ficha não preenche largura');
-  assert.ok(box&&Math.abs(box.height-844)<5,'ficha não preenche altura');
   await mobile.page.screenshot({path:'screenshots/mobile-ficha-390.png',fullPage:false});
+  assert.ok(box&&Math.abs(box.width-366)<2&&Math.abs(box.x-12)<2,'ficha não respeita as margens de 12 px');
+  assert.ok(box&&box.height>500&&box.height<=818,'ficha não cabe no viewport');
+  assert.ok(await modal.evaluate(e=>parseFloat(getComputedStyle(e).borderTopLeftRadius)>=24),'cantos não correspondem à referência');
   await mobile.page.locator('#event-modal .close-modal').click();
   assert.equal(await modal.isVisible(),false);
   assert.equal(await mobile.page.locator('[data-page="buscar"]').isVisible(),true);
