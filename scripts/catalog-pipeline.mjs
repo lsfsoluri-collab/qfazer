@@ -122,6 +122,7 @@ export function buildPublicProjection(rows,{now=new Date()}={}) {
     };
     if(row.imagem_url&&row.licenca_imagem==='LIBERADA'){
       out.imagem_url=String(row.imagem_url);
+      out.licenca_imagem='LIBERADA';
       if(String(row.credito_imagem??'').trim())out.credito_imagem=String(row.credito_imagem).trim();
     }
     sessions.push(out);
