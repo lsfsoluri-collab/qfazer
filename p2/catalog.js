@@ -26,7 +26,7 @@ export function normalizeSessions(payload, {internal = false, now = new Date()} 
   }).map(session => ({
     id: session.session_id, title: session.titulo, category: resolveCategories(session)[0],
     categories: resolveCategories(session), tags: resolveTags(session),
-    imageUrl: (!internal || session.licenca_imagem === 'LIBERADA') && validUrl(session.imagem_url) ? session.imagem_url : null,
+    imageUrl: session.licenca_imagem === 'LIBERADA' && validUrl(session.imagem_url) ? session.imagem_url : null,
     imageCredit: session.credito_imagem || null,
     description: session.descricao_editorial || '', date: session.data_local,
     startsAt: session.inicio_utc, hour: session.hora_local,
@@ -47,7 +47,7 @@ export function sessionMatches(item, filter={}) {
   const tags = Array.isArray(item.tags) ? item.tags : [];
   const content = `${item.title} ${item.place} ${item.neighborhood} ${item.description} ${categories.map(categoryLabel).join(' ')} ${tags.map(tagLabel).join(' ')}`.toLocaleLowerCase('pt-BR');
   if (q && !content.includes(q)) return false;
-  if (filter.category && !categories.includes(filter.category)) return false;
+  if (filter.category && !resolveCategories({categoria:filter.category}).some(id=>categories.includes(id))) return false;
   if (filter.neighborhood && filter.neighborhood !== item.neighborhood) return false;
   if (filter.date && filter.date !== item.date) return false;
   if (filter.budget === 'free' && !(item.priceType === 'GRATUITO' && item.minCents === 0)) return false;
