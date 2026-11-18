@@ -65,12 +65,12 @@
         </div>
 
         <div class="categories" role="group" aria-label="Explorar por categoria">
-          <button data-category-shortcut="MÚSICA" type="button"><svg><use href="#i-music"/></svg><span>shows</span></button>
-          <button data-category-shortcut="FESTA" type="button"><svg><use href="#i-spark"/></svg><span>festas</span></button>
-          <button data-category-shortcut="ARTES_VISUAIS" type="button"><svg><use href="#i-art"/></svg><span>arte</span></button>
-          <button data-category-shortcut="CINEMA" type="button"><svg><use href="#i-film"/></svg><span>cinema</span></button>
-          <button data-category-shortcut="GASTRONOMIA" type="button"><svg><use href="#i-food"/></svg><span>comida</span></button>
-          <button data-category-shortcut="ESPORTE" type="button"><svg><use href="#i-run"/></svg><span>esporte</span></button>
+          <button data-category-shortcut="musica" type="button"><svg><use href="#i-music"/></svg><span>shows</span></button>
+          <button data-category-shortcut="festas" type="button"><svg><use href="#i-spark"/></svg><span>festas</span></button>
+          <button data-category-shortcut="arte" type="button"><svg><use href="#i-art"/></svg><span>arte</span></button>
+          <button data-category-shortcut="cinema" type="button"><svg><use href="#i-film"/></svg><span>cinema</span></button>
+          <button data-category-shortcut="gastronomia" type="button"><svg><use href="#i-food"/></svg><span>comida</span></button>
+          <button data-category-shortcut="esporte" type="button"><svg><use href="#i-run"/></svg><span>esporte</span></button>
         </div>
 
         <section class="home-section featured-section" aria-labelledby="featured-title">
@@ -100,6 +100,8 @@
         </form>
         <div class="results-heading"><h2 id="search-count">Experiências</h2><span>Confirme disponibilidade e valores no canal oficial</span></div>
         <div id="search-list" class="event-grid" aria-live="polite"></div>
+        <div class="search-progress" aria-live="polite"><span id="search-visible-count"></span><button type="button" id="search-more" class="button button-outline" hidden>Ver mais eventos</button></div>
+        <div id="search-sentinel" class="search-sentinel" aria-hidden="true"></div>
         <section id="compare-tray" class="compare-tray" aria-labelledby="compare-heading" hidden><div class="compare-heading"><strong id="compare-heading">Comparar opções</strong><button type="button" class="text-button" id="compare-clear">Limpar comparação</button></div><div id="compare-content"></div></section>
       </section>
 
