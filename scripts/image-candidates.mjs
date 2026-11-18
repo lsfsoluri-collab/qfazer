@@ -20,7 +20,8 @@ export function getOgImage(html,baseUrl){
     .map(x=>[x[1].toLowerCase(),x[3].replaceAll('&amp;','&')]));
   const property=(attrs.property||attrs.name||'').toLowerCase();
   if(!['og:image','og:image:url','twitter:image'].includes(property))continue;
-  const possible=safeHttpsUrl(new URL(attrs.content||'',source).href);
+  if(!attrs.content)continue;
+  const possible=safeHttpsUrl(new URL(attrs.content,source).href);
   if(possible)return possible.href;
  }
  return null;
@@ -30,7 +31,7 @@ export async function findCandidate(url,{allowHosts,fetcher=fetch}={}){
  if(!original)return {candidate:'',reason:'URL oficial inválida'};
  const allowed=new Set(allowHosts||[]);
  if(!allowed.has(original.hostname))return {candidate:'',reason:'Host não autorizado pelo operador'};
- const res=await fetcher(original.href,{headers:{Accept:'text/html'},signal:AbortSignal.timeout(8000)});
+ const res=await fetcher(original.href,{headers:{Accept:'text/html'},redirect:'manual',signal:AbortSignal.timeout(8000)});
  const finalUrl=safeHttpsUrl(res.url||original.href);
  if(!finalUrl||!allowed.has(finalUrl.hostname))return {candidate:'',reason:'Redirecionamento fora dos hosts autorizados'};
  if(!res.ok||!(res.headers.get('content-type')||'').includes('text/html'))return {candidate:'',reason:'Página não é HTML público válido'};
