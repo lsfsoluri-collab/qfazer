@@ -34,3 +34,19 @@ jobs:
           path: screenshots/*.png
           if-no-files-found: warn
           retention-days: 7
+
+      - name: Attach source for internal standalone preview packaging
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qfazer-p2-source
+          path: |
+            p2/index.html
+            p2/app.css
+            p2/app.js
+            p2/catalog.js
+            p2/taxonomy.js
+            p2/assets/*.svg
+            p2/manifest.webmanifest
+          if-no-files-found: error
+          retention-days: 3
