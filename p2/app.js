@@ -36,8 +36,24 @@ function showDetail(item){
  const d=byId('event-modal'),c=byId('event-detail');
  c.replaceChildren();
  const hero=visualBand(item);hero.classList.add('detail-hero');
+ const toolbar=node('div','detail-quick-actions');
+ const saved=state.saved.includes(item.id);
+ const save=button('',`detail-icon-action ${saved?'is-saved':''}`,()=>{
+   toggleSave(item.id);showDetail(item);
+ });
+ save.setAttribute('aria-label',saved?'Remover dos salvos':'Salvar evento');
+ save.append(uiIcon('heart'));
+ const share=button('↗','detail-icon-action',async()=>{
+   try{
+     if(navigator.share){await navigator.share({title:item.title,url:item.url||location.href});}
+     else if(navigator.clipboard&&validUrl(item.url)){await navigator.clipboard.writeText(item.url);announce('Link oficial copiado.');}
+     else announce('Compartilhamento indisponível neste navegador.');
+   }catch(error){if(error?.name!=='AbortError')announce('Não foi possível compartilhar.');}
+ });
+ share.setAttribute('aria-label','Compartilhar link oficial');
+ toolbar.append(save,share);
  const title=node('h2','modal-title',item.title);title.id='detail-title';
- c.append(hero,node('p','section-overline',categoryLabel(item.category)),title);
+ c.append(hero,toolbar,node('p','section-overline',categoryLabel(item.category)),title);
  if(item.description){
   c.append(node('h3','detail-subhead','Sobre esta experiência'),node('p','detail-summary',item.description));
  }else{
@@ -75,7 +91,21 @@ function card(item,{allowCompare=false}={}){
  const actions=node('div','card-actions');
  if(allowCompare){const selected=state.selected.includes(item.id);const compareBtn=button('',`compare-button ${selected?'chosen':''}`,()=>toggleCompare(item.id));compareBtn.setAttribute('aria-label',selected?`Remover ${item.title} da comparação`:`Comparar ${item.title}`);compareBtn.append(uiIcon(selected?'check':'sliders'),node('span','visually-hidden',selected?'Comparando':'Comparar'));actions.append(compareBtn);}
  const details=button('', 'detail-link',()=>showDetail(item));details.setAttribute('aria-label',`Ver detalhes de ${item.title}`);details.append(uiIcon('arrow'),node('span','visually-hidden','Detalhes'));actions.append(details);
- footer.append(actions);main.append(footer);article.append(main);return article;
+ footer.append(actions);main.append(footer);article.append(main);
+ // O card inteiro abre detalhes; botões de salvar/comparar mantêm ações independentes.
+ article.classList.add('is-openable');
+ article.tabIndex=0;
+ article.setAttribute('role','group');
+ article.setAttribute('aria-label',`Abrir detalhes do evento: ${item.title}`);
+ article.addEventListener('click',event=>{
+   if(event.target.closest('button,a,input,select'))return;
+   showDetail(item);
+ });
+ article.addEventListener('keydown',event=>{
+   if(event.target!==article||!['Enter',' '].includes(event.key))return;
+   event.preventDefault();showDetail(item);
+ });
+ return article;
 }
 function featuredCard(item){const article=node('article','featured-card');article.append(visualBand(item));const content=node('div','featured-card-content');content.append(node('span','category-pill',catLabels[item.category]||item.category),node('h3','',item.title),node('p','',`${formatDay(item)} • ${item.neighborhood}`));article.append(content);const open=button(`Ver ${item.title}`,'',()=>showDetail(item));open.setAttribute('aria-label',`Ver evento: ${item.title}`);article.append(open);return article;}
 function renderInto(id,items,msg){const dest=byId(id);dest.replaceChildren();if(!items.length){dest.append(emptyState(msg[0],msg[1]));return;}for(const item of items)dest.append(card(item,{allowCompare:id==='search-list'}));}
@@ -102,7 +132,9 @@ function toggleSave(id){if(state.saved.includes(id))state.saved=state.saved.filt
 function toggleCompare(id){if(state.selected.includes(id))state.selected=state.selected.filter(x=>x!==id);else if(state.selected.length>=3){announce('Escolha até três sessões para comparar.');return;}else state.selected.push(id);renderSearch();}
 function initializeCatalog(payload,internal){state.all=normalizeSessions(payload,{internal});state.selected=[];state.searchVisible=SEARCH_PAGE_SIZE;state.searchFilterKey='';syncFilters();renderHome();renderSaved();renderSearch();announce(`${state.all.length} sessões elegíveis carregadas.`);}
 async function fetchPublic(){try{const response=await fetch('./catalog-public.json',{cache:'no-store'});if(!response.ok)return;const data=await response.json();initializeCatalog(data,false);}catch{/* conteúdo ausente não é erro crítico: sem dados fictícios */}}
-function start(){for(const btn of document.querySelectorAll('[data-tab]'))btn.addEventListener('click',()=>navTo(btn.dataset.tab));document.querySelector('.brand').addEventListener('click',e=>{e.preventDefault();navTo('inicio');});byId('home-form').addEventListener('submit',e=>{e.preventDefault();byId('search-q').value=byId('home-query').value;navTo('buscar');});byId('home-show-all').addEventListener('click',()=>navTo('buscar'));byId('home-more').addEventListener('click',()=>navTo('buscar'));for(const b of document.querySelectorAll('[data-category-shortcut]'))b.addEventListener('click',()=>{navTo('buscar');byId('filter-category').value=b.dataset.categoryShortcut;renderSearch();});byId('chat-to-search').addEventListener('click',()=>navTo('buscar'));byId('search-form').addEventListener('submit',e=>{e.preventDefault();renderSearch();});byId('search-form').addEventListener('reset',()=>setTimeout(renderSearch,0));byId('compare-clear').addEventListener('click',()=>{state.selected=[];renderSearch();});byId('search-more').addEventListener('click',()=>{state.searchVisible+=SEARCH_PAGE_SIZE;renderSearch();});
+function start(){for(const btn of document.querySelectorAll('[data-tab]'))btn.addEventListener('click',()=>navTo(btn.dataset.tab));document.querySelector('.brand').addEventListener('click',e=>{e.preventDefault();navTo('inicio');});byId('home-form').addEventListener('submit',e=>{e.preventDefault();byId('search-q').value=byId('home-query').value;navTo('buscar');});byId('home-show-all').addEventListener('click',()=>navTo('buscar'));byId('home-more').addEventListener('click',()=>navTo('buscar'));for(const b of document.querySelectorAll('[data-category-shortcut]'))b.addEventListener('click',()=>{navTo('buscar');byId('filter-category').value=b.dataset.categoryShortcut;renderSearch();});byId('chat-to-search').addEventListener('click',()=>navTo('buscar'));byId('search-form').addEventListener('submit',e=>{e.preventDefault();renderSearch();});for(const field of ['filter-category','filter-neighborhood','filter-date','filter-budget'])byId(field).addEventListener('change',renderSearch);
+let filterTyping;
+byId('search-q').addEventListener('input',()=>{clearTimeout(filterTyping);filterTyping=setTimeout(renderSearch,200);});byId('search-form').addEventListener('reset',()=>setTimeout(renderSearch,0));byId('compare-clear').addEventListener('click',()=>{state.selected=[];renderSearch();});byId('search-more').addEventListener('click',()=>{state.searchVisible+=SEARCH_PAGE_SIZE;renderSearch();});
 if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{if(state.active==='buscar'&&entries.some(entry=>entry.isIntersecting)&&!byId('search-more').hidden)byId('search-more').click();},{rootMargin:'380px 0px'});observer.observe(byId('search-sentinel'));}
 if(state.homologation){byId('review-panel').hidden=false;byId('import-catalog').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>12_000_000)throw Error('Arquivo muito grande para revisão local.');const payload=JSON.parse(await file.text());if(payload?.meta?.publicacao_autorizada===true)throw Error('Arquivo interno inesperadamente marcado como público.');initializeCatalog(payload,true);text(byId('review-status'),`${state.all.length} sessões reais elegíveis carregadas somente neste navegador`);}catch(error){text(byId('review-status'),`Não foi possível abrir o catálogo: ${error.message}`);}});}
 const hash=location.hash.slice(1);navTo(tabs.has(hash)?hash:'inicio');if(!state.homologation)fetchPublic();if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});}
