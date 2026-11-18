@@ -101,6 +101,8 @@ export function buildPublicProjection(rows,{now=new Date()}={}) {
     if(Number.isNaN(min)||Number.isNaN(max)||(min!==null&&max!==null&&min>max))errors.push(`Linha ${i+2}: faixa de preço inconsistente (${id})`);
     if(row.tipo_preco==='GRATUITO'&&min!==0)errors.push(`Linha ${i+2}: gratuidade sem preço zero (${id})`);
     if(row.imagem_url&&row.licenca_imagem==='LIBERADA'&&!httpsUrl(row.imagem_url))errors.push(`Linha ${i+2}: imagem sem URL HTTPS válida (${id})`);
+    if(row.imagem_url&&row.licenca_imagem==='LIBERADA'&&!httpsUrl(row.url_fonte_imagem))errors.push(`Linha ${i+2}: falta URL da fonte da imagem aprovada (${id})`);
+    if(row.imagem_url&&row.licenca_imagem==='LIBERADA'&&!String(row.credito_imagem??'').trim())errors.push(`Linha ${i+2}: falta crédito da imagem aprovada (${id})`);
     const categories=resolveCategories(row);
     const tags=resolveTags(row);
     if(categories.includes('outros'))errors.push(`Linha ${i+2}: categoria não mapeada para taxonomia pública (${id})`);
@@ -125,6 +127,7 @@ export function buildPublicProjection(rows,{now=new Date()}={}) {
       out.imagem_url=String(row.imagem_url);
       out.licenca_imagem='LIBERADA';
       if(String(row.credito_imagem??'').trim())out.credito_imagem=String(row.credito_imagem).trim();
+      out.url_fonte_imagem=String(row.url_fonte_imagem).trim();
     }
     sessions.push(out);
   }
