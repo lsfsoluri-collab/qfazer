@@ -50,3 +50,66 @@
 
 /* Foco do contêiner é programático; controles individuais mantêm focus-visible. */
 main[tabindex="-1"]:focus{outline:none}
+
+/* Mobile UX v0.4 — referência visual aprovada (Início, Busca, Resultados, Detalhes) */
+.event-card.is-openable{cursor:pointer}
+.event-card.is-openable:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+.detail-quick-actions{display:flex;justify-content:flex-end;gap:9px;margin:10px 0}
+.detail-icon-action{width:40px;height:40px;border-radius:50%;border:1px solid #b1b1a9;background:#222;color:#fff;display:grid;place-items:center;font-size:24px}
+.detail-icon-action svg{height:21px;width:21px;stroke:currentColor;fill:none}
+.detail-icon-action.is-saved svg{fill:var(--lime);stroke:var(--lime)}
+.detail-icon-action:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+@media(max-width:650px){
+  /* barra de navegação inferior imita o mockup, mantendo áreas de toque acessíveis */
+  .nav-mobile{padding:7px 12px calc(7px + env(safe-area-inset-bottom));background:#090909f5;border-top:1px solid #4d4d4d}
+  .nav-mobile button{min-height:54px;font-size:11px;gap:4px}
+  .nav-mobile button svg{width:23px;height:23px}
+  .masthead{height:86px}
+  .brand{width:145px}
+  .hero-kicker{font-size:10px;letter-spacing:.07em}
+  .hero h1{font-size:clamp(32px,9.3vw,41px);letter-spacing:-.065em}
+  .hero-copy{font-size:12px;line-height:1.55}
+  .hero-search{height:48px}
+  .categories{gap:9px;margin-top:13px;margin-bottom:33px}
+  .categories button{min-height:83px;border:1px solid #595959;background:linear-gradient(145deg,#181818,#101010)}
+  .categories button span{font-size:12px}
+  .categories button svg{width:27px;height:27px}
+  /* mockup Buscar: filtro principal em limão + chips em linha, sem mostrar os códigos de planilha */
+  #page-buscar .search-page-heading{padding-top:16px;padding-bottom:22px}
+  #page-buscar .search-page-heading .section-overline{font-size:11px}
+  #page-buscar .search-page-heading h1{font-size:clamp(30px,9vw,40px);line-height:1.09}
+  #page-buscar .search-input-wrap{height:50px}
+  #page-buscar .filter-topline{margin-top:14px}
+  #page-buscar .filter-label{background:var(--lime);color:#0b0b0b;border-radius:100px;min-height:36px;font-size:12px;font-weight:800;padding:8px 14px;margin-bottom:14px}
+  #page-buscar .filter-label svg{stroke:#0b0b0b}
+  #page-buscar .filters{display:flex;flex-wrap:nowrap;gap:8px;max-width:100%;overflow-x:auto;scrollbar-width:none;padding-bottom:5px;scroll-snap-type:x proximity}
+  #page-buscar .filters::-webkit-scrollbar{display:none}
+  #page-buscar .filters label{flex:0 0 auto;display:flex;align-items:center;min-width:0;scroll-snap-align:start}
+  #page-buscar .filters label span{display:none}
+  #page-buscar .filters select,#page-buscar .filters input{width:auto;max-width:155px;min-height:39px;border-radius:40px;background:#121212;color:#fff;border:1px solid #8c8c8c;padding:7px 11px;font-size:11px;font-weight:600;appearance:auto}
+  #page-buscar .filters input[type=date]{width:135px}
+  #page-buscar .filter-controls{display:none}
+  #page-buscar .results-heading{margin:18px 0 14px}
+  #page-buscar .results-heading h2{font-size:17px}
+  /* Cada evento ocupa toda a coluna: imagem hero + bloco creme */
+  #search-list.event-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+  #search-list .event-card{width:100%;border:1px solid #787878;border-radius:17px;overflow:hidden;box-shadow:0 8px 25px #0008}
+  #search-list .card-art{height:146px}
+  #search-list .card-body{padding:13px 15px 13px;gap:6px}
+  #search-list .event-title{font-size:15px;line-height:1.18}
+  #search-list .card-meta,#search-list .card-location{font-size:11px}
+  #search-list .price{font-size:12px;padding:0;background:none}
+  #search-list .card-actions .detail-link{width:42px;height:42px}
+  #search-list .card-actions .compare-button{width:40px;height:40px}
+  #search-list .card-save{width:38px;height:38px;right:10px;top:10px}
+  #search-list .card-save svg{width:21px;height:21px}
+  #search-list .card-art .media-note{font-size:11px}
+  /* Detalhes sobre Buscar, sem substituir a quarta aba Chat */
+  .event-modal .detail-hero{height:clamp(190px,34vh,290px)}
+  .event-modal .detail-quick-actions{position:absolute;right:16px;top:calc(85px + env(safe-area-inset-top));z-index:45;margin:0;gap:8px}
+  .event-modal .detail-icon-action{width:39px;height:39px;background:#101010c9;border:1px solid #ddd}
+  .event-modal .detail-quick-actions .detail-icon-action.is-saved{border-color:var(--lime)}
+  .event-modal .modal-title{font-size:clamp(28px,8.1vw,37px)}
+  .event-modal .detail-summary{line-height:1.55}
+  .event-modal .detail-official-link{font-size:14px}
+}
