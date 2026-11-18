@@ -1,1 +1,11 @@
-{"name":"qfazer-prototipo2","version":"0.1.0","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.mjs","check":"node --check p2/app.js && node --check p2/catalog.js && node --check p2/sw.js && node --check shared/schedule.js && node --test tests/*.test.mjs"}}
+{
+  "name": "qfazer-prototipo2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check p2/app.js && node --check p2/catalog.js && node --check p2/sw.js && node --check shared/schedule.js && node --test tests/*.test.mjs",
+    "sync:catalog:csv": "node scripts/export_public_catalog.mjs --csv"
+  }
+}
