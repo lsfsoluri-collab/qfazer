@@ -120,6 +120,7 @@ export function buildPublicProjection(rows,{now=new Date()}={}) {
       fonte_id:String(row.fonte_id),verificado_em:isoDate(row.verificado_em),
       status:'APTO_PARA_PILOTO',reuso_publico:'LIBERADO'
     };
+    if(String(row.por_que_vale_a_pena??'').trim())out.por_que_vale_a_pena=String(row.por_que_vale_a_pena).trim();
     if(row.imagem_url&&row.licenca_imagem==='LIBERADA'){
       out.imagem_url=String(row.imagem_url);
       out.licenca_imagem='LIBERADA';
