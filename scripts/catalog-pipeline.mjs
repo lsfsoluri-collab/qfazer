@@ -1,4 +1,5 @@
 import {resolveCategories,resolveTags} from '../p2/taxonomy.js';
+import {validatePublicCatalog} from '../p2/public-catalog.js';
 // Qfazer — exportador de projeção pública, sem dependências de terceiros.
 // Importante: NUNCA publica o arquivo bruto da pesquisa; só campos permitidos e sessões aprovadas.
 
@@ -120,7 +121,7 @@ export function buildPublicProjection(rows,{now=new Date()}={}) {
       url_oficial:String(row.url_oficial),
       url_acesso:String(row.url_acesso||row.url_oficial),
       fonte_id:String(row.fonte_id),verificado_em:isoDate(row.verificado_em),
-      status:'APTO_PARA_PILOTO',reuso_publico:'LIBERADO'
+      status:'APTO_PARA_PILOTO',reuso_publico:'LIBERADO',revisao_editorial:'APROVADO'
     };
     if(String(row.por_que_vale_a_pena??'').trim())out.por_que_vale_a_pena=String(row.por_que_vale_a_pena).trim();
     if(row.imagem_url&&row.licenca_imagem==='LIBERADA'){
@@ -133,8 +134,8 @@ export function buildPublicProjection(rows,{now=new Date()}={}) {
   }
   if(errors.length)throw Error('Catálogo NÃO exportado. Corrigir:\n'+errors.slice(0,40).join('\n'));
   sessions.sort((a,b)=>a.inicio_utc.localeCompare(b.inicio_utc)||a.session_id.localeCompare(b.session_id));
-  return {
+  return validatePublicCatalog({
     meta:{schema_version:'1.0',scope:'PUBLICO_APROVADO',total:sessions.length},
     sessoes:sessions
-  };
+  });
 }

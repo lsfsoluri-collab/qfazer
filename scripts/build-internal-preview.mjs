@@ -26,8 +26,8 @@ export async function buildInternalPreview(payload,{generatedAt=new Date().toISO
  for(const match of [...html.matchAll(/(?:src|href)="(\.\/assets\/[^\"]+\.svg)"/g)]){
   const bytes=await fs.readFile(resolve(ROOT,'p2',match[1]));html=html.replaceAll(match[1],'data:image/svg+xml;base64,'+bytes.toString('base64'));
  }
- const modules=[];for(const file of ['taxonomy.js','catalog.js','curation.js'])modules.push((await fs.readFile(resolve(ROOT,'p2',file),'utf8')).replace(/^import .*;\s*$/gm,'').replace(/\bexport /g,''));
- const api='{normalizeSessions,priceLabel,sessionMatches,compareIds,validUrl,CATEGORIES,categoryLabel,tagLabel,normalizeCuration,curationMatches,STATUS_LABELS,BLOCKER_LABELS}';
+ const modules=[];for(const file of ['taxonomy.js','catalog.js','public-catalog.js','curation.js'])modules.push((await fs.readFile(resolve(ROOT,'p2',file),'utf8')).replace(/^import .*;\s*$/gm,'').replace(/\bexport /g,''));
+ const api='{normalizeSessions,readPublicCatalog,priceLabel,sessionMatches,compareIds,validUrl,CATEGORIES,categoryLabel,tagLabel,normalizeCuration,curationMatches,STATUS_LABELS,BLOCKER_LABELS}';
  const library='<script>\n(()=>{\n'+modules.join('\n')+'\nwindow.QfazerInternal='+api+';\n})();\n</script>';
  let app=await fs.readFile(resolve(ROOT,'p2/app.js'),'utf8');
  app=app.replace(/^import \{([^}]+)\} from [^;]+;/gm,(_,names)=>'const {'+names+'}=window.QfazerInternal;');
