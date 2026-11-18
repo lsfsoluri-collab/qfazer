@@ -13,3 +13,33 @@
 .q-ray-one{left:81px;transform:rotate(-34deg)}.q-ray-two{left:140px;top:-2px;transform:rotate(2deg)}.q-ray-three{left:201px;top:10px;transform:rotate(34deg)}
 @media(max-width:1050px) and (min-width:651px){.hero-symbol{transform:rotate(-8deg) scale(.82)}}
 @media(max-width:650px){.featured-grid,.home-event-grid{margin-right:0}}
+
+/* Qfazer — taxonomy, licensed imagery, infinite browse and full-screen detail v0.3 */
+.card-art .event-cover{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;z-index:1}
+.card-art .media-note{z-index:3}
+.featured-card .card-art::after{z-index:2;pointer-events:none}
+.search-progress{padding:23px 12px 12px;display:flex;align-items:center;justify-content:center;gap:15px;flex-wrap:wrap;color:#c9c9c2;font-size:12px;min-height:65px}
+.search-progress .button{padding:10px 17px;min-height:42px}
+.search-sentinel{height:2px;width:100%;pointer-events:none}
+.event-modal .detail-hero{height:220px;border-radius:14px;margin:0 0 21px}
+.detail-hero .media-symbol{font-size:175px}
+.detail-subhead{font:800 15px var(--font-display);color:var(--lime);margin:21px 0 10px}
+.detail-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.detail-tag{border:1px solid #696969;border-radius:50px;padding:5px 12px;font-size:12px;line-height:1.2}
+.event-modal .detail-official-link{display:flex;align-items:center;justify-content:center;text-align:center;min-height:53px;margin-top:18px;border-radius:100px;background:var(--lime);color:#0b0b0b;font-weight:800}
+.image-credit{font-size:11px;color:#a8a8a1;margin-top:13px}
+.event-modal .close-modal{position:relative;z-index:50}
+@media(max-width:650px){
+  .event-modal{position:fixed;inset:0;width:100vw;max-width:none;max-height:none;height:100dvh;border:0;border-radius:0;margin:0;padding:0 0 max(20px,env(safe-area-inset-bottom));background:#0b0b0b}
+  .event-modal form{position:absolute;top:calc(14px + env(safe-area-inset-top));right:15px;z-index:50;padding:0;background:transparent}
+  .event-modal .close-modal{width:46px;height:46px;border:2px solid var(--lime);background:#080808e6;box-shadow:0 3px 18px #000b}
+  .event-modal #event-detail{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+  .event-modal .detail-hero{height:min(39vh,310px);margin:0 0 17px;border:0;border-radius:0}
+  .event-modal .detail-hero .media-symbol{font-size:170px}
+  .event-modal #event-detail>:not(.detail-hero){margin-left:19px;margin-right:19px}
+  .event-modal .modal-title{font-size:clamp(27px,8vw,40px);margin-top:5px;margin-bottom:14px}
+  .event-modal .event-facts{grid-template-columns:76px 1fr;gap:12px;font-size:13px}
+  .event-modal .detail-tags{margin-top:20px}
+  .event-modal .detail-official-link{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:10;box-shadow:0 10px 30px #000c}
+  .search-progress{padding-bottom:22px}
+}
