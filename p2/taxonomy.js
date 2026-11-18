@@ -12,6 +12,7 @@ export const CATEGORIES = Object.freeze([
   {id:'literatura',label:'Literatura'},
   {id:'feiras',label:'Feiras'},
   {id:'oficinas',label:'Oficinas'},
+  {id:'experiencias',label:'Experiências'},
   {id:'vida-noturna',label:'Vida noturna'},
   {id:'outros',label:'Outros'}
 ]);
@@ -26,7 +27,7 @@ const alias = Object.freeze({
   'FESTAS E VIDA NOTURNA':['festas','vida-noturna'], 'FESTA':['festas'], 'FESTAS':['festas'],
   'VIDA NOTURNA':['vida-noturna'], 'BARES COM PROGRAMACAO':['vida-noturna'],
   'ESPORTE':['esporte'], 'ESPORTES':['esporte'], 'ESPORTES E MOVIMENTO':['esporte'],
-  'OFICINAS E EXPERIENCIAS':['oficinas'], 'OFICINAS':['oficinas'],
+  'OFICINAS E EXPERIENCIAS':['experiencias'], 'OFICINAS':['oficinas'],
   'DANCA E PERFORMANCE':['danca']
 });
 const tagNames=Object.freeze({
@@ -65,6 +66,18 @@ export function resolveCategories(row){
    const direct=CATEGORIES.find(x=>key(x.label)===normalized||key(x.id)===normalized);
    const ids=direct?[direct.id]:(alias[normalized]||[]);
    for(const id of ids)if(allowed.has(id)&&!found.includes(id))found.push(id);
+ }
+ // Classificação adicional apenas se a subcategoria curada explicita o tema.
+ // Categorias informadas manualmente em 'categorias_busca' prevalecem.
+ if(!raw.length){
+   const subtype=key(row.subcategoria);
+   const extra=[];
+   if(/GASTRONOM|COMIDA|DOCES|DEGUSTACAO|VINHO|CAFE|JANTAR|HARMONIZADO/.test(subtype))extra.push('gastronomia');
+   if(/\bSHOW\b|SAMBA|\bMPB\b|ROCK|REGGAE|RAP|MUSICA ELETRONIC|MUSICA AO VIVO/.test(subtype))extra.push('musica');
+   if(/FEIRA DE ARTE|ARTE E ARTESANATO|ATELIE|PERFORMANCE ART/.test(subtype))extra.push('arte');
+   if(/OFICINA|COLAGEM|QUADRINHOS|\bHQS\b/.test(subtype))extra.push('oficinas');
+   if(/POLE DANCE|BALLROOM|ESPETACULO DE DANCA/.test(subtype))extra.push('danca');
+   for(const id of extra)if(allowed.has(id)&&!found.includes(id))found.push(id);
  }
  return found.length?found:['outros'];
 }
