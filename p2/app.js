@@ -71,7 +71,7 @@ function showDetail(item){
    const label=node('dt','',k);label.prepend(uiIcon(icon));facts.append(label,node('dd','',v));
  }
  c.append(facts);
- {const box=node('section','detail-rationale'),heading=node('h3','', 'Por que vale a pena?');heading.prepend(uiIcon('spark'));box.append(heading,node('p','',item.why||'Justificativa editorial ainda não informada.'));c.append(box);}
+ {const why=String(item.why||'').trim();if(why||item.internal){const box=node('section','detail-rationale'),heading=node('h3','', 'Por que vale a pena?');heading.prepend(uiIcon('spark'));box.append(heading,node('p','',why||'Texto editorial pendente de curadoria.'));c.append(box);}}
  const labels=[...new Set([...(item.categories||[item.category]).map(categoryLabel),...(item.tags||[]).map(tagLabel)])].filter(Boolean);
  if(labels.length){
    const tags=node('div','detail-tags');
